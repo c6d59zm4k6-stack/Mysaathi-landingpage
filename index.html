@@ -114,9 +114,18 @@
   /* PROBLEM */
   .problem{background:var(--ink);color:#fff}
   .problem h2{color:#fff} .problem h2 em{color:#F2A6BE;font-style:italic}
-  .problem p{color:rgba(255,255,255,.8);margin-top:12px;font-size:15.5px}
-  .problem .punch{font-family:var(--serif);font-size:18px;color:#fff;margin-top:14px;line-height:1.4}
+  .problem .punch{font-family:var(--serif);font-size:18px;color:#fff;margin-top:0;line-height:1.4}
   .problem .punch b{color:#F2A6BE;font-weight:500;font-style:italic}
+  .confuse{position:relative;margin:28px 0 4px;display:flex;flex-wrap:wrap;gap:9px;justify-content:center}
+  .confuse .chip2{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:11px;padding:8px 13px;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.8);white-space:nowrap}
+  .confuse .chip2:nth-child(1){transform:rotate(-3deg)}
+  .confuse .chip2:nth-child(2){transform:rotate(2deg)}
+  .confuse .chip2:nth-child(3){transform:rotate(-1.5deg)}
+  .confuse .chip2:nth-child(4){transform:rotate(2.5deg)}
+  .confuse .chip2 b{color:#F2A6BE;font-weight:700}
+  .converge{display:flex;justify-content:center;margin:12px 0 16px;color:rgba(255,255,255,.3)}
+  .converge svg{width:17px;height:22px}
+  .fearcard{background:rgba(242,166,190,.09);border:1px solid rgba(242,166,190,.24);border-radius:14px;padding:16px 18px}
 
   /* WALK AWAY / PLAN */
   .walk{background:linear-gradient(180deg,var(--cream),#fff)}
@@ -396,8 +405,16 @@
     <div class="wrap">
       <span class="sec-eyebrow" style="color:#F2A6BE;opacity:.9">The part no one talks about</span>
       <h2 class="head">Everyone's had an opinion. <em>No one's had a plan.</em></h2>
-      <p>Your mum says it's stress. A friend swears by her diet. A doctor says just lose weight. You've tried bits of all of it — and quietly wondered if the problem is you.</p>
-      <p class="punch">It isn't you. <b>The cause is hidden — so no one's advice ever fit.</b></p>
+      <div class="confuse">
+        <span class="chip2"><b>Mum:</b> "It's just stress."</span>
+        <span class="chip2"><b>Friend:</b> "Try my diet."</span>
+        <span class="chip2"><b>Doctor:</b> "Just lose weight."</span>
+        <span class="chip2"><b>Instagram:</b> "Do this instead."</span>
+      </div>
+      <div class="converge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v14M6 13l6 6 6-6"/></svg></div>
+      <div class="fearcard">
+        <p class="punch">It isn't you. <b>The cause is hidden — so no one's advice ever fit.</b></p>
+      </div>
     </div>
   </section>
 
@@ -696,7 +713,14 @@
     "The part no one talks about":"जिस बारे में कोई बात नहीं करता",
     "Everyone's had an opinion.":"हर किसी की एक राय रही है।",
     "No one's had a plan.":"किसी के पास प्लान नहीं रहा।",
-    "Your mum says it's stress. A friend swears by her diet. A doctor says just lose weight. You've tried bits of all of it — and quietly wondered if the problem is you.":"माँ कहती हैं तनाव है। सहेली अपनी डाइट की कसम खाती है। डॉक्टर कहते हैं बस वज़न घटाओ। आपने थोड़ा-थोड़ा सब आज़माया — और चुपचाप सोचा कि कहीं ग़लती आपकी तो नहीं।",
+    "Mum:":"माँ:",
+    '"It\'s just stress."':'"बस तनाव है।"',
+    "Friend:":"सहेली:",
+    '"Try my diet."':'"मेरी डाइट अपनाओ।"',
+    "Doctor:":"डॉक्टर:",
+    '"Just lose weight."':'"बस वज़न घटाओ।"',
+    "Instagram:":"Instagram:",
+    '"Do this instead."':'"इसकी जगह यह करो।"',
     "It isn't you.":"ग़लती आपकी नहीं है।",
     "The cause is hidden — so no one's advice ever fit.":"वजह छिपी है — इसलिए किसी की सलाह कभी फिट नहीं बैठी।",
     "What changes today":"आज क्या बदलेगा",
