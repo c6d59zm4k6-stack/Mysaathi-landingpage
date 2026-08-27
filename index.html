@@ -588,7 +588,7 @@
       <div class="pricebig"><span class="wasprice">₹499</span> ₹149</div>
       <div class="anchornote">Regular ₹499 · ₹149 for this live cohort</div>
       <div class="seats"><span class="d"></span>Limited seats · [ Sun 22 June ]</div>
-      <a class="btn" href="#" onclick="return false;">Reserve my seat <span class="price">₹149</span></a>
+      <a class="btn" href="#" id="reserveBtn">Reserve my seat <span class="price">₹149</span></a>
       <div class="btn-note">One-tap UPI / Razorpay</div>
     </div>
   </section>
@@ -609,6 +609,28 @@
 </div></div>
 
 <script>
+  /* ================================================================
+     PAYMENT SETUP — do this before launch
+     1. Create a free Razorpay account: https://razorpay.com/payment-links/
+     2. Make a Payment Link for ₹149 (or whatever the live price is).
+     3. Paste that link below, between the quotes.
+     Until you do, the "Reserve my seat" button shows a friendly notice
+     instead of a broken link.
+     ================================================================ */
+  var RAZORPAY_LINK = "";
+
+  var reserveBtn = document.getElementById('reserveBtn');
+  if (reserveBtn) {
+    if (RAZORPAY_LINK) {
+      reserveBtn.href = RAZORPAY_LINK;
+    } else {
+      reserveBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        alert('Payment isn’t set up yet. Add your Razorpay Payment Link in index.html (search for RAZORPAY_LINK).');
+      });
+    }
+  }
+
   var sticky=document.getElementById('sticky'),hero=document.querySelector('.hero');
   new IntersectionObserver(function(e){sticky.classList.toggle('show',!e[0].isIntersecting)},{threshold:0}).observe(hero);
   var rev=document.querySelectorAll('.reveal');
