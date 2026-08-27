@@ -64,6 +64,7 @@ export default async function handler(req, res) {
           // What she told us on the landing page quiz — so you know what each
           // buyer actually came in for when you look at the Razorpay dashboard.
           focus_track: TRACK_LABELS[track] || "Not selected",
+          focus_track_key: track || "",
           language
         }
       })

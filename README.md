@@ -26,6 +26,10 @@ Needs hosting that runs the `api/` functions. Vercel is set up for it:
    | `RAZORPAY_KEY_ID` | from Razorpay → Settings → API Keys |
    | `RAZORPAY_KEY_SECRET` | shown once when you generate the key — save it |
    | `WORKSHOP_AMOUNT_PAISE` | optional, defaults to `14900` (₹149) |
+   | `RESEND_API_KEY` | optional — enables the confirmation email, see below |
+   | `EMAIL_FROM` | optional, e.g. `Garbha Saathi <hello@yourdomain.com>` |
+   | `WORKSHOP_ZOOM_LINK` | optional — included in the confirmation email once you have one |
+   | `WORKSHOP_DATE_LABEL` | optional, e.g. `Sunday, 22 June · 11 AM` |
 
 3. Redeploy.
 
@@ -71,10 +75,38 @@ Never commit `.env.local` — `.gitignore` already covers it.
   `order_id|payment_id`. The browser reporting its own success isn't proof, so
   a seat only counts as booked once this check passes.
 
-Anything that should happen once per paid seat — mailing the Zoom link, adding
-her to the WhatsApp group, appending to a sheet — goes in `verify-payment.js`
-where the comment marks the spot. Until then, Razorpay's dashboard is the
-record of who paid.
+Once a payment verifies, `verify-payment.js` looks up the order's notes back
+on Razorpay (name, email, quiz track — set server-side in `create-order.js`,
+not trusted from the browser) and, if `RESEND_API_KEY` is set, emails her a
+confirmation in her chosen language with the Zoom link (once `WORKSHOP_ZOOM_LINK`
+is set — until then it just says the link is coming on WhatsApp) and the one
+fact from her quiz result. **This is best-effort by design**: if the email
+fails to send, the payment is still reported as verified, because it already
+happened — an email hiccup must never make a real payment look unconfirmed.
+
+Without `RESEND_API_KEY`, no email is sent and nothing else changes — Razorpay's
+dashboard stays the record of who paid.
+
+### Confirmation email — Resend setup
+
+1. Sign up at [resend.com](https://resend.com) (free tier is enough to start).
+2. For a quick start, leave `EMAIL_FROM` unset — it defaults to Resend's own
+   `onboarding@resend.dev`, which sends to anyone with no setup. To send from
+   your own address (recommended before real launch), verify your domain in
+   Resend and set `EMAIL_FROM` to an address on it.
+3. Copy the API key into `RESEND_API_KEY`.
+
+### WhatsApp confirmation — not wired up yet, on purpose
+
+Automated WhatsApp messages need a Business API provider (Meta's Cloud API,
+Twilio, or Gupshup are the common choices) — that means a Meta Business
+verification and message-template approval, which usually takes a few days
+and needs decisions only you can make (which provider, which phone number).
+There's nothing to half-build here yet; the spot for it is marked in
+`verify-payment.js` next to the email call, ready to add once you've picked a
+provider. Until then, the confirmation email is the automated channel, and the
+existing "message us on WhatsApp" links throughout the page cover the manual
+one.
 
 ## Files
 
