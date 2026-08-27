@@ -26,6 +26,7 @@ Needs hosting that runs the `api/` functions. Vercel is set up for it:
    | `RAZORPAY_KEY_ID` | from Razorpay → Settings → API Keys |
    | `RAZORPAY_KEY_SECRET` | shown once when you generate the key — save it |
    | `WORKSHOP_AMOUNT_PAISE` | optional, defaults to `14900` (₹149) |
+   | `RAZORPAY_WEBHOOK_SECRET` | from Razorpay → Settings → Webhooks, see below — different from `RAZORPAY_KEY_SECRET` |
    | `RESEND_API_KEY` | optional — enables the confirmation email, see below |
    | `EMAIL_FROM` | optional, e.g. `Garbha Saathi <hello@yourdomain.com>` |
    | `WORKSHOP_ZOOM_LINK` | optional — included in the confirmation email once you have one |
@@ -73,19 +74,29 @@ Never commit `.env.local` — `.gitignore` already covers it.
   the publishable key id is sent to the browser.
 - `api/verify-payment.js` re-computes Razorpay's HMAC signature over
   `order_id|payment_id`. The browser reporting its own success isn't proof, so
-  a seat only counts as booked once this check passes.
+  the browser only shows "your seat is booked" once this check passes.
+- `api/razorpay-webhook.js` is what actually sends the confirmation email. If
+  she pays and closes the tab immediately, `verify-payment.js` never even
+  runs — nothing in the browser gets the chance to report back. Razorpay
+  calls this endpoint directly from their own servers the moment the payment
+  captures, regardless of what her browser does, which is what makes it a
+  real backstop rather than a nicer error message.
 
-Once a payment verifies, `verify-payment.js` looks up the order's notes back
-on Razorpay (name, email, quiz track — set server-side in `create-order.js`,
-not trusted from the browser) and, if `RESEND_API_KEY` is set, emails her a
-confirmation in her chosen language with the Zoom link (once `WORKSHOP_ZOOM_LINK`
-is set — until then it just says the link is coming on WhatsApp) and the one
-fact from her quiz result. **This is best-effort by design**: if the email
-fails to send, the payment is still reported as verified, because it already
-happened — an email hiccup must never make a real payment look unconfirmed.
+Both endpoints look up the order's notes back on Razorpay (name, email, quiz
+track — set server-side in `create-order.js`, never trusted from a caller)
+before doing anything with them.
 
-Without `RESEND_API_KEY`, no email is sent and nothing else changes — Razorpay's
-dashboard stays the record of who paid.
+**Both are best-effort past the payment/signature check itself.** If Resend
+is down or misconfigured, the payment is still reported as captured/verified,
+because it already happened — an email hiccup must never make a real payment
+look unconfirmed. Likewise, the webhook always acknowledges Razorpay's call
+with 200 even when the email failed, so Razorpay doesn't retry-storm an
+endpoint that isn't going to succeed differently the second time; the retry
+would just repeat the same Resend failure. The failure itself still gets
+logged, so it shows up in Vercel's function logs if you go looking.
+
+Without `RESEND_API_KEY`, no email is ever sent — Razorpay's dashboard stays
+the record of who paid.
 
 ### Confirmation email — Resend setup
 
@@ -96,6 +107,22 @@ dashboard stays the record of who paid.
    Resend and set `EMAIL_FROM` to an address on it.
 3. Copy the API key into `RESEND_API_KEY`.
 
+### The webhook — Razorpay setup
+
+1. Razorpay dashboard → **Settings → Webhooks** → **Add New Webhook**.
+2. URL: `https://<your-vercel-domain>/api/razorpay-webhook`.
+3. Active events: check **`payment.captured`** (nothing else is needed).
+4. Razorpay shows you a secret when you save it — put that in
+   `RAZORPAY_WEBHOOK_SECRET`. It's a different value from `RAZORPAY_KEY_SECRET`;
+   don't reuse one for the other.
+5. Redeploy so the new env var takes effect, then use Razorpay's "Send Test
+   Webhook" button (or just make one ₹149 test payment) and check the
+   webhook's delivery log in the dashboard for a `200`.
+
+Only one of the two paths (`verify-payment.js` or the webhook) ever sends the
+email — the webhook, always — specifically so a normal payment where the tab
+stays open doesn't get emailed twice.
+
 ### WhatsApp confirmation — not wired up yet, on purpose
 
 Automated WhatsApp messages need a Business API provider (Meta's Cloud API,
@@ -103,16 +130,18 @@ Twilio, or Gupshup are the common choices) — that means a Meta Business
 verification and message-template approval, which usually takes a few days
 and needs decisions only you can make (which provider, which phone number).
 There's nothing to half-build here yet; the spot for it is marked in
-`verify-payment.js` next to the email call, ready to add once you've picked a
-provider. Until then, the confirmation email is the automated channel, and the
-existing "message us on WhatsApp" links throughout the page cover the manual
-one.
+`api/razorpay-webhook.js`, right next to the email call — same webhook, same
+best-effort treatment, ready to add once you've picked a provider. Until
+then, the confirmation email is the automated channel, and the existing
+"message us on WhatsApp" links throughout the page cover the manual one.
 
 ## Files
 
 - `index.html` — the whole page: markup, styles, Hindi translation layer, quiz and checkout
 - `api/create-order.js` — creates the Razorpay order
-- `api/verify-payment.js` — verifies the payment signature
+- `api/verify-payment.js` — verifies the payment signature for the browser's own success screen
+- `api/razorpay-webhook.js` — the reliable, server-to-server sender of the confirmation email
+- `api/_lib/confirmation.js` — shared email content/sending, used by the webhook
 - `assets/` — page images
 
 ## Editing copy
