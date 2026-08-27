@@ -111,6 +111,25 @@
   .tile.q .ico svg{width:21px;height:21px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .tile.q .tx{color:#fff;padding:0}
 
+  .tile[data-track]{cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .1s}
+  .tile[data-track]:active{transform:scale(.98)}
+  .tile[data-track]:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
+  .tile[data-track] .ph{position:relative}
+  .tile[data-track] .check{position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:50%;background:#fff;display:none;place-items:center;box-shadow:0 1px 4px rgba(46,33,56,.25)}
+  .tile[data-track] .check svg{width:12px;height:12px;stroke:var(--rose-deep);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .tile.picked{border-color:var(--rose);box-shadow:0 0 0 1.5px var(--rose)}
+  .tile.picked .check{display:grid}
+
+  .focus-reveal{margin-top:16px}
+  .focus-reveal[hidden]{display:none}
+  .focus-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px 20px;box-shadow:var(--shadow-lg)}
+  .focus-card.pop{animation:focusIn .35s cubic-bezier(.2,.8,.2,1)}
+  @keyframes focusIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  .fr-eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose)}
+  .focus-card h3{font-family:var(--serif);font-size:19px;margin-top:6px;color:var(--ink)}
+  .focus-card p{font-size:14px;margin-top:6px}
+  .focus-card .btn{margin-top:14px}
+
   /* PROBLEM */
   .problem{background:var(--ink);color:#fff}
   .problem h2{color:#fff} .problem h2 em{color:#F2A6BE;font-style:italic}
@@ -386,16 +405,24 @@
   <section class="symp reveal">
     <div class="wrap">
       <span class="sec-eyebrow">Sound familiar?</span>
-      <h2 class="head">Four problems you've been treating separately. <em>One root cause.</em></h2>
-      <div class="grid7">
-        <div class="tile"><span class="ph"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".7"/><circle cx="15" cy="13" r=".7"/><circle cx="13.5" cy="9" r=".7"/><circle cx="10" cy="14" r=".7"/></svg></span><span class="tx">Acne that won't go</span></div>
-        <div class="tile"><span class="ph"><svg viewBox="0 0 24 24"><path d="M7 21c0-7 2-13 5-18M12 21c0-7 1-13 3-18M16 21c0-6 1-10 2-14"/></svg></span><span class="tx">Hair thinning</span></div>
-        <div class="tile"><span class="ph"><svg viewBox="0 0 24 24"><path d="M4 8h16l-2 12H6z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg></span><span class="tx">Stubborn weight</span></div>
-        <div class="tile"><span class="ph"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/><circle cx="12" cy="15" r="2"/></svg></span><span class="tx">Irregular periods</span></div>
-        <div class="tile"><span class="ph"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span><span class="tx">Low energy, crashes</span></div>
-        <div class="tile"><span class="ph"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.4"/></svg></span><span class="tx">Sugar cravings</span></div>
-        <div class="tile"><span class="ph"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 15.5c.8-1 2-1.5 3.5-1.5s2.7.5 3.5 1.5"/><circle cx="9" cy="10" r=".8"/><circle cx="15" cy="10" r=".8"/></svg></span><span class="tx">Mood swings, stress</span></div>
+      <h2 class="head">Tap what's true for you. <em>We'll show you the root cause.</em></h2>
+      <div class="grid7" id="symptomGrid">
+        <div class="tile" data-track="skin" role="button" tabindex="0" aria-pressed="false"><span class="ph"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".7"/><circle cx="15" cy="13" r=".7"/><circle cx="13.5" cy="9" r=".7"/><circle cx="10" cy="14" r=".7"/></svg><span class="check"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span></span><span class="tx">Acne that won't go</span></div>
+        <div class="tile" data-track="skin" role="button" tabindex="0" aria-pressed="false"><span class="ph"><svg viewBox="0 0 24 24"><path d="M7 21c0-7 2-13 5-18M12 21c0-7 1-13 3-18M16 21c0-6 1-10 2-14"/></svg><span class="check"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span></span><span class="tx">Hair thinning</span></div>
+        <div class="tile" data-track="metabolic" role="button" tabindex="0" aria-pressed="false"><span class="ph"><svg viewBox="0 0 24 24"><path d="M4 8h16l-2 12H6z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg><span class="check"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span></span><span class="tx">Stubborn weight</span></div>
+        <div class="tile" data-track="cycle" role="button" tabindex="0" aria-pressed="false"><span class="ph"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/><circle cx="12" cy="15" r="2"/></svg><span class="check"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span></span><span class="tx">Irregular periods</span></div>
+        <div class="tile" data-track="mood" role="button" tabindex="0" aria-pressed="false"><span class="ph"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg><span class="check"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span></span><span class="tx">Low energy, crashes</span></div>
+        <div class="tile" data-track="metabolic" role="button" tabindex="0" aria-pressed="false"><span class="ph"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.4"/></svg><span class="check"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span></span><span class="tx">Sugar cravings</span></div>
+        <div class="tile" data-track="mood" role="button" tabindex="0" aria-pressed="false"><span class="ph"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 15.5c.8-1 2-1.5 3.5-1.5s2.7.5 3.5 1.5"/><circle cx="9" cy="10" r=".8"/><circle cx="15" cy="10" r=".8"/></svg><span class="check"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span></span><span class="tx">Mood swings, stress</span></div>
         <div class="tile q"><span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .5c0 2-2.5 2-2.5 4"/><circle cx="12" cy="17" r=".6"/></svg></span><span class="tx">Not even sure it's PCOS? Start here.</span></div>
+      </div>
+      <div class="focus-reveal" id="focusReveal" hidden>
+        <div class="focus-card">
+          <span class="fr-eyebrow">Based on what you picked</span>
+          <h3 id="frTitle">Cycle &amp; Hormone Balance</h3>
+          <p id="frFact">A long, irregular cycle can still become a healthy one.</p>
+          <a class="btn" href="#plan">See how we build your plan</a>
+        </div>
       </div>
     </div>
   </section>
@@ -673,8 +700,10 @@
     "Acne, weight, hair fall, irregular periods — different symptoms, one root cause.":"एक्ने, वज़न, बाल झड़ना, अनियमित पीरियड्स — अलग-अलग लक्षण, एक ही जड़।",
     "Acne, hair fall, weight, periods —":"एक्ने, बाल झड़ना, वज़न, पीरियड्स —",
     "finally understand why.":"आख़िरकार समझिए क्यों।",
-    "Four problems you've been treating separately.":"चार दिक्कतें जिन्हें आप अलग-अलग ठीक कर रही थीं।",
-    "One root cause.":"एक ही जड़।",
+    "Tap what's true for you.":"जो आप पर सच लगे, उस पर टैप करें।",
+    "We'll show you the root cause.":"हम आपको जड़ वजह दिखाएँगे।",
+    "Based on what you picked":"आपने जो चुना उसके आधार पर",
+    "See how we build your plan":"देखें हम आपका प्लान कैसे बनाते हैं",
     "Here's why nothing's worked yet —":"इसलिए अब तक कुछ काम नहीं आया —",
     "and why it's not your fault.":"और इसमें आपकी ग़लती नहीं।",
     "Regular ₹499 · ₹149 for this live cohort":"रेगुलर ₹499 · इस लाइव कोहोर्ट के लिए ₹149",
@@ -912,8 +941,61 @@
 
   /* ---- Language gate ---- */
   var gate=document.getElementById('gate');
-  function pickLang(l){applyLang(l);gate.classList.add('hide');}
+  function pickLang(l){applyLang(l);gate.classList.add('hide');refreshFocus();}
   function openGate(){gate.classList.remove('hide');}
+
+  /* ---- Symptom tiles -> personalized focus card ---- */
+  var TRACKS={
+    cycle:{en:['Cycle & Hormone Balance',"A long, irregular cycle can still become a healthy one."],
+           hi:['साइकल और हार्मोन बैलेंस',"लंबा, अनियमित साइकल भी सेहतमंद बन सकता है।"]},
+    skin:{en:['Skin & Hair Wellness',"PCOS acne often shows on the jaw and chin — it's hormonal, not hygiene."],
+          hi:['स्किन और बालों की सेहत',"PCOS का एक्ने अक्सर जॉ और ठुड्डी पर होता है — यह हार्मोनल है, सफ़ाई की कमी नहीं।"]},
+    metabolic:{en:['Metabolic & Insulin Health',"You can have insulin issues at any weight."],
+               hi:['मेटाबॉलिज़्म और इंसुलिन हेल्थ',"किसी भी वज़न पर इंसुलिन की दिक़्क़त हो सकती है।"]},
+    mood:{en:['Mood & Energy Restoration',"Mood swings come from hormones, not a character flaw."],
+          hi:['मूड और एनर्जी की वापसी',"मूड स्विंग्स हार्मोन से आते हैं, स्वभाव की कमी से नहीं।"]}
+  };
+  var pickedTracks=[];
+  var focusReveal=document.getElementById('focusReveal');
+  var frTitle=document.getElementById('frTitle');
+  var frFact=document.getElementById('frFact');
+  var symptomTiles=document.querySelectorAll('#symptomGrid .tile[data-track]');
+
+  function bestTrack(){
+    var counts={};
+    pickedTracks.forEach(function(k){counts[k]=(counts[k]||0)+1;});
+    var best=pickedTracks[0],bestN=0;
+    Object.keys(counts).forEach(function(k){if(counts[k]>bestN){bestN=counts[k];best=k;}});
+    return best;
+  }
+  function refreshFocus(){
+    if(!pickedTracks.length)return;
+    var t=TRACKS[bestTrack()];
+    var hi=document.documentElement.lang==='hi';
+    var pair=hi?t.hi:t.en;
+    frTitle.textContent=pair[0];
+    frFact.textContent=pair[1];
+  }
+  function toggleTile(tile){
+    var track=tile.getAttribute('data-track');
+    var on=tile.classList.toggle('picked');
+    tile.setAttribute('aria-pressed',on?'true':'false');
+    if(on){pickedTracks.push(track);}
+    else{var i=pickedTracks.indexOf(track);if(i>-1)pickedTracks.splice(i,1);}
+    if(!pickedTracks.length){focusReveal.hidden=true;return;}
+    refreshFocus();
+    if(focusReveal.hidden){
+      focusReveal.hidden=false;
+      var card=focusReveal.querySelector('.focus-card');
+      card.classList.remove('pop');void card.offsetWidth;card.classList.add('pop');
+    }
+  }
+  symptomTiles.forEach(function(tile){
+    tile.addEventListener('click',function(){toggleTile(tile);});
+    tile.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleTile(tile);}
+    });
+  });
 
   /* ---- Live countdown ----  SET YOUR WORKSHOP DATE & TIME HERE: */
   var target=new Date('2026-06-22T11:00:00');
