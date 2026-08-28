@@ -85,7 +85,7 @@
 
   /* ---- tappable tiles ---- */
   .tiles{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}
-  .tile{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:13px 12px;cursor:pointer;transition:border-color .14s,box-shadow .14s,transform .1s;position:relative;display:flex;flex-direction:column;gap:8px}
+  .tile{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:13px 12px;cursor:pointer;transition:border-color .14s,box-shadow .14s,transform .1s;position:relative;overflow:visible;display:flex;flex-direction:column;gap:8px}
   .tile:active{transform:scale(.975)}
   .tile:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
   .tile svg.ic{width:24px;height:24px;stroke:var(--rose-deep);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
@@ -109,7 +109,7 @@
 
   /* ---- yes/no ---- */
   .yn{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
-  .yn button{font-family:var(--sans);font-size:16px;font-weight:700;padding:15px;border-radius:14px;border:1.5px solid var(--rose);background:#fff;color:var(--rose-deep);cursor:pointer;transition:transform .1s}
+  .yn button{position:relative;font-family:var(--sans);font-size:16px;font-weight:700;padding:15px;border-radius:14px;border:1.5px solid var(--rose);background:#fff;color:var(--rose-deep);cursor:pointer;transition:transform .1s}
   .yn button:active{transform:scale(.97)}
   .yn button:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
   .yn button.picked{background:var(--rose);color:#fff;border-color:transparent}
@@ -179,14 +179,39 @@
   .paybar .l2{font-size:11.5px;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .paybar a{flex:none;width:auto;padding:12px 20px;font-size:15px}
 
-  /* ---- progress rail: signals "this is short" ---- */
-  .rail{position:fixed;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:6px;pointer-events:none;
-    left:50%;margin-left:calc(var(--col)/2 - 14px)}
-  @media (max-width:470px){ .rail{left:auto;right:6px;margin-left:0} }
-  .rail i{width:4px;height:14px;border-radius:2px;background:rgba(46,33,56,.16);transition:background .25s,height .25s}
-  .rail i.on{background:var(--rose);height:20px}
-  .rail.on-dark i{background:rgba(255,255,255,.25)}
-  .rail.on-dark i.on{background:#F2A6BE}
+  /* ---- progress bar: an Instagram-story-style read on "how much is left",
+     the same signal Phases gives with its segmented topbar ---- */
+  .progress{
+    position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:55;
+    width:100%;max-width:var(--col);display:flex;gap:5px;
+    padding:12px 14px 0;pointer-events:none;
+  }
+  .progress i{flex:1;height:3px;border-radius:2px;background:rgba(46,33,56,.15);overflow:hidden;position:relative}
+  .progress i::after{content:"";position:absolute;inset:0;background:var(--rose);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+  .progress i.done::after{transform:scaleX(1)}
+  .progress i.now::after{transform:scaleX(1)}
+  .progress.on-dark i{background:rgba(255,255,255,.22)}
+  .progress.on-dark i::after{background:#F2A6BE}
+
+  /* ---- tap reward: a quick ring pulse in brand colour, echoing the burst
+     Phases spawns on selection — without needing particle JS ---- */
+  .tile.on::before, .yn button.picked::before{
+    content:"";position:absolute;inset:-3px;border-radius:inherit;
+    border:2px solid var(--rose);opacity:0;
+    animation:pulse-out .5s ease-out;
+  }
+  @keyframes pulse-out{from{opacity:.7;transform:scale(1)}to{opacity:0;transform:scale(1.12)}}
+
+  /* ---- the explicit "keep going" tap, matching Phases' answer -> payoff
+     -> Continue rhythm instead of a passive reveal you have to notice ---- */
+  .goBtn{
+    display:inline-flex;align-items:center;gap:6px;margin-top:12px;
+    background:var(--rose);color:#fff;border:none;font-family:var(--sans);
+    font-size:14px;font-weight:700;padding:11px 18px;border-radius:12px;
+    cursor:pointer;animation:pop .3s cubic-bezier(.2,.9,.25,1) .05s both;
+  }
+  .goBtn:active{transform:scale(.96)}
+  .goBtn svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important}
@@ -196,7 +221,7 @@
 </head>
 <body>
 
-<div class="rail" id="rail" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
 <div class="deck" id="deck">
 
@@ -261,6 +286,7 @@
         <div class="rk">Not separate problems.</div>
         <p>What you tapped usually traces back to one hormonal root — which is exactly what we work backwards from.</p>
       </div>
+      <button class="goBtn" data-go="2">Keep going <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
     </div>
 
     <div class="spacer"></div>
@@ -302,6 +328,7 @@
         <div class="rk" id="rev2k">Exactly right.</div>
         <p>Same PCOS. Different bodies. Different needs. A plan that isn't built around <em>your</em> body was never going to fit.</p>
       </div>
+      <button class="goBtn" data-go="3">See your starting point <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
     </div>
 
     <div class="spacer"></div>
@@ -422,24 +449,39 @@
   var deck  = document.getElementById('deck');
   var cards = Array.prototype.slice.call(document.querySelectorAll('[data-card]'));
 
-  /* ---- progress rail ---- */
-  var rail = document.getElementById('rail');
-  cards.forEach(function(){ rail.appendChild(document.createElement('i')); });
-  var dots = rail.querySelectorAll('i');
+  /* ---- progress bar: segment per card, filled up to (and including)
+     wherever she currently is — same "how much is left" signal as
+     Phases' segmented topbar, at the top since that's the natural spot
+     for a story-style progress read ---- */
+  var progress = document.getElementById('progress');
+  cards.forEach(function(){ progress.appendChild(document.createElement('i')); });
+  var segs = progress.querySelectorAll('i');
 
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
         if (!e.isIntersecting) return;
         var i = cards.indexOf(e.target);
-        for (var k = 0; k < dots.length; k++) dots[k].classList.toggle('on', k === i);
-        rail.classList.toggle('on-dark', e.target.classList.contains('dark'));
+        for (var k = 0; k < segs.length; k++) {
+          segs[k].classList.toggle('done', k < i);
+          segs[k].classList.toggle('now', k === i);
+        }
+        progress.classList.toggle('on-dark', e.target.classList.contains('dark'));
       });
     }, { root: deck, threshold: 0.55 });
     cards.forEach(function(c){ io.observe(c); });
   } else {
-    dots[0].classList.add('on');
+    segs[0].classList.add('now');
   }
+
+  /* ---- "Continue" buttons: an explicit tap forward after each reveal,
+     instead of leaving her to notice the generic scroll cue ---- */
+  Array.prototype.forEach.call(document.querySelectorAll('.goBtn'), function(btn){
+    btn.addEventListener('click', function(){
+      var i = parseInt(btn.getAttribute('data-go'), 10);
+      cards[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
 
   /* ---- Q1: symptom tiles ---- */
   var picked = [];
