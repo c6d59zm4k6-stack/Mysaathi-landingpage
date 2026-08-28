@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Your PCOS, Your Plan — Garbha Saathi · ₹149</title>
+<meta name="description" content="A live 2-hour PCOS workshop. Build a plan that's actually yours.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#2E2138; --ink-soft:#5B4A66;
+    --plum:#5B3E6B; --rose:#C9436A; --rose-deep:#A8345A; --rose-tint:#FBE7EC;
+    --marigold:#E89A3C; --marigold-tint:#FBEEDB;
+    --sage:#5E7E68; --sage-tint:#E7F0EA;
+    --cream:#FDF6F1; --cream-2:#FBEFE9; --card:#FFF;
+    --line:rgba(46,33,56,.12); --line-soft:rgba(46,33,56,.07);
+    --shadow:0 1px 2px rgba(46,33,56,.05),0 12px 26px -16px rgba(91,62,107,.30);
+    --shadow-lg:0 2px 6px rgba(46,33,56,.06),0 26px 50px -28px rgba(91,62,107,.40);
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    --serif:"Fraunces",Georgia,serif;
+    --col:430px;
+    --bar:74px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:var(--sans);color:var(--ink);background:#EEE7E2;line-height:1.5;font-size:16px}
+
+  /* The page is one vertical column of full-screen cards. Native scroll with
+     snap points — no JS routing — so the back button, sharing and Instagram's
+     in-app browser all behave normally, and it degrades to an ordinary scroll
+     if snap isn't supported. */
+  .deck{
+    max-width:var(--col);margin:0 auto;background:var(--cream);
+    height:100svh;overflow-y:auto;overflow-x:hidden;
+    scroll-snap-type:y mandatory;
+    scroll-behavior:smooth;
+    position:relative;
+    -webkit-overflow-scrolling:touch;
+  }
+  @supports not (height:100svh){ .deck{height:100vh} }
+
+  .card{
+    min-height:100svh;
+    scroll-snap-align:start;
+    scroll-snap-stop:always;
+    display:flex;flex-direction:column;
+    padding:26px 20px calc(var(--bar) + 26px);
+    position:relative;
+  }
+  @supports not (min-height:100svh){ .card{min-height:100vh} }
+  .card.dark{background:var(--ink);color:#fff}
+  .card.tint{background:var(--cream-2)}
+  .spacer{flex:1;min-height:12px}
+
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);display:flex;align-items:center;gap:7px}
+  .dark .eyebrow{color:#F2A6BE}
+  h1,h2{font-family:var(--serif);font-weight:600;line-height:1.14;letter-spacing:-.01em}
+  h1{font-size:31px;margin-top:14px}
+  h2{font-size:26px;margin-top:10px}
+  em{font-style:italic;color:var(--rose)}
+  .dark em{color:#F2A6BE}
+  p.lead{font-size:15.5px;color:var(--ink-soft);margin-top:11px}
+  .dark p.lead{color:rgba(255,255,255,.78)}
+
+  /* ---- hero ---- */
+  .brand{display:flex;align-items:center;gap:8px;font-family:var(--serif);font-weight:600;font-size:17px}
+  .brand .mark{width:26px;height:26px;border-radius:50%;background:conic-gradient(from 200deg,var(--rose),var(--marigold),var(--plum),var(--rose));display:grid;place-items:center;color:#fff;font-size:12px}
+  .video{position:relative;margin-top:18px;border-radius:18px;overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:5/4;background:var(--rose-tint)}
+  .video img{width:100%;height:100%;object-fit:cover;display:block}
+  .video .play{position:absolute;inset:0;display:grid;place-items:center}
+  .video .play span{width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.93);display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+  .video .play span::after{content:"";border-left:17px solid var(--rose);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+  .video .vcap{position:absolute;left:11px;bottom:11px;background:rgba(46,33,56,.78);color:#fff;font-size:11px;font-weight:600;padding:4px 9px;border-radius:7px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+  .chip{display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 11px;font-size:12px;font-weight:600}
+  .chip.hot{background:var(--rose-tint);border-color:transparent;color:var(--rose-deep)}
+
+  /* ---- scroll cue ---- */
+  .cue{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:var(--ink-soft);letter-spacing:.04em}
+  .dark .cue{color:rgba(255,255,255,.6)}
+  .cue svg{width:17px;height:17px;animation:nudge 1.8s ease-in-out infinite}
+  @keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+  /* ---- tappable tiles ---- */
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}
+  .tile{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:13px 12px;cursor:pointer;transition:border-color .14s,box-shadow .14s,transform .1s;position:relative;display:flex;flex-direction:column;gap:8px}
+  .tile:active{transform:scale(.975)}
+  .tile:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
+  .tile svg.ic{width:24px;height:24px;stroke:var(--rose-deep);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .tile .tx{font-size:13.5px;font-weight:600;line-height:1.25}
+  .tile.on{border-color:var(--rose);background:var(--rose-tint);box-shadow:0 0 0 3px rgba(201,67,106,.12)}
+  .tile .tick{position:absolute;top:9px;right:9px;width:19px;height:19px;border-radius:50%;background:var(--rose);display:none;place-items:center}
+  .tile .tick svg{width:11px;height:11px;stroke:#fff;fill:none;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+  .tile.on .tick{display:grid}
+
+  /* ---- persona compare ---- */
+  .people{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+  /* White card inside a dark section — it must set its own ink, or it
+     inherits the section's white text and the names vanish. */
+  .person{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:15px;padding:13px 12px;box-shadow:var(--shadow)}
+  .person .who{display:flex;align-items:center;gap:7px;font-family:var(--serif);font-weight:600;font-size:15px;padding-bottom:9px;border-bottom:1px solid var(--line-soft);margin-bottom:9px}
+  .person .av{width:26px;height:26px;border-radius:50%;flex:none}
+  .person.a .av{background:linear-gradient(140deg,var(--rose),var(--marigold))}
+  .person.b .av{background:linear-gradient(140deg,var(--plum),var(--sage))}
+  .person .row{display:flex;align-items:flex-start;gap:7px;font-size:12.5px;color:var(--ink-soft);padding:4px 0;line-height:1.35}
+  .person .row svg{width:13px;height:13px;flex:none;margin-top:2px;stroke:var(--ink-soft);fill:none;stroke-width:2;opacity:.75}
+
+  /* ---- yes/no ---- */
+  .yn{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+  .yn button{font-family:var(--sans);font-size:16px;font-weight:700;padding:15px;border-radius:14px;border:1.5px solid var(--rose);background:#fff;color:var(--rose-deep);cursor:pointer;transition:transform .1s}
+  .yn button:active{transform:scale(.97)}
+  .yn button:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
+  .yn button.picked{background:var(--rose);color:#fff;border-color:transparent}
+  .dark .yn button{background:transparent;border-color:rgba(255,255,255,.4);color:#fff}
+  .dark .yn button.picked{background:#fff;color:var(--ink);border-color:transparent}
+
+  /* ---- reveal ---- */
+  .reveal{margin-top:16px}
+  .reveal[hidden]{display:none}
+  .revealcard{background:var(--marigold-tint);border-left:3px solid var(--marigold);border-radius:0 14px 14px 0;padding:15px 16px;animation:pop .38s cubic-bezier(.2,.9,.25,1)}
+  .dark .revealcard{background:rgba(242,166,190,.13);border-left-color:#F2A6BE}
+  .revealcard .rk{font-family:var(--serif);font-weight:600;font-size:17px;font-style:italic;color:var(--rose-deep)}
+  .dark .revealcard .rk{color:#F2A6BE}
+  .revealcard p{font-size:14.5px;color:var(--ink-soft);margin-top:5px}
+  .dark .revealcard p{color:rgba(255,255,255,.8)}
+  @keyframes pop{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+
+  /* ---- focus result ---- */
+  .focus{background:#fff;border-radius:18px;padding:20px 18px;box-shadow:var(--shadow-lg);margin-top:16px;text-align:center}
+  .focus .fk{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rose)}
+  .focus .fname{font-family:var(--serif);font-size:23px;font-weight:600;margin-top:7px;line-height:1.2}
+  .focus .ffact{font-size:14px;color:var(--ink-soft);margin-top:9px}
+  .focus .fnote{font-size:12px;color:var(--ink-soft);margin-top:13px;padding-top:11px;border-top:1px solid var(--line-soft)}
+
+  /* ---- steps ---- */
+  .steps{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+  .step{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:14px;padding:14px 13px;box-shadow:var(--shadow)}
+  .step .n{width:27px;height:27px;flex:none;border-radius:50%;background:var(--rose-tint);color:var(--rose-deep);display:grid;place-items:center;font-size:13px;font-weight:700;font-family:var(--serif)}
+  .step h3{font-family:var(--serif);font-size:16px;font-weight:600}
+  .step p{font-size:13px;color:var(--ink-soft);margin-top:3px}
+  .step .mins{font-size:11px;font-weight:700;color:var(--marigold);letter-spacing:.05em;margin-top:5px}
+
+  /* ---- takeaway list ---- */
+  .gets{display:flex;flex-direction:column;gap:9px;margin-top:18px}
+  .get{display:flex;gap:10px;align-items:flex-start;font-size:14.5px}
+  .get svg{width:19px;height:19px;flex:none;margin-top:2px;stroke:var(--sage);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+  /* ---- price ---- */
+  .pricebox{text-align:center;margin-top:20px}
+  .pricebig{font-family:var(--serif);font-size:46px;font-weight:600;line-height:1}
+  .pricebig .was{font-size:23px;color:var(--ink-soft);text-decoration:line-through;margin-right:9px;opacity:.65}
+  .dark .pricebig .was{color:rgba(255,255,255,.55)}
+  .pricenote{font-size:13px;color:var(--ink-soft);margin-top:8px}
+  .dark .pricenote{color:rgba(255,255,255,.72)}
+  .guarantee{display:flex;align-items:center;justify-content:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--sage);background:var(--sage-tint);border-radius:11px;padding:10px 13px;margin-top:16px}
+  .dark .guarantee{background:rgba(94,126,104,.22);color:#B9D6C3}
+
+  /* ---- buttons ---- */
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--rose);color:#fff;border:none;font-family:var(--sans);font-size:16.5px;font-weight:700;padding:16px;border-radius:15px;cursor:pointer;box-shadow:0 8px 20px -8px rgba(201,67,106,.6);text-decoration:none;transition:transform .1s}
+  .btn:active{transform:scale(.985)}
+  .btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .btn .tag{background:rgba(255,255,255,.22);padding:2px 8px;border-radius:7px;font-size:14.5px}
+  .btn.ghost{background:transparent;color:var(--rose-deep);border:1.5px solid var(--rose);box-shadow:none}
+  .dark .btn.ghost{color:#fff;border-color:rgba(255,255,255,.45)}
+
+  /* ---- sticky bar: always one tap from paying, on every card ---- */
+  .paybar{
+    position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+    width:100%;max-width:var(--col);z-index:60;
+    background:rgba(253,246,241,.93);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border-top:1px solid var(--line);
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+    display:flex;align-items:center;gap:11px;
+  }
+  .paybar .info{flex:1;min-width:0}
+  .paybar .l1{font-size:13.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .paybar .l2{font-size:11.5px;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .paybar a{flex:none;width:auto;padding:12px 20px;font-size:15px}
+
+  /* ---- progress rail: signals "this is short" ---- */
+  .rail{position:fixed;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:6px;pointer-events:none;
+    left:50%;margin-left:calc(var(--col)/2 - 14px)}
+  @media (max-width:470px){ .rail{left:auto;right:6px;margin-left:0} }
+  .rail i{width:4px;height:14px;border-radius:2px;background:rgba(46,33,56,.16);transition:background .25s,height .25s}
+  .rail i.on{background:var(--rose);height:20px}
+  .rail.on-dark i{background:rgba(255,255,255,.25)}
+  .rail.on-dark i.on{background:#F2A6BE}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .deck{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="rail" id="rail" aria-hidden="true"></div>
+
+<div class="deck" id="deck">
+
+  <!-- 1 · HERO -->
+  <section class="card" data-card>
+    <div class="brand"><span class="mark">गृ</span> Garbha Saathi</div>
+    <span class="eyebrow" style="margin-top:20px">Live 2-hour PCOS workshop</span>
+    <h1>Your PCOS.<br><em>Your plan.</em></h1>
+    <p class="lead">Acne, weight, hair fall, irregular cycles — different symptoms, one root cause.</p>
+
+    <div class="video">
+      <img loading="lazy" alt="Isha — 30 second intro"
+        src="https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?w=800&h=640&fit=crop&crop=faces&q=72&auto=format">
+      <div class="play"><span></span></div>
+      <div class="vcap">▶ Isha · 30 sec</div>
+    </div>
+
+    <div class="chips">
+      <span class="chip hot">[ Sun 22 June · 11 AM ]</span>
+      <span class="chip">Live on Zoom</span>
+      <span class="chip">₹149</span>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="cue">
+      <span>Takes 60 seconds — start here</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- 2 · TAP YOUR SYMPTOMS -->
+  <section class="card tint" data-card>
+    <span class="eyebrow">Question 1 of 2</span>
+    <h2>Which of these sound like <em>you?</em></h2>
+    <p class="lead">Tap all that apply.</p>
+
+    <div class="tiles" id="tiles">
+      <button class="tile" data-track="cycle" aria-pressed="false">
+        <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/><circle cx="12" cy="15" r="2"/></svg>
+        <span class="tx">Irregular periods</span>
+        <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+      </button>
+      <button class="tile" data-track="skin" aria-pressed="false">
+        <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".8"/><circle cx="15" cy="13" r=".8"/><circle cx="13.5" cy="9" r=".8"/></svg>
+        <span class="tx">Acne &amp; hair fall</span>
+        <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+      </button>
+      <button class="tile" data-track="metabolic" aria-pressed="false">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M4 8h16l-2 12H6z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>
+        <span class="tx">Weight that won't shift</span>
+        <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+      </button>
+      <button class="tile" data-track="mood" aria-pressed="false">
+        <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 15.5c.8-1 2-1.5 3.5-1.5s2.7.5 3.5 1.5"/><circle cx="9" cy="10" r=".8"/><circle cx="15" cy="10" r=".8"/></svg>
+        <span class="tx">Mood swings, low energy</span>
+        <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+      </button>
+    </div>
+
+    <div class="reveal" id="rev1" hidden>
+      <div class="revealcard">
+        <div class="rk">Not separate problems.</div>
+        <p>What you tapped usually traces back to one hormonal root — which is exactly what we work backwards from.</p>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="cue">
+      <span id="cue2">Pick at least one</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- 3 · THE USP, AS A REALISATION -->
+  <section class="card dark" data-card>
+    <span class="eyebrow">Question 2 of 2</span>
+    <h2>Two women. Same diagnosis. <em>Same plan?</em></h2>
+
+    <div class="people">
+      <div class="person a">
+        <div class="who"><span class="av"></span> Anu</div>
+        <div class="row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg> Irregular cycles</div>
+        <div class="row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg> Acne, oily skin</div>
+        <div class="row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg> Belly weight gain</div>
+        <div class="row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg> Cravings, crashes</div>
+      </div>
+      <div class="person b">
+        <div class="who"><span class="av"></span> Kavya</div>
+        <div class="row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg> Regular cycles</div>
+        <div class="row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg> Clear skin</div>
+        <div class="row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg> Can't lose weight</div>
+        <div class="row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg> Bloating, fatigue</div>
+      </div>
+    </div>
+
+    <div class="yn" id="yn">
+      <button data-v="yes">Yes</button>
+      <button data-v="no">No</button>
+    </div>
+
+    <div class="reveal" id="rev2" hidden>
+      <div class="revealcard">
+        <div class="rk" id="rev2k">Exactly right.</div>
+        <p>Same PCOS. Different bodies. Different needs. A plan that isn't built around <em>your</em> body was never going to fit.</p>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="cue">
+      <span>Here's what we do about it</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- 4 · HER RESULT -->
+  <section class="card" data-card>
+    <span class="eyebrow">Your starting point</span>
+    <h2>Where <em>your</em> plan begins.</h2>
+
+    <div class="focus">
+      <div class="fk">Likely focus area</div>
+      <div class="fname" id="focusName">Cycle &amp; Hormone Balance</div>
+      <div class="ffact" id="focusFact">A long, irregular cycle can still become a healthy one.</div>
+      <div class="fnote">This is a starting point, not a diagnosis. In the workshop you'll build the full plan around it — and we'll tell you honestly if it looks like something other than PCOS.</div>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="cue">
+      <span>What the 2 hours look like</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- 5 · THE 2 HOURS -->
+  <section class="card tint" data-card>
+    <span class="eyebrow">The 2 hours</span>
+    <h2>Understand it, build it, <em>walk out with it.</em></h2>
+
+    <div class="steps">
+      <div class="step">
+        <span class="n">1</span>
+        <div><h3>Understand your body</h3><p>The one root cause, in plain words.</p><div class="mins">45 MIN</div></div>
+      </div>
+      <div class="step">
+        <span class="n">2</span>
+        <div><h3>Build your plan, live</h3><p>Guided step by step. If you can WhatsApp, you can do this.</p><div class="mins">45 MIN</div></div>
+      </div>
+      <div class="step">
+        <span class="n">3</span>
+        <div><h3>Experts tune it, live</h3><p>Real plans sharpened on the call, so you see how it's done.</p><div class="mins">30 MIN</div></div>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="cue">
+      <span>What you keep</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- 6 · WHAT SHE KEEPS -->
+  <section class="card" data-card>
+    <span class="eyebrow">What you walk out with</span>
+    <h2>Your own PCOS Root Plan — <em>not a handout.</em></h2>
+
+    <div class="gets">
+      <div class="get"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>Your likely PCOS type — the root driving your symptoms</span></div>
+      <div class="get"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>A one-page action plan — diet &amp; lifestyle, in your words</span></div>
+      <div class="get"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>The exact tests to get, so a doctor can confirm it</span></div>
+      <div class="get"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>An honest timeline — what shifts in weeks, what takes months</span></div>
+      <div class="get"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>A daily WhatsApp tracker + a free community</span></div>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="cue">
+      <span>Book your seat</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- 7 · PAY -->
+  <section class="card dark" data-card id="book">
+    <span class="eyebrow">Reserve your seat</span>
+    <h2>Build a plan that's <em>actually yours.</em></h2>
+    <p class="lead">Two hours. Real experts. A plan you keep.</p>
+
+    <div class="pricebox">
+      <div class="pricebig"><span class="was">₹499</span>₹149</div>
+      <div class="pricenote">₹149 for this live cohort · [ Sun 22 June · 11 AM ]</div>
+    </div>
+
+    <div class="guarantee">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.4 8-8 9-4.6-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>
+      <span>Nothing to buy after. Doing it yourself is a complete option.</span>
+    </div>
+
+    <div class="spacer"></div>
+    <a class="btn" href="#" id="bookBtn">Reserve my seat <span class="tag">₹149</span></a>
+    <p class="lead" style="text-align:center;font-size:12px;margin-top:10px">Secure payment via Razorpay · UPI, cards &amp; netbanking</p>
+  </section>
+
+</div>
+
+<div class="paybar">
+  <div class="info">
+    <div class="l1">Your PCOS, your plan — ₹149</div>
+    <div class="l2">Live on Zoom · [ Sun 22 June ]</div>
+  </div>
+  <a class="btn" href="#book" id="barBtn">Reserve</a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var TRACKS = {
+    cycle:     ['Cycle & Hormone Balance', 'A long, irregular cycle can still become a healthy one.'],
+    skin:      ['Skin & Hair Wellness',    'PCOS acne shows on the jaw and chin. It’s hormonal, not hygiene.'],
+    metabolic: ['Metabolic & Insulin Health','You can have insulin issues at any weight.'],
+    mood:      ['Mood & Energy Restoration','Mood swings come from hormones, not a character flaw.']
+  };
+
+  var deck  = document.getElementById('deck');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('[data-card]'));
+
+  /* ---- progress rail ---- */
+  var rail = document.getElementById('rail');
+  cards.forEach(function(){ rail.appendChild(document.createElement('i')); });
+  var dots = rail.querySelectorAll('i');
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (!e.isIntersecting) return;
+        var i = cards.indexOf(e.target);
+        for (var k = 0; k < dots.length; k++) dots[k].classList.toggle('on', k === i);
+        rail.classList.toggle('on-dark', e.target.classList.contains('dark'));
+      });
+    }, { root: deck, threshold: 0.55 });
+    cards.forEach(function(c){ io.observe(c); });
+  } else {
+    dots[0].classList.add('on');
+  }
+
+  /* ---- Q1: symptom tiles ---- */
+  var picked = [];
+  var rev1 = document.getElementById('rev1');
+  var cue2 = document.getElementById('cue2');
+  var focusName = document.getElementById('focusName');
+  var focusFact = document.getElementById('focusFact');
+
+  function topTrack(){
+    if (!picked.length) return 'cycle';
+    var counts = {}, best = picked[0], bestN = 0;
+    picked.forEach(function(t){ counts[t] = (counts[t] || 0) + 1; });
+    Object.keys(counts).forEach(function(t){
+      if (counts[t] > bestN) { bestN = counts[t]; best = t; }
+    });
+    return best;
+  }
+
+  function syncResult(){
+    var t = TRACKS[topTrack()];
+    focusName.textContent = t[0];
+    focusFact.textContent = t[1];
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('#tiles .tile'), function(tile){
+    tile.addEventListener('click', function(){
+      var track = tile.getAttribute('data-track');
+      var on = tile.classList.toggle('on');
+      tile.setAttribute('aria-pressed', on ? 'true' : 'false');
+      if (on) picked.push(track);
+      else { var i = picked.indexOf(track); if (i > -1) picked.splice(i, 1); }
+
+      rev1.hidden = !picked.length;
+      cue2.textContent = picked.length ? 'Now the important bit' : 'Pick at least one';
+      syncResult();
+    });
+  });
+
+  /* ---- Q2: the realisation ---- */
+  var rev2 = document.getElementById('rev2');
+  var rev2k = document.getElementById('rev2k');
+  Array.prototype.forEach.call(document.querySelectorAll('#yn button'), function(b){
+    b.addEventListener('click', function(){
+      Array.prototype.forEach.call(document.querySelectorAll('#yn button'), function(x){
+        x.classList.remove('picked');
+      });
+      b.classList.add('picked');
+      // Both answers land on the same truth — "yes" just gets a gentler turn.
+      rev2k.textContent = b.getAttribute('data-v') === 'no' ? 'Exactly right.' : 'Actually — no.';
+      rev2.hidden = false;
+    });
+  });
+
+  /* ---- payment: same fallback contract as the live page ---- */
+  var RAZORPAY_LINK = "";
+  function pay(e){
+    if (e) e.preventDefault();
+    if (RAZORPAY_LINK) { window.location.href = RAZORPAY_LINK; return; }
+    alert('Preview only — payment runs on the live page.');
+  }
+  document.getElementById('bookBtn').addEventListener('click', pay);
+})();
+</script>
+</body>
+</html>
