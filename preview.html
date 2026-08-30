@@ -97,15 +97,16 @@
 
   /* ---- persona compare ---- */
   .people{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
-  /* White card inside a dark section — it must set its own ink, or it
-     inherits the section's white text and the names vanish. */
-  .person{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:15px;padding:13px 12px;box-shadow:var(--shadow)}
-  .person .who{display:flex;align-items:center;gap:7px;font-family:var(--serif);font-weight:600;font-size:15px;padding-bottom:9px;border-bottom:1px solid var(--line-soft);margin-bottom:9px}
+  /* Deliberately flat/translucent, not a white bordered card like .tile —
+     .tile is tappable one card earlier, so a person card in the same
+     white-card-with-shadow shape reads as tappable too, and it isn't. */
+  .person{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:15px;padding:13px 12px}
+  .person .who{display:flex;align-items:center;gap:7px;font-family:var(--serif);font-weight:600;font-size:15px;padding-bottom:9px;border-bottom:1px solid rgba(255,255,255,.14);margin-bottom:9px}
   .person .av{width:26px;height:26px;border-radius:50%;flex:none}
   .person.a .av{background:linear-gradient(140deg,var(--rose),var(--marigold))}
   .person.b .av{background:linear-gradient(140deg,var(--plum),var(--sage))}
-  .person .row{display:flex;align-items:flex-start;gap:7px;font-size:12.5px;color:var(--ink-soft);padding:4px 0;line-height:1.35}
-  .person .row svg{width:13px;height:13px;flex:none;margin-top:2px;stroke:var(--ink-soft);fill:none;stroke-width:2;opacity:.75}
+  .person .row{display:flex;align-items:flex-start;gap:7px;font-size:12.5px;color:rgba(255,255,255,.68);padding:4px 0;line-height:1.35}
+  .person .row svg{width:13px;height:13px;flex:none;margin-top:2px;stroke:rgba(255,255,255,.68);fill:none;stroke-width:2;opacity:.9}
 
   /* ---- yes/no ---- */
   .yn{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
@@ -146,6 +147,40 @@
   .gets{display:flex;flex-direction:column;gap:9px;margin-top:18px}
   .get{display:flex;gap:10px;align-items:flex-start;font-size:14.5px}
   .get svg{width:19px;height:19px;flex:none;margin-top:2px;stroke:var(--sage);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+  /* ---- testimonials ---- */
+  .tests{display:flex;flex-direction:column;gap:12px;margin-top:18px}
+  .tcard{background:#fff;border-radius:14px;padding:15px;box-shadow:var(--shadow)}
+  .tcard .qt{font-size:13.5px;line-height:1.45;color:var(--ink)}
+  .tcard .qt em{color:var(--rose-deep)}
+  .tcard .stars{color:var(--marigold);font-size:12px;letter-spacing:1px;margin-top:9px}
+  .tcard .who{display:flex;align-items:center;gap:9px;margin-top:10px}
+  .tcard .who img{width:32px;height:32px;border-radius:50%;object-fit:cover;flex:none}
+  .tcard .who .n{font-size:12.5px;font-weight:700}
+  .tcard .who .s{font-size:11px;color:var(--ink-soft)}
+
+  /* ---- checkout sheet: collects name/WhatsApp/email in one place before
+     Razorpay opens, same contract as index.html's sheet ---- */
+  .sheet-ov{position:fixed;inset:0;z-index:120;display:flex;align-items:flex-end;justify-content:center;background:rgba(46,33,56,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+  .sheet-ov[hidden]{display:none}
+  .sheet-card{width:100%;max-width:var(--col);background:var(--cream);border-radius:22px 22px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));box-shadow:var(--shadow-lg);animation:sheetUp .3s cubic-bezier(.2,.8,.2,1)}
+  @keyframes sheetUp{from{transform:translateY(14px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .sheet-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .sheet-head h3{font-family:var(--serif);font-size:20px;font-weight:600;color:var(--ink)}
+  .sheet-head .sh-sub{font-size:12.5px;color:var(--ink-soft);margin-top:3px}
+  .sheet-x{flex:none;width:30px;height:30px;border-radius:50%;border:none;background:rgba(46,33,56,.07);color:var(--ink);font-size:17px;line-height:1;cursor:pointer;font-family:var(--sans)}
+  .sheet-fields{display:grid;gap:10px;margin-top:16px}
+  .sheet-fields label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:5px}
+  .sheet-fields input{width:100%;font-family:var(--sans);font-size:16px;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px 13px}
+  .sheet-fields input:focus{outline:none;border-color:var(--rose)}
+  .sheet-focus{display:flex;align-items:center;gap:8px;background:var(--rose-tint);border-radius:11px;padding:9px 12px;margin-top:14px;font-size:12.5px;font-weight:600;color:var(--rose-deep)}
+  .sheet-focus[hidden]{display:none}
+  .sheet-err{font-size:12.5px;font-weight:600;color:var(--rose-deep);margin-top:10px;min-height:16px}
+  .sheet-card .btn{margin-top:12px}
+  .sheet-card .btn.busy{opacity:.65;pointer-events:none}
+  .sheet-trust{text-align:center;font-size:11.5px;color:var(--ink-soft);margin-top:9px}
+  .paid-mark{width:52px;height:52px;border-radius:50%;margin:0 auto 12px;background:var(--sage-tint);display:grid;place-items:center}
+  .paid-mark svg{width:26px;height:26px;stroke:var(--sage);fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 
   /* ---- price ---- */
   .pricebox{text-align:center;margin-top:20px}
@@ -352,12 +387,42 @@
 
     <div class="spacer"></div>
     <div class="cue">
+      <span>What women who did this say</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- 5 · TESTIMONIALS -->
+  <section class="card" data-card>
+    <span class="eyebrow">From women we've helped</span>
+    <h2>Real words, <em>real people.</em></h2>
+
+    <div class="tests">
+      <div class="tcard">
+        <div class="qt">She actually explained <em>why</em> my cycles were off, instead of just handing me a diet. First time it made sense.</div>
+        <div class="stars">★★★★★</div>
+        <div class="who"><img loading="lazy" alt="" src="https://randomuser.me/api/portraits/women/68.jpg"><div><div class="n">[ Name ]</div><div class="s">Bhopal · past client</div></div></div>
+      </div>
+      <div class="tcard">
+        <div class="qt">No pressure to buy anything. I left with something I could actually follow at home.</div>
+        <div class="stars">★★★★★</div>
+        <div class="who"><img loading="lazy" alt="" src="https://randomuser.me/api/portraits/women/65.jpg"><div><div class="n">[ Name ]</div><div class="s">Past client</div></div></div>
+      </div>
+      <div class="tcard">
+        <div class="qt">They told me honestly it might be my thyroid, not PCOS. I trusted them more for it.</div>
+        <div class="stars">★★★★★</div>
+        <div class="who"><img loading="lazy" alt="" src="https://randomuser.me/api/portraits/women/90.jpg"><div><div class="n">[ Name ]</div><div class="s">Past client</div></div></div>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="cue">
       <span>What the 2 hours look like</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
     </div>
   </section>
 
-  <!-- 5 · THE 2 HOURS -->
+  <!-- 6 · THE 2 HOURS -->
   <section class="card tint" data-card>
     <span class="eyebrow">The 2 hours</span>
     <h2>Understand it, build it, <em>walk out with it.</em></h2>
@@ -384,7 +449,7 @@
     </div>
   </section>
 
-  <!-- 6 · WHAT SHE KEEPS -->
+  <!-- 7 · WHAT SHE KEEPS -->
   <section class="card" data-card>
     <span class="eyebrow">What you walk out with</span>
     <h2>Your own PCOS Root Plan — <em>not a handout.</em></h2>
@@ -404,7 +469,7 @@
     </div>
   </section>
 
-  <!-- 7 · PAY -->
+  <!-- 8 · PAY -->
   <section class="card dark" data-card id="book">
     <span class="eyebrow">Reserve your seat</span>
     <h2>Build a plan that's <em>actually yours.</em></h2>
@@ -421,10 +486,34 @@
     </div>
 
     <div class="spacer"></div>
-    <a class="btn" href="#" id="bookBtn">Reserve my seat <span class="tag">₹149</span></a>
+    <a class="btn" href="#" data-checkout>Reserve my seat <span class="tag">₹149</span></a>
     <p class="lead" style="text-align:center;font-size:12px;margin-top:10px">Secure payment via Razorpay · UPI, cards &amp; netbanking</p>
   </section>
 
+</div>
+
+<div class="sheet-ov" id="checkoutSheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="sheet-card" id="sheetCard">
+    <div class="sheet-head">
+      <div>
+        <h3 id="sheetTitle">Reserve your seat</h3>
+        <div class="sh-sub">Live 2-hour PCOS workshop · ₹149</div>
+      </div>
+      <button class="sheet-x" id="sheetClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="sheet-focus" id="sheetFocus" hidden>
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      <span>Your focus: <b id="sheetFocusName"></b></span>
+    </div>
+    <div class="sheet-fields">
+      <div><label for="ckName">Your name</label><input id="ckName" type="text" autocomplete="name" placeholder="Priya Sharma"></div>
+      <div><label for="ckPhone">WhatsApp number</label><input id="ckPhone" type="tel" autocomplete="tel" inputmode="numeric" placeholder="98765 43210"></div>
+      <div><label for="ckEmail">Email</label><input id="ckEmail" type="email" autocomplete="email" placeholder="you@email.com"></div>
+    </div>
+    <div class="sheet-err" id="sheetErr"></div>
+    <a class="btn" href="#" id="sheetPay">Pay <span class="tag">₹149</span></a>
+    <div class="sheet-trust">Secure payment via Razorpay · UPI, cards &amp; netbanking</div>
+  </div>
 </div>
 
 <div class="paybar">
@@ -432,7 +521,7 @@
     <div class="l1">Your PCOS, your plan — ₹149</div>
     <div class="l2">Live on Zoom · [ Sun 22 June ]</div>
   </div>
-  <a class="btn" href="#book" id="barBtn">Reserve</a>
+  <a class="btn" href="#" data-checkout>Reserve</a>
 </div>
 
 <script>
@@ -535,14 +624,140 @@
     });
   });
 
-  /* ---- payment: same fallback contract as the live page ---- */
+  /* ---- payment: one sheet collects name/WhatsApp/email, then Razorpay
+     opens over the page — same contract as index.html's checkout. ---- */
   var RAZORPAY_LINK = "";
-  function pay(e){
-    if (e) e.preventDefault();
-    if (RAZORPAY_LINK) { window.location.href = RAZORPAY_LINK; return; }
-    alert('Preview only — payment runs on the live page.');
+
+  var sheet=document.getElementById('checkoutSheet'),
+      sheetCard=document.getElementById('sheetCard'),
+      sheetErr=document.getElementById('sheetErr'),
+      sheetPay=document.getElementById('sheetPay'),
+      sheetFocus=document.getElementById('sheetFocus'),
+      sheetFocusName=document.getElementById('sheetFocusName'),
+      ckName=document.getElementById('ckName'),
+      ckPhone=document.getElementById('ckPhone'),
+      ckEmail=document.getElementById('ckEmail'),
+      lastFocused=null;
+
+  function setErr(msg){ sheetErr.textContent = msg || ''; }
+  function setBusy(on,label){
+    sheetPay.classList.toggle('busy', on);
+    if (on) sheetPay.textContent = label;
   }
-  document.getElementById('bookBtn').addEventListener('click', pay);
+  function resetPayBtn(){
+    sheetPay.classList.remove('busy');
+    sheetPay.innerHTML = 'Pay <span class="tag">₹149</span>';
+  }
+
+  function openCheckout(e){
+    if (e) e.preventDefault();
+    lastFocused = document.activeElement;
+    setErr(''); resetPayBtn();
+    if (picked.length) {
+      sheetFocusName.textContent = TRACKS[topTrack()][0];
+      sheetFocus.hidden = false;
+    } else {
+      sheetFocus.hidden = true;
+    }
+    sheet.hidden = false;
+    setTimeout(function(){ ckName.focus(); }, 60);
+  }
+  function closeCheckout(){
+    sheet.hidden = true;
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+
+  document.getElementById('sheetClose').addEventListener('click', closeCheckout);
+  sheet.addEventListener('click', function(e){ if (e.target === sheet) closeCheckout(); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && !sheet.hidden) closeCheckout();
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-checkout]'), function(el){
+    el.addEventListener('click', openCheckout);
+  });
+
+  /* Razorpay's script is only fetched once someone actually opens checkout. */
+  var rzpLoading = null;
+  function loadRazorpay(){
+    if (window.Razorpay) return Promise.resolve(true);
+    if (rzpLoading) return rzpLoading;
+    rzpLoading = new Promise(function(resolve){
+      var s = document.createElement('script');
+      s.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      s.onload = function(){ resolve(true); };
+      s.onerror = function(){ resolve(false); };
+      document.head.appendChild(s);
+    });
+    return rzpLoading;
+  }
+
+  function fallbackOrExplain(){
+    if (RAZORPAY_LINK) { window.location.href = RAZORPAY_LINK; return; }
+    setErr('Payment isn’t switched on yet. Please message us on WhatsApp to book.');
+    resetPayBtn();
+  }
+
+  function showPaid(){
+    sheetCard.innerHTML =
+      '<div class="paid-mark"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>'+
+      '<h3 style="font-family:var(--serif);font-size:20px;text-align:center;color:var(--ink)">Your seat is booked</h3>'+
+      '<p style="text-align:center;font-size:14px;margin-top:8px">We’ll send the Zoom link and joining details on WhatsApp and email.</p>'+
+      '<a class="btn" href="#" id="paidDone" style="margin-top:16px">Done</a>';
+    document.getElementById('paidDone').addEventListener('click', function(e){
+      e.preventDefault(); closeCheckout();
+    });
+  }
+
+  sheetPay.addEventListener('click', function(e){
+    e.preventDefault();
+    if (sheetPay.classList.contains('busy')) return;
+
+    var name = ckName.value.trim(), phone = ckPhone.value.trim(), email = ckEmail.value.trim();
+    if (!name) return setErr('Please enter your name.');
+    if (phone.replace(/\D/g,'').length < 10) return setErr('Please enter a valid phone number.');
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return setErr('Please enter a valid email address.');
+
+    setErr(''); setBusy(true, 'Starting…');
+    var track = picked.length ? topTrack() : '';
+
+    fetch('/api/create-order', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({name:name, email:email, phone:phone, track:track, language:'en'})
+    }).then(function(r){
+      return r.json().then(function(d){ return {ok:r.ok, status:r.status, data:d}; });
+    }).then(function(res){
+      if (res.status===503 || res.status===404 || res.status===405) { fallbackOrExplain(); return; }
+      if (!res.ok) { setErr(res.data.error || 'Something went wrong. Please try again.'); resetPayBtn(); return; }
+
+      return loadRazorpay().then(function(loaded){
+        if (!loaded) { fallbackOrExplain(); return; }
+        resetPayBtn();
+        var rzp = new window.Razorpay({
+          key: res.data.keyId, order_id: res.data.orderId, amount: res.data.amount, currency: res.data.currency,
+          name: 'Garbha Saathi', description: 'Live 2-hour PCOS workshop',
+          prefill: {name:name, email:email, contact:phone}, theme: {color:'#C9436A'},
+          handler: function(resp){
+            setBusy(true, 'Confirming…');
+            fetch('/api/verify-payment', {
+              method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(resp)
+            }).then(function(r){ return r.json(); }).then(function(v){
+              if (v && v.verified) { showPaid(); }
+              else { setErr('We couldn’t confirm that payment. If money was deducted, message us on WhatsApp — we’ll sort it out.'); resetPayBtn(); }
+            }).catch(function(){
+              setErr('We couldn’t confirm that payment. If money was deducted, message us on WhatsApp — we’ll sort it out.'); resetPayBtn();
+            });
+          },
+          modal: {ondismiss:function(){ resetPayBtn(); }}
+        });
+        rzp.on('payment.failed', function(){
+          setErr('That payment didn’t go through. Please try again.'); resetPayBtn();
+        });
+        rzp.open();
+      });
+    }).catch(function(){
+      fallbackOrExplain();
+    });
+  });
 })();
 </script>
 </body>
