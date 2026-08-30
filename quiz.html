@@ -108,8 +108,11 @@
   .trustline{ display:flex; align-items:center; justify-content:center; gap:6px; font-size:11.5px; font-weight:700; color:var(--charcoal); opacity:.5; margin-top:10px; }
   .trustline svg{ width:12px; height:12px; fill:var(--charcoal); }
 
-  .personagrid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
-  .personacard{ border-radius:18px; padding:12px; background:var(--paper); text-align:center; border:1.5px solid rgba(59,52,44,0.08); }
+  .personagrid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; position:relative; }
+  .personagrid::after{ content:""; position:absolute; top:4px; bottom:4px; left:50%; width:1px; background:rgba(59,52,44,0.1); }
+  /* Deliberately not a bordered var(--paper) box like .tfbtn below — that
+     shape means "tap me" one row down, and these two cards aren't tappable. */
+  .personacard{ border-radius:18px; padding:12px 10px 4px; text-align:center; }
   .personacard .mascot{ margin:0 auto 6px; }
   .personatag{ display:inline-block; font-family:var(--sans); font-weight:800; font-size:10px; letter-spacing:.04em; text-transform:uppercase; color:var(--paper); padding:5px 10px; border-radius:999px; margin-bottom:8px; }
   .persona-a .personatag{ background:var(--terracotta); }
@@ -187,6 +190,7 @@
   .herovideo .vcap{ position:absolute; left:10px; bottom:10px; background:rgba(59,52,44,.78); color:var(--paper); font-size:10.5px; font-weight:700; padding:4px 9px; border-radius:7px; }
 
   /* ---- testimonials ---- */
+  .testihead{ font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--charcoal-dim); text-align:center; margin:24px 0 10px; }
   .testicard{ background:var(--paper); border-radius:16px; padding:15px 16px; margin-bottom:10px; border:1.5px solid rgba(59,52,44,0.08); text-align:left; }
   .testicard .stars{ color:var(--mustard); font-size:13px; letter-spacing:1px; margin-bottom:6px; }
   .testicard .qt{ font-size:14px; line-height:1.45; color:var(--charcoal); font-style:italic; }
@@ -206,12 +210,49 @@
   .btn.busy{ opacity:.6; pointer-events:none; }
   .paidmark{ width:56px; height:56px; border-radius:50%; margin:0 auto 14px; background:var(--mint-pastel); display:flex; align-items:center; justify-content:center; }
   .paidmark svg{ width:28px; height:28px; stroke:var(--olive); fill:none; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* ---- checkout sheet: a popup over the offer screen, collecting name/
+     WhatsApp/email in one place before Razorpay opens — same contract as
+     index.html's checkout, instead of a separate full wizard screen. ---- */
+  .sheet-ov{ position:fixed; inset:0; z-index:200; display:flex; align-items:flex-end; justify-content:center; background:rgba(59,52,44,.55); }
+  .sheet-ov[hidden]{ display:none; }
+  .sheet-card{ width:100%; max-width:var(--maxw); max-height:88vh; overflow-y:auto; background:var(--cream); border-radius:22px 22px 0 0; padding:22px 20px calc(22px + env(safe-area-inset-bottom)); box-shadow:0 -14px 40px rgba(0,0,0,.22); animation:sheetUp .3s cubic-bezier(.2,.8,.2,1); }
+  @keyframes sheetUp{ from{ transform:translateY(14px); opacity:0; } to{ transform:translateY(0); opacity:1; } }
+  .sheet-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+  .sheet-head h3{ font-family:var(--serif); font-size:20px; font-weight:700; color:var(--charcoal); margin:0; }
+  .sheet-head .sh-sub{ font-size:12.5px; color:var(--charcoal-dim); margin-top:3px; }
+  .sheet-x{ flex:none; width:30px; height:30px; border-radius:50%; border:none; background:rgba(59,52,44,.08); color:var(--charcoal); font-size:17px; line-height:1; cursor:pointer; font-family:var(--sans); }
+  .sheet-focus{ display:flex; align-items:center; gap:8px; background:var(--coral-pastel); border-radius:11px; padding:9px 12px; margin:14px 0 4px; font-size:12.5px; font-weight:700; color:var(--terracotta-dim); }
+  .sheet-focus[hidden]{ display:none; }
+  .sheet-fields{ margin-top:14px; }
 </style>
 </head>
 <body>
   <div class="device" id="device">
     <div class="topbar" id="topbar"></div>
     <div class="stage" id="stage"></div>
+  </div>
+
+  <div class="sheet-ov" id="checkoutSheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <div class="sheet-card" id="sheetCard">
+      <div class="sheet-head">
+        <div>
+          <h3 id="sheetTitle">Reserve your seat</h3>
+          <div class="sh-sub">₹149 · live 2-hour workshop</div>
+        </div>
+        <button class="sheet-x" id="sheetClose" aria-label="Close">&times;</button>
+      </div>
+      <div class="sheet-focus" id="sheetFocus" hidden>
+        <span>Your focus: <b id="sheetFocusName"></b></span>
+      </div>
+      <div class="sheet-fields">
+        <div class="field"><label>Your name</label><input type="text" id="ckName" placeholder="Priya Sharma" autocomplete="name"></div>
+        <div class="field"><label>WhatsApp number</label><input type="tel" id="ckPhone" placeholder="98765 43210" inputmode="numeric" autocomplete="tel"></div>
+        <div class="field"><label>Email</label><input type="email" id="ckEmail" placeholder="you@email.com" autocomplete="email"></div>
+      </div>
+      <div class="payerr" id="sheetErr"></div>
+      <button class="btn" id="sheetPay">Pay ₹149</button>
+    </div>
   </div>
 
 <script>
@@ -376,7 +417,7 @@
 
   var order = ['welcome','age','knowledge','symptoms','goal','fertility','doctor',
     'quizA','quizB','quizC','quizD','quizE','finale','payoff','email',
-    'testimonials','offer','payment','success'];
+    'offer','success'];
   var fertilityIdx = order.indexOf('fertility');
   var QUESTION_SCREENS = ['age','knowledge','symptoms','goal','fertility','doctor','quizA','quizB','quizC','quizD','quizE'];
   var SKIPPABLE = ['fertility','doctor'];
@@ -415,6 +456,88 @@
   function goTo(i){ state.i=i; renderTopbar(); renderScreen(); }
   function next(){ var i=state.i+1; while(i<order.length && isSkippableIdx(i)) i++; goTo(i); }
   function goBack(){ var i=state.i-1; while(i>=0 && isSkippableIdx(i)) i--; if(i>=0) goTo(i); }
+
+  // Checkout sheet: a popup over the 'offer' screen collecting name/WhatsApp/
+  // email in one place before Razorpay opens, instead of a separate wizard
+  // screen — same contract as index.html's checkout.
+  var sheet=document.getElementById('checkoutSheet'),
+      sheetErr=document.getElementById('sheetErr'),
+      sheetPay=document.getElementById('sheetPay'),
+      sheetFocus=document.getElementById('sheetFocus'),
+      sheetFocusName=document.getElementById('sheetFocusName'),
+      ckName=document.getElementById('ckName'),
+      ckPhone=document.getElementById('ckPhone'),
+      ckEmail=document.getElementById('ckEmail');
+
+  function setSheetErr(msg){ sheetErr.textContent = msg || ''; }
+  function setSheetBusy(on,label){
+    sheetPay.classList.toggle('busy', on);
+    if(on) sheetPay.textContent = label;
+  }
+  function resetSheetBtn(){ sheetPay.classList.remove('busy'); sheetPay.textContent = 'Pay ₹149'; }
+  function fallbackOrExplain(){
+    if(RAZORPAY_LINK){ window.location.href = RAZORPAY_LINK; return; }
+    setSheetErr('Payment isn’t switched on yet. Message us on WhatsApp to book.');
+    resetSheetBtn();
+  }
+
+  function openCheckout(){
+    setSheetErr(''); resetSheetBtn();
+    ckName.value = state.answers.name || '';
+    ckPhone.value = state.answers.phone || '';
+    ckEmail.value = state.answers.email || '';
+    var track = TRACKS[state.answers.goal];
+    if(track){ sheetFocusName.textContent = track.title; sheetFocus.hidden = false; }
+    else { sheetFocus.hidden = true; }
+    sheet.hidden = false;
+    setTimeout(function(){ ckName.focus(); }, 60);
+  }
+  function closeCheckout(){ sheet.hidden = true; }
+
+  document.getElementById('sheetClose').addEventListener('click', closeCheckout);
+  sheet.addEventListener('click', function(e){ if(e.target===sheet) closeCheckout(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !sheet.hidden) closeCheckout(); });
+
+  sheetPay.addEventListener('click', function(){
+    if(sheetPay.classList.contains('busy')) return;
+    var nm=ckName.value.trim(), ph=ckPhone.value.trim(), em=ckEmail.value.trim();
+    if(!nm) return setSheetErr('Please enter your name.');
+    if(ph.replace(/\D/g,'').length<10) return setSheetErr('Please enter a valid phone number.');
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return setSheetErr('Please enter a valid email address.');
+    setSheetErr(''); setSheetBusy(true,'Starting…');
+    state.answers.name=nm; state.answers.phone=ph; state.answers.email=em;
+
+    fetch('/api/create-order',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name:nm,email:em,phone:ph,track:state.answers.goal||'',language:'en'})
+    }).then(function(r){ return r.json().then(function(d){ return {ok:r.ok,status:r.status,data:d}; }); })
+    .then(function(res){
+      if(res.status===503||res.status===404||res.status===405){ fallbackOrExplain(); return; }
+      if(!res.ok){ setSheetErr(res.data.error||'Something went wrong. Please try again.'); resetSheetBtn(); return; }
+      return loadRazorpay().then(function(loaded){
+        if(!loaded){ fallbackOrExplain(); return; }
+        resetSheetBtn();
+        var rzp=new window.Razorpay({
+          key:res.data.keyId, order_id:res.data.orderId, amount:res.data.amount, currency:res.data.currency,
+          name:'Garbha Saathi', description:'Live 2-hour PCOS workshop',
+          prefill:{name:nm,email:em,contact:ph}, theme:{color:'#C1704A'},
+          handler:function(resp){
+            setSheetBusy(true,'Confirming…');
+            fetch('/api/verify-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(resp)})
+              .then(function(r){ return r.json(); })
+              .then(function(v){
+                if(v&&v.verified){ closeCheckout(); next(); }
+                else{ setSheetErr('We couldn’t confirm that payment. If money was deducted, message us on WhatsApp.'); resetSheetBtn(); }
+              })
+              .catch(function(){ setSheetErr('We couldn’t confirm that payment. If money was deducted, message us on WhatsApp.'); resetSheetBtn(); });
+          },
+          modal:{ondismiss:function(){ resetSheetBtn(); }}
+        });
+        rzp.on('payment.failed',function(){ setSheetErr('That payment didn’t go through. Please try again.'); resetSheetBtn(); });
+        rzp.open();
+      });
+    }).catch(function(){ fallbackOrExplain(); });
+  });
 
   function renderTopbar(){
     var name = order[state.i];
@@ -824,9 +947,6 @@
       el.appendChild(mascotHero(track.phase));
       var h2=document.createElement('h1'); h2.className='q'; h2.textContent='So, here\u2019s your path'; el.appendChild(h2);
       var rl=document.createElement('div'); rl.className='recaplist'; el.appendChild(rl);
-      var save=document.createElement('button'); save.className='btn'; save.textContent='Save my spot'; save.onclick=next;
-      stage.appendChild(el);
-      el.appendChild(save);
       var tones=['ric-coral','ric-moss','ric-berry','ric-sky'];
       rows.forEach(function(r,idx){
         var row=document.createElement('div'); row.className='recaprow';
@@ -837,6 +957,24 @@
         row.querySelector('.rvalue').textContent=r.value;
         rl.appendChild(row);
       });
+
+      var th=document.createElement('div'); th.className='testihead'; th.textContent='From women we\u2019ve helped'; el.appendChild(th);
+      var quotes = [
+        {q:'She actually explained why my cycles were off, instead of just handing me a diet. First time it made sense.', who:'Bhopal \u00b7 past client'},
+        {q:'No pressure to buy anything. I left with something I could actually follow at home.', who:'Past client'},
+        {q:'They told me honestly it might be my thyroid, not PCOS. I trusted them more for it.', who:'Past client'}
+      ];
+      quotes.forEach(function(t){
+        var c=document.createElement('div'); c.className='testicard';
+        c.innerHTML='<div class="stars">\u2605\u2605\u2605\u2605\u2605</div><div class="qt"></div><div class="who"></div>';
+        c.querySelector('.qt').textContent='\u201c'+t.q+'\u201d';
+        c.querySelector('.who').textContent='[ Name ] \u00b7 '+t.who;
+        el.appendChild(c);
+      });
+
+      var save=document.createElement('button'); save.className='btn'; save.textContent='Save my spot'; save.onclick=next;
+      el.appendChild(save);
+      stage.appendChild(el);
       return;
     }
 
@@ -856,28 +994,6 @@
         state.answers.email=v||null; next();
       };
       el.querySelector('#skipEmail').onclick=function(){ state.answers.email=null; next(); };
-      return;
-    }
-
-    if(name==='testimonials'){
-      el = screenWrap('question');
-      el.innerHTML = '<h1 class="q">From women we\'ve helped</h1>';
-      var quotes = [
-        {q:'She actually explained why my cycles were off, instead of just handing me a diet. First time it made sense.', who:'Bhopal \u00b7 past client'},
-        {q:'No pressure to buy anything. I left with something I could actually follow at home.', who:'Past client'},
-        {q:'They told me honestly it might be my thyroid, not PCOS. I trusted them more for it.', who:'Past client'}
-      ];
-      quotes.forEach(function(t){
-        var c=document.createElement('div'); c.className='testicard';
-        c.innerHTML='<div class="stars">\u2605\u2605\u2605\u2605\u2605</div><div class="qt"></div><div class="who"></div>';
-        c.querySelector('.qt').textContent='\u201c'+t.q+'\u201d';
-        c.querySelector('.who').textContent='[ Name ] \u00b7 '+t.who;
-        el.appendChild(c);
-      });
-      var sp9=document.createElement('div'); sp9.className='spacer'; el.appendChild(sp9);
-      var cont=document.createElement('button'); cont.className='btn'; cont.textContent='Continue'; cont.onclick=next;
-      el.appendChild(cont);
-      stage.appendChild(el);
       return;
     }
 
@@ -901,81 +1017,9 @@
       });
       el.appendChild(ol);
       var sp10=document.createElement('div'); sp10.className='spacer'; el.appendChild(sp10);
-      var goPay=document.createElement('button'); goPay.className='btn'; goPay.textContent='Continue to payment'; goPay.onclick=next;
+      var goPay=document.createElement('button'); goPay.className='btn'; goPay.textContent='Continue to payment'; goPay.onclick=openCheckout;
       el.appendChild(goPay);
       stage.appendChild(el);
-      return;
-    }
-
-    if(name==='payment'){
-      el = screenWrap('question');
-      el.innerHTML =
-        '<h1 class="q">Reserve your seat</h1><p class="sub">\u20b9149 \u00b7 live 2-hour workshop</p>'+
-        '<div class="field"><label>Your name</label><input type="text" id="payName" placeholder="Priya Sharma" autocomplete="name"></div>'+
-        '<div class="field"><label>WhatsApp number</label><input type="tel" id="payPhone" placeholder="98765 43210" inputmode="numeric" autocomplete="tel"></div>'+
-        '<div class="field"><label>Email</label><input type="email" id="payEmail" placeholder="you@email.com" autocomplete="email"></div>'+
-        '<div class="payerr" id="payErr"></div>'+
-        '<div class="spacer"></div>'+
-        '<button class="btn" id="payBtn">Pay \u20b9149</button>';
-      stage.appendChild(el);
-
-      var nameEl=el.querySelector('#payName'), phoneEl=el.querySelector('#payPhone'),
-          emailEl=el.querySelector('#payEmail'), errEl=el.querySelector('#payErr'),
-          payBtn=el.querySelector('#payBtn');
-      if(state.answers.email) emailEl.value = state.answers.email;
-
-      function setErr(msg){ errEl.textContent = msg || ''; }
-      function setBusy(on, label){
-        payBtn.classList.toggle('busy', on);
-        if(on) payBtn.textContent = label;
-      }
-      function resetBtn(){ payBtn.classList.remove('busy'); payBtn.textContent = 'Pay \u20b9149'; }
-      function fallbackOrExplain(){
-        if(RAZORPAY_LINK){ window.location.href = RAZORPAY_LINK; return; }
-        setErr('Payment isn\u2019t switched on yet. Message us on WhatsApp to book.');
-        resetBtn();
-      }
-
-      payBtn.onclick=function(){
-        if(payBtn.classList.contains('busy')) return;
-        var nm=nameEl.value.trim(), ph=phoneEl.value.trim(), em=emailEl.value.trim();
-        if(!nm) return setErr('Please enter your name.');
-        if(ph.replace(/\D/g,'').length<10) return setErr('Please enter a valid phone number.');
-        if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return setErr('Please enter a valid email address.');
-        setErr(''); setBusy(true,'Starting\u2026');
-        state.answers.name=nm; state.answers.phone=ph; state.answers.email=em;
-
-        fetch('/api/create-order',{
-          method:'POST', headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({name:nm,email:em,phone:ph,track:state.answers.goal||'',language:'en'})
-        }).then(function(r){ return r.json().then(function(d){ return {ok:r.ok,status:r.status,data:d}; }); })
-        .then(function(res){
-          if(res.status===503||res.status===404||res.status===405){ fallbackOrExplain(); return; }
-          if(!res.ok){ setErr(res.data.error||'Something went wrong. Please try again.'); resetBtn(); return; }
-          return loadRazorpay().then(function(loaded){
-            if(!loaded){ fallbackOrExplain(); return; }
-            resetBtn();
-            var rzp=new window.Razorpay({
-              key:res.data.keyId, order_id:res.data.orderId, amount:res.data.amount, currency:res.data.currency,
-              name:'Garbha Saathi', description:'Live 2-hour PCOS workshop',
-              prefill:{name:nm,email:em,contact:ph}, theme:{color:'#C1704A'},
-              handler:function(resp){
-                setBusy(true,'Confirming\u2026');
-                fetch('/api/verify-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(resp)})
-                  .then(function(r){ return r.json(); })
-                  .then(function(v){
-                    if(v&&v.verified){ next(); }
-                    else{ setErr('We couldn\u2019t confirm that payment. If money was deducted, message us on WhatsApp.'); resetBtn(); }
-                  })
-                  .catch(function(){ setErr('We couldn\u2019t confirm that payment. If money was deducted, message us on WhatsApp.'); resetBtn(); });
-              },
-              modal:{ondismiss:function(){ resetBtn(); }}
-            });
-            rzp.on('payment.failed',function(){ setErr('That payment didn\u2019t go through. Please try again.'); resetBtn(); });
-            rzp.open();
-          });
-        }).catch(function(){ fallbackOrExplain(); });
-      };
       return;
     }
 
