@@ -132,8 +132,8 @@
   .field input{ width:100%;background:none;border:none;outline:none;font-size:16px;color:var(--charcoal);font-family:var(--sans);font-weight:600; }
   .field input::placeholder{ color:rgba(59,52,44,0.4); }
 
-  .tfrow{ display:flex; gap:12px; margin:8px 0 4px; }
-  .tfbtn{ flex:1; padding:20px 10px; min-height:100px; display:flex; align-items:center; justify-content:center; border-radius:18px; border:2px solid rgba(59,52,44,0.14); background:var(--paper); font-family:var(--serif); font-weight:800; font-size:22px; color:var(--charcoal); cursor:pointer; transition:transform .15s ease, border-color .15s ease, background .15s ease; position:relative; }
+  .tfrow{ display:flex; flex-direction:column; gap:12px; margin:8px 0 4px; }
+  .tfbtn{ padding:20px 10px; min-height:84px; display:flex; align-items:center; justify-content:center; border-radius:18px; border:2px solid rgba(59,52,44,0.14); background:var(--paper); font-family:var(--serif); font-weight:800; font-size:22px; color:var(--charcoal); cursor:pointer; transition:transform .15s ease, border-color .15s ease, background .15s ease; position:relative; }
   .tfbtn:active{ transform:scale(.96); }
   .tfbtn.picked{ border-color:var(--terracotta); background:var(--coral-pastel); }
   .tfbtn.locked{ pointer-events:none; }
@@ -416,8 +416,7 @@
   ];
 
   var order = ['welcome','age','knowledge','symptoms','goal','fertility','doctor',
-    'quizA','quizB','quizC','quizD','quizE','finale','payoff','email',
-    'offer','success'];
+    'quizA','quizB','quizC','quizD','quizE','finale','payoff','success'];
   var fertilityIdx = order.indexOf('fertility');
   var QUESTION_SCREENS = ['age','knowledge','symptoms','goal','fertility','doctor','quizA','quizB','quizC','quizD','quizE'];
   var SKIPPABLE = ['fertility','doctor'];
@@ -972,34 +971,6 @@
         el.appendChild(c);
       });
 
-      var save=document.createElement('button'); save.className='btn'; save.textContent='Save my spot'; save.onclick=next;
-      el.appendChild(save);
-      stage.appendChild(el);
-      return;
-    }
-
-    if(name==='email'){
-      var track2 = TRACKS[state.answers.goal] || TRACKS.cycle;
-      el = screenWrap('question');
-      el.innerHTML =
-        '<h1 class="q">Where should we send it?</h1>'+
-        '<p class="sub">Your '+track2.title+' guide + invite.</p>'+
-        '<div class="field"><label>Email</label><input type="email" id="emailInput" placeholder="you@email.com" autocomplete="email"></div>'+
-        '<div class="spacer"></div>'+
-        '<button class="btn" id="reserveBtn">Reserve my spot</button>'+
-        '<button class="textlink" id="skipEmail">Skip for now, I\u2019ll browse first</button>';
-      stage.appendChild(el);
-      el.querySelector('#reserveBtn').onclick=function(){
-        var v=el.querySelector('#emailInput').value.trim();
-        state.answers.email=v||null; next();
-      };
-      el.querySelector('#skipEmail').onclick=function(){ state.answers.email=null; next(); };
-      return;
-    }
-
-    if(name==='offer'){
-      el = screenWrap('question');
-      el.innerHTML = '<h1 class="q">Build a plan that\'s actually yours.</h1><p class="sub">Two hours. Real experts. A plan you keep.</p>';
       var pc=document.createElement('div'); pc.className='pricecard';
       pc.innerHTML='<div><span class="was">\u20b9499</span><span class="now">\u20b9149</span></div><div class="note">[ Sun 22 June \u00b7 11 AM ] \u00b7 Live on Zoom</div>';
       el.appendChild(pc);
@@ -1016,9 +987,9 @@
         ol.appendChild(r);
       });
       el.appendChild(ol);
-      var sp10=document.createElement('div'); sp10.className='spacer'; el.appendChild(sp10);
-      var goPay=document.createElement('button'); goPay.className='btn'; goPay.textContent='Continue to payment'; goPay.onclick=openCheckout;
-      el.appendChild(goPay);
+
+      var save=document.createElement('button'); save.className='btn'; save.textContent='Save my spot'; save.onclick=openCheckout;
+      el.appendChild(save);
       stage.appendChild(el);
       return;
     }
