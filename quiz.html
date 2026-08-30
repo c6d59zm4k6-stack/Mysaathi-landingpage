@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>Your PCOS, Your Plan — Garbha Saathi</title>
+<meta name="theme-color" content="#F4EEE1">
+<meta name="description" content="A live 2-hour PCOS workshop. Answer a few quick questions and see your personalized starting point.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F4EEE1; --paper:#FBF7EE;
+    --terracotta:#C1704A; --terracotta-dim:#9C5636; --olive:#7D8455; --dusty:#7C93A8; --mustard:#D3A64C; --rose:#C97A93; --lav-deep:#9B8FB0;
+    --charcoal:#3B342C; --charcoal-dim:rgba(59,52,44,0.62);
+    --coral-pastel:#F6D9C7; --mint-pastel:#DCEEDD; --pink-pastel:#F8DCE3;
+    --sky-pastel:#DCE7F4; --gold-pastel:#FBEAC0; --lavender-pastel:#E8DFF3;
+    --serif:'Fraunces','Figtree',serif; --sans:'Figtree',-apple-system,BlinkMacSystemFont,sans-serif;
+    --maxw:460px;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{ background:#ddd4c2; font-family:var(--sans); color:var(--charcoal); display:flex; justify-content:center; min-height:100dvh; }
+  .device{ width:100%; max-width:var(--maxw); min-height:100dvh; background:var(--cream); position:relative; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 0 60px rgba(0,0,0,0.25); }
+
+  .topbar{ display:flex; align-items:center; gap:10px; padding:max(18px, env(safe-area-inset-top)) 20px 4px; min-height:34px; }
+  .backbtn{ width:32px; height:32px; border:none; background:rgba(59,52,44,0.07); color:var(--charcoal); display:flex; align-items:center; justify-content:center; cursor:pointer; border-radius:50%; flex:none; }
+  .backbtn svg{width:17px;height:17px;}
+  .progress{ display:flex; gap:6px; flex:1; }
+  .progress .seg{ flex:1; height:5px; border-radius:999px; background:rgba(59,52,44,0.12); overflow:hidden; }
+  .progress .seg i{ display:block; height:100%; width:0%; background:var(--charcoal); border-radius:999px; transition:width .4s ease; }
+  .progress .seg.done i{ width:100%; }
+  .skiplink{ background:none;border:none;font-family:var(--sans);font-size:13px;font-weight:700;color:var(--charcoal);opacity:.55;cursor:pointer;padding:6px 2px; }
+
+  .stage{ flex:1; display:flex; flex-direction:column; padding:6px 22px calc(26px + env(safe-area-inset-bottom)); overflow-y:auto; }
+  .screen{ animation:rise .45s cubic-bezier(.16,1,.3,1) both; display:flex; flex-direction:column; flex:1; }
+  @keyframes rise{ from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);} }
+
+  h1.q{ font-family:var(--serif); font-weight:600; font-size:24px; line-height:1.24; margin:8px 0 6px; text-align:center; color:var(--charcoal); }
+  h1.q .accent{ color:var(--terracotta); }
+  p.sub{ font-size:13.5px; line-height:1.45; color:var(--charcoal-dim); text-align:center; margin:0 0 14px; font-weight:500; }
+  .spacer{flex:1;}
+
+  /* ---- mascot: Doc1 shape, lively bob + quick blink ---- */
+  .mascot{ width:120px; height:138px; margin:2px auto 6px; position:relative; animation:bob 2.4s ease-in-out infinite; }
+  .mascot.sm{ width:78px; height:90px; margin:0 auto 10px; }
+  .mascot.big{ width:150px; height:172px; }
+  @keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+  @media (prefers-reduced-motion: reduce){ .mascot{animation:none;} }
+  .mascot .mbody{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:76%; height:32%; background:var(--charcoal); border-radius:46% 46% 30% 30%; }
+  .mascot .mhead{ position:absolute; top:0; left:8%; width:84%; height:74%; border-radius:50%; background:var(--terracotta); overflow:hidden; box-shadow:0 10px 20px rgba(59,52,44,.15); }
+  .mascot .mhead i.msh{ position:absolute; top:0; bottom:0; background:var(--terracotta-dim); display:block; }
+  .mascot .mhead.full i.msh{ left:0; width:100%; }
+  .mascot .mhead.crescent i.msh{ right:-38%; width:60%; border-radius:50%; }
+  .mascot .mhead.quarter i.msh{ right:0; width:50%; border-radius:0 999px 999px 0; }
+  .mascot .mhead.gibbous i.msh{ right:-8%; width:72%; border-radius:50%; }
+  .mascot .mhead.lastquarter i.msh{ left:0; width:50%; border-radius:999px 0 0 999px; }
+  .mascot .cheek{ position:absolute; width:16%; height:10%; border-radius:50%; background:rgba(59,52,44,.16); top:55%; }
+  .mascot .cheek.l{left:9%;} .mascot .cheek.r{right:9%;}
+  .mascot .mface{ position:absolute; width:52%; left:24%; top:28%; }
+  .mascot .mface .eyes{ transform-box:fill-box; transform-origin:50% 50%; animation:blink 2.4s ease-in-out infinite; }
+  @keyframes blink{ 0%,82%,100%{transform:scaleY(1);} 90%{transform:scaleY(.1);} }
+  @media (prefers-reduced-motion: reduce){ .mascot .mface .eyes{animation:none;} }
+
+  /* ---- sparkle: big, glowing, everywhere the mascot shows up ---- */
+  .mascotwrap{ position:relative; width:150px; margin:2px auto 6px; }
+  .sparkle{ position:absolute; width:26px; height:26px; opacity:.55; pointer-events:none; animation:twinkle 1.7s ease-in-out infinite; filter:drop-shadow(0 0 5px currentColor); z-index:5; }
+  .sparkle.lg{ width:34px; height:34px; }
+  .sparkle.sm2{ width:16px; height:16px; }
+  .sparkle svg{ width:100%; height:100%; fill:currentColor; }
+  @keyframes twinkle{ 0%,100%{opacity:.35; transform:scale(.6) rotate(0deg);} 50%{opacity:1; transform:scale(1.25) rotate(35deg);} }
+  @media (prefers-reduced-motion: reduce){ .sparkle{animation:none; opacity:.8;} }
+
+  /* ---- one-shot selection sparkle burst ---- */
+  .burst-spark{ position:absolute; top:50%; left:50%; width:12px; height:12px; margin:-6px; border-radius:3px; opacity:0; pointer-events:none; animation:burstpop .7s ease-out forwards; filter:drop-shadow(0 0 4px currentColor); }
+  @keyframes burstpop{ 0%{opacity:0; transform:translate(0,0) scale(.3) rotate(0deg);} 20%{opacity:1;} 100%{opacity:0; transform:translate(var(--tx),var(--ty)) scale(1.3) rotate(110deg);} }
+  @media (prefers-reduced-motion: reduce){ .burst-spark{display:none;} }
+
+  .cardgrid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .cardgrid.list{ grid-template-columns:1fr; gap:8px; }
+  .card{ border-radius:18px; padding:16px; min-height:100px; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer; position:relative; overflow:hidden; border:none; text-align:left; transition:transform .15s ease; -webkit-user-select:none; user-select:none; }
+  .card:active{ transform:scale(.96); }
+  .card .cicon{ width:38px;height:38px;border-radius:10px;background:rgba(59,52,44,0.08);display:flex;align-items:center;justify-content:center;position:relative; }
+  .card .cicon svg{ width:19px;height:19px;fill:var(--charcoal); }
+  .card .clabel{ font-family:var(--sans); font-weight:800; font-size:16px; color:var(--charcoal); line-height:1.25; }
+  .card .badge{ position:absolute;top:9px;right:9px;width:24px;height:24px;border-radius:50%;background:var(--charcoal);display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.5);transition:all .18s ease; }
+  .card .badge svg{ width:13px;height:13px;stroke:var(--paper);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round; }
+  .card.selected .badge{ opacity:1;transform:scale(1); }
+  .card.selected{ box-shadow:0 0 0 2.5px var(--charcoal); }
+  .card.locked{ pointer-events:none; }
+  .card.row{ flex-direction:row; align-items:center; justify-content:flex-start; gap:12px; min-height:0; padding:12px 14px; border-radius:16px; }
+  .card.row .cicon{ width:32px; height:32px; border-radius:9px; flex:none; }
+  .card.row .cicon svg{ width:16px; height:16px; }
+  .card.row .clabel{ font-size:15.5px; line-height:1.2; flex:1; }
+  .card.row .badge{ position:static; margin-left:auto; width:22px; height:22px; flex:none; }
+  .card.row .badge svg{ width:12px; height:12px; }
+  .card.bignum{ align-items:center; justify-content:center; text-align:center; min-height:100px; padding:10px 8px; }
+  .card.bignum .clabel{ font-family:var(--serif); font-weight:800; font-size:30px; line-height:1.06; width:100%; }
+  .c-coral{background:var(--coral-pastel);} .c-moss{background:var(--mint-pastel);} .c-berry{background:var(--pink-pastel);}
+  .c-sky{background:var(--sky-pastel);} .c-gold{background:var(--gold-pastel);} .c-ink{background:var(--lavender-pastel);}
+
+  .insightcard{ background:var(--paper); border-left:4px solid var(--terracotta); border-radius:14px; padding:18px 16px; margin:30px 0 16px; box-shadow:0 4px 14px rgba(59,52,44,.06); animation:fadein .35s ease both; }
+  .insightcard p{ font-size:19px; font-weight:800; line-height:1.38; color:var(--charcoal); margin:0; text-align:center; }
+  .btn.continueBtn{ margin-top:8px; }
+  @keyframes fadein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  .trustline{ display:flex; align-items:center; justify-content:center; gap:6px; font-size:11.5px; font-weight:700; color:var(--charcoal); opacity:.5; margin-top:10px; }
+  .trustline svg{ width:12px; height:12px; fill:var(--charcoal); }
+
+  .personagrid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+  .personacard{ border-radius:18px; padding:12px; background:var(--paper); text-align:center; border:1.5px solid rgba(59,52,44,0.08); }
+  .personacard .mascot{ margin:0 auto 6px; }
+  .personatag{ display:inline-block; font-family:var(--sans); font-weight:800; font-size:10px; letter-spacing:.04em; text-transform:uppercase; color:var(--paper); padding:5px 10px; border-radius:999px; margin-bottom:8px; }
+  .persona-a .personatag{ background:var(--terracotta); }
+  .persona-b .personatag{ background:var(--olive); }
+  .personarow{ display:flex; align-items:center; gap:8px; padding:7px 2px; font-size:13px; font-weight:700; color:var(--charcoal); text-align:left; border-bottom:1px solid rgba(59,52,44,0.08); }
+  .personarow:last-child{ border-bottom:none; }
+  .personarow .picon{ width:23px; height:23px; border-radius:50%; background:rgba(59,52,44,0.08); display:flex; align-items:center; justify-content:center; flex:none; }
+  .personarow .picon svg{ width:12px; height:12px; fill:var(--charcoal); }
+
+  .btn{ display:flex; align-items:center; justify-content:center; width:100%; padding:15px; background:var(--charcoal); color:var(--paper); border:none; border-radius:999px; font-family:var(--sans); font-weight:700; font-size:15px; cursor:pointer; transition:transform .15s ease,opacity .15s ease; }
+  .btn:active{ transform:scale(.98); }
+  .btn.disabled{ opacity:.32; pointer-events:none; }
+  .textlink{ background:none;border:none;color:var(--charcoal);opacity:.55;font-family:var(--sans);font-size:13px;font-weight:700;text-decoration:underline;text-underline-offset:3px;margin-top:14px;align-self:center;cursor:pointer; }
+
+  .field{ background:var(--paper);border:1.5px solid rgba(59,52,44,0.14);border-radius:18px;padding:14px 16px;margin-bottom:14px; }
+  .field label{ display:block;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--charcoal-dim);margin-bottom:4px;font-weight:800; }
+  .field input{ width:100%;background:none;border:none;outline:none;font-size:16px;color:var(--charcoal);font-family:var(--sans);font-weight:600; }
+  .field input::placeholder{ color:rgba(59,52,44,0.4); }
+
+  .tfrow{ display:flex; gap:12px; margin:8px 0 4px; }
+  .tfbtn{ flex:1; padding:20px 10px; min-height:100px; display:flex; align-items:center; justify-content:center; border-radius:18px; border:2px solid rgba(59,52,44,0.14); background:var(--paper); font-family:var(--serif); font-weight:800; font-size:22px; color:var(--charcoal); cursor:pointer; transition:transform .15s ease, border-color .15s ease, background .15s ease; position:relative; }
+  .tfbtn:active{ transform:scale(.96); }
+  .tfbtn.picked{ border-color:var(--terracotta); background:var(--coral-pastel); }
+  .tfbtn.locked{ pointer-events:none; }
+
+  .guessval{ font-family:var(--serif); font-weight:700; font-size:34px; color:var(--charcoal); text-align:center; margin:2px 0 4px; }
+  .guesssub{ text-align:center; font-size:13.5px; font-weight:600; color:var(--charcoal-dim); margin-bottom:14px; }
+  input[type=range]{ -webkit-appearance:none; width:100%; height:7px; border-radius:999px; background:rgba(59,52,44,0.14); margin:8px 0 18px; }
+  input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:26px; height:26px; border-radius:50%; background:var(--charcoal); border:4px solid var(--paper); box-shadow:0 2px 8px rgba(0,0,0,.25); cursor:pointer; }
+  input[type=range]::-moz-range-thumb{ width:26px; height:26px; border-radius:50%; background:var(--charcoal); border:4px solid var(--paper); cursor:pointer; }
+  .rangeends{ display:flex; justify-content:space-between; font-size:11px; font-weight:700; color:var(--charcoal-dim); margin-top:-12px; margin-bottom:16px; }
+
+  .dotsgrid{ display:flex; gap:7px; justify-content:center; flex-wrap:wrap; max-width:260px; margin:10px auto 14px; }
+  .dotsgrid .dot{ width:15px; height:15px; border-radius:50%; opacity:.92; }
+  .dotsgrid .dot.c-coral{background:var(--terracotta);} .dotsgrid .dot.c-moss{background:var(--olive);}
+  .dotsgrid .dot.c-berry{background:var(--rose);} .dotsgrid .dot.c-sky{background:var(--dusty);}
+  .dotsgrid .dot.c-gold{background:var(--mustard);} .dotsgrid .dot.c-ink{background:var(--lav-deep);}
+
+  .receipt{ width:100%; background:var(--charcoal); border-radius:22px; padding:24px 20px 20px; margin-bottom:18px; box-shadow:0 12px 26px rgba(59,52,44,.22); }
+  .receipt .cross{ text-align:center; font-size:14.5px; font-weight:600; color:rgba(251,247,238,.5); text-decoration:line-through; margin:8px 0; font-family:var(--sans); }
+  .receipt .final{ text-align:center; font-size:18px; font-weight:600; font-style:italic; color:var(--gold-pastel); font-family:var(--serif); margin-top:14px; padding-top:14px; border-top:1px solid rgba(251,247,238,.16); }
+
+  .recaplist{ width:100%; display:flex; flex-direction:column; gap:9px; margin-bottom:16px; }
+  .recaprow{ display:flex; align-items:center; gap:12px; background:var(--paper); border-radius:16px; padding:11px 13px; text-align:left; border:1.5px solid rgba(59,52,44,0.06); }
+  .recaprow .ricon{ width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex:none; }
+  .recaprow .ricon svg{ width:17px; height:17px; fill:var(--paper); }
+  .recaprow .rlabel{ font-size:10.5px; font-weight:700; color:var(--charcoal-dim); text-transform:uppercase; letter-spacing:.03em; }
+  .recaprow .rvalue{ font-family:var(--sans); font-weight:700; font-size:14px; color:var(--charcoal); line-height:1.28; }
+  .ric-coral{background:var(--terracotta);} .ric-moss{background:var(--olive);} .ric-berry{background:var(--rose);} .ric-sky{background:var(--dusty);}
+
+  .successwrap{ align-items:center; text-align:center; justify-content:center; }
+  .successwrap h1{ font-family:var(--serif); font-size:23px; font-weight:600; color:var(--charcoal); margin:12px 0 8px; }
+  .successwrap p{ font-size:14px; font-weight:500; color:var(--charcoal-dim); max-width:30ch; margin:0 0 22px; line-height:1.5; }
+  .startover{ font-size:12px; font-weight:700; color:var(--charcoal); opacity:.45; text-decoration:underline; cursor:pointer; }
+
+  .wordmark{ display:flex; align-items:center; gap:7px; justify-content:center; margin:2px 0 10px; }
+  .wordmark .dot{ width:12px;height:12px;border-radius:50%;background:var(--charcoal); }
+  .wordmark span{ font-family:var(--serif); font-weight:700; font-size:13px; color:var(--charcoal); opacity:.72; }
+  .trustpill{ display:inline-flex; align-items:center; gap:7px; background:rgba(59,52,44,0.07); color:var(--charcoal); border-radius:999px; padding:6px 14px; font-size:10.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; margin-bottom:10px; }
+  .welcome{ align-items:center; justify-content:center; text-align:center; }
+  .welcome h1{ font-family:var(--serif); font-weight:600; font-size:27px; line-height:1.2; color:var(--charcoal); margin:4px 0 8px; }
+  .welcome p.lead{ font-size:14px; font-weight:500; line-height:1.5; color:var(--charcoal-dim); margin:0 0 18px; max-width:28ch; }
+  .meta-row{ display:flex; gap:9px; margin:0 0 24px; flex-wrap:wrap; justify-content:center; }
+  .meta-row .m{ font-size:11.5px; color:var(--charcoal); font-weight:700; display:flex; align-items:center; gap:6px; background:rgba(59,52,44,0.06); border-radius:999px; padding:7px 13px; }
+  .meta-row .m svg{ width:12px; height:12px; fill:var(--terracotta); }
+
+  @media (prefers-reduced-motion: reduce){ .screen{animation:none;} }
+
+  /* ---- hero: video + headline, grafted onto Phases' welcome screen ---- */
+  .herovideo{ position:relative; width:100%; max-width:280px; margin:4px auto 14px; border-radius:18px; overflow:hidden; aspect-ratio:5/4; box-shadow:0 10px 24px rgba(59,52,44,.18); background:linear-gradient(150deg,var(--coral-pastel),var(--gold-pastel)); }
+  .herovideo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .herovideo .play{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+  .herovideo .play span{ width:52px; height:52px; border-radius:50%; background:rgba(251,247,238,.94); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 14px rgba(0,0,0,.22); }
+  .herovideo .play span::after{ content:''; border-left:15px solid var(--terracotta); border-top:9px solid transparent; border-bottom:9px solid transparent; margin-left:3px; }
+  .herovideo .vcap{ position:absolute; left:10px; bottom:10px; background:rgba(59,52,44,.78); color:var(--paper); font-size:10.5px; font-weight:700; padding:4px 9px; border-radius:7px; }
+
+  /* ---- testimonials ---- */
+  .testicard{ background:var(--paper); border-radius:16px; padding:15px 16px; margin-bottom:10px; border:1.5px solid rgba(59,52,44,0.08); text-align:left; }
+  .testicard .stars{ color:var(--mustard); font-size:13px; letter-spacing:1px; margin-bottom:6px; }
+  .testicard .qt{ font-size:14px; line-height:1.45; color:var(--charcoal); font-style:italic; }
+  .testicard .who{ margin-top:9px; font-size:11.5px; font-weight:700; color:var(--charcoal-dim); }
+
+  /* ---- offer ---- */
+  .pricecard{ background:var(--charcoal); border-radius:20px; padding:22px 20px; text-align:center; margin-bottom:16px; box-shadow:0 12px 26px rgba(59,52,44,.22); }
+  .pricecard .was{ font-size:15px; color:rgba(251,247,238,.5); text-decoration:line-through; margin-right:8px; }
+  .pricecard .now{ font-family:var(--serif); font-size:38px; font-weight:700; color:var(--paper); }
+  .pricecard .note{ font-size:12px; color:rgba(251,247,238,.7); margin-top:8px; font-weight:600; }
+  .offer-list{ display:flex; flex-direction:column; gap:8px; margin-bottom:6px; }
+  .offer-row{ display:flex; align-items:flex-start; gap:9px; font-size:13.5px; color:var(--charcoal); text-align:left; }
+  .offer-row svg{ width:16px; height:16px; flex:none; margin-top:2px; stroke:var(--olive); fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* ---- payment ---- */
+  .payerr{ font-size:12.5px; font-weight:700; color:#B0473B; margin:-6px 0 12px; min-height:16px; text-align:center; }
+  .btn.busy{ opacity:.6; pointer-events:none; }
+  .paidmark{ width:56px; height:56px; border-radius:50%; margin:0 auto 14px; background:var(--mint-pastel); display:flex; align-items:center; justify-content:center; }
+  .paidmark svg{ width:28px; height:28px; stroke:var(--olive); fill:none; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; }
+</style>
+</head>
+<body>
+  <div class="device" id="device">
+    <div class="topbar" id="topbar"></div>
+    <div class="stage" id="stage"></div>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+
+  var SPARK_SVG = '<svg viewBox="0 0 24 24"><path d="M12 1c0 6.5 2 9.5 9.5 10-7.5.5-9.5 3.5-9.5 10 0-6.5-2-9.5-9.5-10C10 10.5 12 7.5 12 1z"/></svg>';
+  var SPARK_TONES = ['var(--mustard)','var(--terracotta)','var(--olive)','var(--rose)'];
+
+  // sparkle spots, scaled to size — every mascot gets a few, not just hero moments
+  var SPARK_SPOTS = {
+    sm:  [ {top:'-10%', left:'0%', size:'sm2'}, {top:'62%', left:'88%', size:'sm2'} ],
+    def: [ {top:'-8%', left:'-6%', size:''}, {top:'18%', left:'92%', size:'sm2'}, {top:'74%', left:'-8%', size:'sm2'} ],
+    big: [ {top:'-6%', left:'-8%', size:'lg'}, {top:'10%', left:'94%', size:''}, {top:'72%', left:'-10%', size:''}, {top:'86%', left:'86%', size:'sm2'} ]
+  };
+
+  function sparksFor(spots){
+    var html='';
+    spots.forEach(function(s,k){
+      var tone = SPARK_TONES[k%SPARK_TONES.length];
+      html += '<span class="sparkle '+s.size+'" style="top:'+s.top+';left:'+s.left+';animation-delay:'+(k*0.35)+'s;color:'+tone+';">'+SPARK_SVG+'</span>';
+    });
+    return html;
+  }
+
+  function mascot(phase, size){
+    var cls = size==='big' ? ' big' : (size==='sm' ? ' sm' : '');
+    var spots = size==='big' ? SPARK_SPOTS.big : (size==='sm' ? SPARK_SPOTS.sm : SPARK_SPOTS.def);
+    return '<div class="mascot'+cls+'">'+
+      '<div class="mbody"></div>'+
+      '<div class="mhead '+phase+'"><i class="msh"></i></div>'+
+      '<div class="cheek l"></div><div class="cheek r"></div>'+
+      '<svg class="mface" viewBox="0 0 100 46">'+
+        '<g class="eyes">'+
+          '<path d="M12,24 Q24,8 36,24" stroke="#3B342C" stroke-width="7" fill="none" stroke-linecap="round"/>'+
+          '<path d="M64,24 Q76,8 88,24" stroke="#3B342C" stroke-width="7" fill="none" stroke-linecap="round"/>'+
+        '</g>'+
+        '<path d="M22,32 Q50,54 78,32" stroke="#3B342C" stroke-width="7" fill="none" stroke-linecap="round"/>'+
+      '</svg>'+
+      sparksFor(spots)+
+    '</div>';
+  }
+
+  // hero moments (welcome, receipt, recap, success) pile on extra sparkles around the mascot
+  function mascotHero(phase){
+    var wrap = document.createElement('div'); wrap.className='mascotwrap';
+    wrap.innerHTML = mascot(phase,'big');
+    var extra = [
+      {top:'32%', left:'-14%', delay:'.2s', tone:1, size:'sm2'},
+      {top:'0%', left:'40%', delay:'1s', tone:2, size:'sm2'},
+      {top:'96%', left:'40%', delay:'1.6s', tone:0, size:'lg'}
+    ];
+    extra.forEach(function(s){
+      var sp=document.createElement('span'); sp.className='sparkle '+s.size;
+      sp.style.top=s.top; sp.style.left=s.left; sp.style.animationDelay=s.delay;
+      sp.style.color=SPARK_TONES[s.tone];
+      sp.innerHTML=SPARK_SVG;
+      wrap.appendChild(sp);
+    });
+    return wrap;
+  }
+
+  // one-shot sparkle burst, spawned from a selected card's badge (or the element itself)
+  function burst(targetEl){
+    if(!targetEl) return;
+    var cs = getComputedStyle(targetEl);
+    if(cs.position==='static') targetEl.style.position='relative';
+    for(var k=0;k<6;k++){
+      (function(k){
+        var s=document.createElement('span'); s.className='burst-spark';
+        var tone = SPARK_TONES[k%SPARK_TONES.length];
+        s.style.background = tone;
+        s.style.color = tone;
+        var angle = (k*60) + Math.random()*30;
+        var dist = 18 + Math.random()*14;
+        s.style.setProperty('--tx',(Math.cos(angle*Math.PI/180)*dist).toFixed(1)+'px');
+        s.style.setProperty('--ty',(Math.sin(angle*Math.PI/180)*dist).toFixed(1)+'px');
+        s.style.animationDelay=(k*40)+'ms';
+        targetEl.appendChild(s);
+        setTimeout(function(){ if(s.parentNode) s.parentNode.removeChild(s); }, 750);
+      })(k);
+    }
+  }
+
+  var CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+
+  var ICONS = {
+    cycle:'<svg viewBox="0 0 24 24"><path d="M20 12c0-4.4-3.6-8-8-8-3.4 0-6.3 2.1-7.4 5.1a1 1 0 101.9.7A6 6 0 0112 6c3.3 0 6 2.7 6 6h-2.5a.5.5 0 00-.4.8l3.5 4.4a.5.5 0 00.8 0l3.5-4.4a.5.5 0 00-.4-.8H20z"/></svg>',
+    sprout:'<svg viewBox="0 0 24 24"><path d="M12 22a1 1 0 01-1-1v-6.1C6.6 14.4 3 10.8 3 6a1 1 0 011-1c4.8 0 8.4 3.6 8.9 8H13c.5-4.4 4.1-8 8.9-8a1 1 0 011 1c0 4.8-3.6 8.4-8 8.9V21a1 1 0 01-1 1z"/></svg>',
+    drop:'<svg viewBox="0 0 24 24"><path d="M12 2.3c-.3.4-7 8.6-7 13.2a7 7 0 0014 0c0-4.6-6.7-12.8-7-13.2z"/></svg>',
+    spark:'<svg viewBox="0 0 24 24"><path d="M12 2l2.1 6.2L20 10l-5.9 1.8L12 18l-2.1-6.2L4 10l5.9-1.8z"/></svg>',
+    sun:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.6"/><g stroke="#3B342C" stroke-width="2.4" stroke-linecap="round"><path d="M12 1.5v3M12 19.5v3M3 12h3M18 12h3M5.1 5.1l2.1 2.1M16.8 16.8l2.1 2.1M5.1 18.9l2.1-2.1M16.8 7.2l2.1-2.1"/></g></svg>',
+    book:'<svg viewBox="0 0 24 24"><path d="M3 4.5A1.5 1.5 0 014.5 3H11v18H4.5A1.5 1.5 0 013 19.5v-15zM21 4.5A1.5 1.5 0 0019.5 3H13v18h6.5a1.5 1.5 0 001.5-1.5v-15z"/></svg>',
+    calendar:'<svg viewBox="0 0 24 24"><path d="M7 2a1 1 0 011 1v1h8V3a1 1 0 112 0v1h1a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h1V3a1 1 0 011-1zM5 10v10h14V10H5z"/></svg>',
+    check:'<svg viewBox="0 0 24 24"><path d="M20.3 5.7a1 1 0 010 1.4l-11 11a1 1 0 01-1.4 0l-5-5a1 1 0 111.4-1.4L8.6 16 18.9 5.7a1 1 0 011.4 0z"/></svg>',
+    clock:'<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 10.4l4 2.3-.9 1.6-4.6-2.7V6h1.5v6.4z"/></svg>',
+    compass:'<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm3.6 5.4l-2 5.2-5.2 2 2-5.2z"/></svg>',
+    heart:'<svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-9.5-8.5C.5 9 2 5.5 5.5 5c2-.3 3.7.7 4.5 2 .8-1.3 2.5-2.3 4.5-2C18 5.5 19.5 9 21.5 12.5 19 16.65 12 21 12 21z"/></svg>',
+    shield:'<svg viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5z"/></svg>'
+  };
+
+  var CHEVRON = '<svg viewBox="0 0 24 24" fill="none" stroke="#3B342C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>';
+
+  var AGE = [
+    {id:'under20',  label:'Under 20', c:'coral', payoff:'Got it. This is made for you.'},
+    {id:'twenties', label:'20s',      c:'moss',  payoff:'Got it. This is made for your 20s.'},
+    {id:'thirties', label:'30s',      c:'berry', payoff:'Got it. This is made for your 30s.'},
+    {id:'fortyplus',label:'40+',      c:'sky',   payoff:'Got it. This is made for 40 and up.'}
+  ];
+  var KNOWLEDGE = [
+    {id:'nothing', label:'Nothing yet',     icon:'spark', c:'coral', payoff:'No problem. We\u2019ll start from zero.'},
+    {id:'some',    label:'Some basics',     icon:'book',  c:'moss',  payoff:'Good. We\u2019ll build on what you know.'},
+    {id:'lots',    label:'A lot already',   icon:'sun',   c:'berry', payoff:'Great. We\u2019ll skip the basics.'}
+  ];
+  var SYMPTOMS = [
+    {id:'cycles',    label:'Irregular cycles',    icon:'cycle', c:'coral'},
+    {id:'weight',    label:'Weight & insulin',    icon:'drop',  c:'moss'},
+    {id:'skin',      label:'Acne, skin & hair',   icon:'spark', c:'gold'},
+    {id:'fertility', label:'Fertility challenges',icon:'sprout',c:'berry'},
+    {id:'mood',      label:'Mood swings',         icon:'sun',   c:'sky'},
+    {id:'fatigue',   label:'Low energy',          icon:'clock', c:'moss'},
+    {id:'sleep',     label:'Trouble sleeping',    icon:'book',  c:'ink'}
+  ];
+  var GOALS = [
+    {id:'cycle',     label:'Regulate cycle',    phase:'full',        c:'coral'},
+    {id:'fertility', label:'Support fertility', phase:'crescent',    c:'berry'},
+    {id:'metabolic', label:'Weight & insulin',  phase:'quarter',     c:'moss'},
+    {id:'skin',      label:'Skin & hair',       phase:'gibbous',     c:'gold'},
+    {id:'mood',      label:'Mood & energy',     phase:'lastquarter', c:'sky'}
+  ];
+  var FERTILITY_TIME = [
+    {id:'trying',   label:'Trying now',        icon:'heart',   c:'berry', payoff:'We\u2019ll show fertility help right away.'},
+    {id:'soon',     label:'Next year or two',  icon:'calendar',c:'coral', payoff:'We\u2019ll save that for later.'},
+    {id:'learning', label:'Just learning',     icon:'book',    c:'sky',   payoff:'We\u2019ll keep it simple for now.'}
+  ];
+  var DOCTOR = [
+    {id:'yes',          label:'Yes, regularly',       icon:'check',   c:'moss',  payoff:'Great. We\u2019ll add to your care.'},
+    {id:'occasionally', label:'Sometimes',            icon:'clock',   c:'gold',  payoff:'We\u2019ll help you use those visits well.'},
+    {id:'not_now',       label:'Not right now',        icon:'shield',  c:'ink',   payoff:'No pressure. We\u2019ll help you get ready.'},
+    {id:'starting',      label:'Looking to start',     icon:'compass', c:'berry', payoff:'We\u2019ll help you find good questions to ask.'}
+  ];
+  var TRACKS = {
+    cycle:     {title:'Cycle & Hormone Balance', phase:'full',
+      fact:'A long cycle can still be a healthy one.'},
+    fertility: {title:'Fertility Support', phase:'crescent',
+      fact:'Home tests can get PCOS wrong. Specialists know better.'},
+    metabolic: {title:'Metabolic & Insulin Health', phase:'quarter',
+      fact:'You can have insulin issues at any weight.'},
+    skin:      {title:'Skin & Hair Wellness', phase:'gibbous',
+      fact:'PCOS acne often shows on the jaw and chin. It\u2019s hormonal.'},
+    mood:      {title:'Mood & Energy Restoration', phase:'lastquarter',
+      fact:'Mood swings come from hormones. Not a character flaw.'}
+  };
+  var CRED = [
+    {id:'medical',  label:'Real medical review',    icon:'check',  c:'moss'},
+    {id:'plain',    label:'Plain language',         icon:'book',   c:'coral'},
+    {id:'stories',  label:'Real patient stories',   icon:'heart',  c:'berry'},
+    {id:'nofear',   label:'No fear-mongering',      icon:'shield', c:'sky'},
+    {id:'updates',  label:'Regular updates',        icon:'calendar',c:'gold'},
+    {id:'nosales',  label:'No sales pitch',         icon:'compass',c:'ink'}
+  ];
+
+  var order = ['welcome','age','knowledge','symptoms','goal','fertility','doctor',
+    'quizA','quizB','quizC','quizD','quizE','finale','payoff','email',
+    'testimonials','offer','payment','success'];
+  var fertilityIdx = order.indexOf('fertility');
+  var QUESTION_SCREENS = ['age','knowledge','symptoms','goal','fertility','doctor','quizA','quizB','quizC','quizD','quizE'];
+  var SKIPPABLE = ['fertility','doctor'];
+  var act1Questions = [order.indexOf('age'), order.indexOf('knowledge'), order.indexOf('symptoms'), order.indexOf('goal'), order.indexOf('doctor')];
+  var act2Questions = [order.indexOf('quizA'), order.indexOf('quizB'), order.indexOf('quizC'), order.indexOf('quizD'), order.indexOf('quizE')];
+
+  var state = {
+    i:0, guess:20,
+    answers:{ age:null, knowledge:null, symptoms:[], goal:null, fertilityTime:null, doctor:null, email:null, name:null, phone:null },
+    tfA:null, dietPick:null, tfD:null, cred:new Set()
+  };
+
+  // Payment fallback: works with no backend at all — see Mysaathi-landingpage's
+  // README/PROGRESS.md for the full Razorpay setup. Same contract as index.html's
+  // checkout: if /api isn't there (static hosting) or the keys aren't set (503),
+  // fall back to a hosted Payment Link instead of failing silently.
+  var RAZORPAY_LINK = "";
+  var rzpLoading = null;
+  function loadRazorpay(){
+    if(window.Razorpay) return Promise.resolve(true);
+    if(rzpLoading) return rzpLoading;
+    rzpLoading = new Promise(function(resolve){
+      var sc=document.createElement('script');
+      sc.src='https://checkout.razorpay.com/v1/checkout.js';
+      sc.onload=function(){ resolve(true); };
+      sc.onerror=function(){ resolve(false); };
+      document.head.appendChild(sc);
+    });
+    return rzpLoading;
+  }
+
+  var stage = document.getElementById('stage');
+  var topbar = document.getElementById('topbar');
+
+  function isSkippableIdx(idx){ return idx===fertilityIdx && state.answers.goal!=='fertility'; }
+  function goTo(i){ state.i=i; renderTopbar(); renderScreen(); }
+  function next(){ var i=state.i+1; while(i<order.length && isSkippableIdx(i)) i++; goTo(i); }
+  function goBack(){ var i=state.i-1; while(i>=0 && isSkippableIdx(i)) i--; if(i>=0) goTo(i); }
+
+  function renderTopbar(){
+    var name = order[state.i];
+    topbar.innerHTML = '';
+    var qList=null;
+    if(state.i>=order.indexOf('age') && state.i<=order.indexOf('doctor')) qList=act1Questions;
+    else if(state.i>=order.indexOf('quizA') && state.i<=order.indexOf('quizE')) qList=act2Questions;
+
+    var showBack = QUESTION_SCREENS.indexOf(name)>-1 && state.i>0;
+    if(showBack){
+      var b=document.createElement('button'); b.className='backbtn'; b.innerHTML=CHEVRON;
+      b.onclick=function(){ goBack(); };
+      topbar.appendChild(b);
+    } else {
+      var sp=document.createElement('div'); sp.style.width='32px'; sp.style.flex='none'; topbar.appendChild(sp);
+    }
+    if(qList){
+      var prog=document.createElement('div'); prog.className='progress';
+      var passed = qList.filter(function(qi){ return state.i>qi; }).length;
+      for(var s=0;s<qList.length;s++){
+        var seg=document.createElement('div'); seg.className='seg'+(s<passed?' done':'');
+        var inner=document.createElement('i'); seg.appendChild(inner); prog.appendChild(seg);
+      }
+      topbar.appendChild(prog);
+    } else {
+      var fill=document.createElement('div'); fill.style.flex='1'; topbar.appendChild(fill);
+    }
+    if(SKIPPABLE.indexOf(name)>-1){
+      var sk=document.createElement('button'); sk.className='skiplink'; sk.textContent='Skip';
+      sk.onclick=function(){ next(); };
+      topbar.appendChild(sk);
+    } else if(qList){
+      var pad=document.createElement('div'); pad.style.width='32px'; pad.style.flex='none'; topbar.appendChild(pad);
+    }
+  }
+
+  function screenWrap(cls){ var d=document.createElement('div'); d.className='screen '+cls; return d; }
+  function firstSymptom(){ return SYMPTOMS.filter(function(s){ return (state.answers.symptoms||[]).indexOf(s.id)>-1; })[0]; }
+
+  function revealInline(el, payoffText){
+    var oldInsight = el.querySelector('.insightcard'); if(oldInsight) oldInsight.remove();
+    var oldBtn = el.querySelector('.btn.continueBtn'); if(oldBtn) oldBtn.remove();
+    var oldSpacer = el.querySelector('.spacer'); if(oldSpacer) oldSpacer.remove();
+
+    var wrap = document.createElement('div');
+    wrap.innerHTML = '<div class="insightcard"><p></p></div>';
+    wrap.querySelector('p').textContent = payoffText;
+    var btn = document.createElement('button'); btn.className='btn continueBtn'; btn.textContent='Continue';
+    btn.onclick = next;
+    el.appendChild(wrap.firstChild);
+    el.appendChild(btn);
+  }
+
+  // Wires up a group of single-select cards so picking one, then a different one,
+  // swaps the selection and refreshes the reaction message instead of locking in place.
+  function wireSingleSelect(cardEls, opts, onPick){
+    var pickToken = 0;
+    cardEls.forEach(function(el, idx){
+      el.onclick = function(){
+        var opt = opts[idx];
+        cardEls.forEach(function(c){ c.classList.remove('selected'); });
+        el.classList.add('selected');
+        burst(el.querySelector('.badge'));
+        var myToken = ++pickToken;
+        setTimeout(function(){ if(myToken===pickToken) onPick(opt); }, 220);
+      };
+    });
+  }
+
+  function iconCard(opt, variant){
+    var extraClass = variant ? ' '+variant : '';
+    var el=document.createElement('button'); el.className='card'+extraClass+' c-'+opt.c; el.type='button';
+    var iconHtml = variant==='bignum' ? '' : (opt.phase
+      ? '<span class="cicon"><div class="mhead '+opt.phase+'" style="position:relative;width:100%;height:100%;border-radius:8px;"><i class="msh"></i></div></span>'
+      : (opt.icon ? '<span class="cicon">'+ICONS[opt.icon]+'</span>' : '<span></span>'));
+    el.innerHTML = iconHtml + '<span class="clabel"></span><span class="badge">'+CHECK+'</span>';
+    el.querySelector('.clabel').textContent = opt.label;
+    return el;
+  }
+
+  function multiCard(opt, selectedSet, onChange, variant){
+    var el = iconCard(opt, variant);
+    el.onclick=function(){
+      if(selectedSet.has(opt.id)){ selectedSet.delete(opt.id); el.classList.remove('selected'); }
+      else { selectedSet.add(opt.id); el.classList.add('selected'); burst(el.querySelector('.badge')); }
+      onChange();
+    };
+    return el;
+  }
+
+  function renderScreen(){
+    stage.innerHTML='';
+    var name = order[state.i];
+    var el;
+
+    if(name==='welcome'){
+      el = screenWrap('welcome');
+      el.innerHTML =
+        '<div class="wordmark"><div class="dot"></div><span>Garbha Saathi</span></div>'+
+        '<div class="trustpill">Live 2-hour PCOS workshop</div>'+
+        '<div class="herovideo">'+
+          '<img loading="lazy" alt="Isha — 30 second intro" src="https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?w=560&h=448&fit=crop&crop=faces&q=72&auto=format">'+
+          '<div class="play"><span></span></div>'+
+          '<div class="vcap">▶ Isha · 30 sec</div>'+
+        '</div>';
+      var h=document.createElement('h1'); h.innerHTML='Your PCOS. <span class="accent">Your plan.</span>';
+      var lead=document.createElement('p'); lead.className='lead'; lead.textContent='A few quick questions, then a few things worth knowing.';
+      el.appendChild(h); el.appendChild(lead);
+      var meta=document.createElement('div'); meta.className='meta-row';
+      meta.innerHTML='<div class="m">'+ICONS.clock+' 90 seconds</div><div class="m">'+ICONS.check+' Made for you</div>';
+      el.appendChild(meta);
+      var sp0=document.createElement('div'); sp0.className='spacer'; el.appendChild(sp0);
+      var startBtn=document.createElement('button'); startBtn.className='btn'; startBtn.textContent='Start';
+      startBtn.onclick=next;
+      el.appendChild(startBtn);
+      stage.appendChild(el);
+      return;
+    }
+
+    if(name==='age'){
+      el = screenWrap('question');
+      el.innerHTML = '<h1 class="q">How old are you?</h1>';
+      var g=document.createElement('div'); g.className='cardgrid';
+      var ageEls = AGE.map(function(o){ var c=iconCard(o,'bignum'); g.appendChild(c); return c; });
+      wireSingleSelect(ageEls, AGE, function(opt){ state.answers.age=opt.id; revealInline(el,opt.payoff); });
+      el.appendChild(g);
+      var sp0=document.createElement('div'); sp0.className='spacer'; el.appendChild(sp0);
+      stage.appendChild(el);
+      return;
+    }
+
+    if(name==='knowledge'){
+      el = screenWrap('question');
+      el.innerHTML = '<h1 class="q">How much do you know about PCOS already?</h1>';
+      var g2=document.createElement('div'); g2.className='cardgrid';
+      var knowledgeEls = KNOWLEDGE.map(function(o){ var c=iconCard(o); g2.appendChild(c); return c; });
+      wireSingleSelect(knowledgeEls, KNOWLEDGE, function(opt){ state.answers.knowledge=opt.id; revealInline(el,opt.payoff); });
+      el.appendChild(g2);
+      var sp1=document.createElement('div'); sp1.className='spacer'; el.appendChild(sp1);
+      stage.appendChild(el);
+      return;
+    }
+
+    if(name==='symptoms'){
+      el = screenWrap('question');
+      el.innerHTML = '<h1 class="q">What\u2019s showing up for you?</h1><p class="sub">Pick all that fit.</p>';
+      var grid=document.createElement('div'); grid.className='cardgrid list';
+      var selectedSet = new Set(state.answers.symptoms||[]);
+      var btn=document.createElement('button'); btn.className='btn disabled'; btn.textContent='Continue';
+      function refresh(){ btn.className='btn'+(selectedSet.size?'':' disabled'); }
+      SYMPTOMS.forEach(function(o){ var c=multiCard(o,selectedSet,refresh,'row'); if(selectedSet.has(o.id)) c.classList.add('selected'); grid.appendChild(c); });
+      el.appendChild(grid);
+      var sp=document.createElement('div'); sp.className='spacer'; el.appendChild(sp);
+      btn.onclick=function(){
+        if(!selectedSet.size) return;
+        state.answers.symptoms = Array.from(selectedSet);
+        var labels = state.answers.symptoms.map(function(id){ return SYMPTOMS.filter(function(s){return s.id===id;})[0].label; });
+        var txt = labels.length>1 ? ('We\u2019ll focus on '+labels[0]+' and '+labels[1]+'.') : ('We\u2019ll focus on '+labels[0]+'.');
+        grid.querySelectorAll('.card').forEach(function(c){ c.classList.add('locked'); });
+        btn.remove(); sp.remove();
+        revealInline(el, txt);
+      };
+      el.appendChild(btn);
+      var trust = document.createElement('div'); trust.className='trustline';
+      trust.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 014 4v2h1a2 2 0 012 2v9a2 2 0 01-2 2H7a2 2 0 01-2-2v-9a2 2 0 012-2h1V6a4 4 0 014-4zm0 2a2 2 0 00-2 2v2h4V6a2 2 0 00-2-2z"/></svg> 100% private and secure';
+      el.appendChild(trust);
+      stage.appendChild(el);
+      return;
+    }
+
+
+    if(name==='goal'){
+      el = screenWrap('question');
+      el.innerHTML = '<h1 class="q">Pick your first focus.</h1><p class="sub">One focus works better than five.</p>';
+      var g3=document.createElement('div'); g3.className='cardgrid';
+      var goalEls = GOALS.map(function(o){ var c=iconCard(o); g3.appendChild(c); return c; });
+      wireSingleSelect(goalEls, GOALS, function(opt){
+        state.answers.goal=opt.id;
+        var track=TRACKS[opt.id];
+        revealInline(el, 'Your track: '+track.title+'.');
+      });
+      el.appendChild(g3);
+      var sp2=document.createElement('div'); sp2.className='spacer'; el.appendChild(sp2);
+      stage.appendChild(el);
+      return;
+    }
+
+    if(name==='fertility'){
+      el = screenWrap('question');
+      el.innerHTML = '<h1 class="q">Where are you with that?</h1>';
+      var g4=document.createElement('div'); g4.className='cardgrid';
+      var fertEls = FERTILITY_TIME.map(function(o){ var c=iconCard(o); g4.appendChild(c); return c; });
+      wireSingleSelect(fertEls, FERTILITY_TIME, function(opt){ state.answers.fertilityTime=opt.id; revealInline(el,opt.payoff); });
+      el.appendChild(g4);
+      var sp3=document.createElement('div'); sp3.className='spacer'; el.appendChild(sp3);
+      stage.appendChild(el);
+      return;
+    }
+
+    if(name==='doctor'){
+      el = screenWrap('question');
+      el.innerHTML = '<h1 class="q">Working with a doctor?</h1><p class="sub">This supports care — it doesn\u2019t replace it.</p>';
+      var g5=document.createElement('div'); g5.className='cardgrid';
+      var doctorEls = DOCTOR.map(function(o){ var c=iconCard(o); g5.appendChild(c); return c; });
+      wireSingleSelect(doctorEls, DOCTOR, function(opt){ state.answers.doctor=opt.id; revealInline(el,opt.payoff); });
+      el.appendChild(g5);
+      var sp4=document.createElement('div'); sp4.className='spacer'; el.appendChild(sp4);
+      stage.appendChild(el);
+      return;
+    }
+
+    if(name==='quizA'){
+      el = screenWrap('question');
+      el.innerHTML = '<h1 class="q">Same diagnosis. Same plan?</h1>';
+      var categories = [
+        {icon:'cycle',   a:'Irregular periods',            b:'Regular periods'},
+        {icon:'spark',   a:'Acne & oily skin',              b:'Clear skin'},
+        {icon:'drop',    a:'Hair thinning',                 b:'Thick hair'},
+        {icon:'compass', a:'Weight gain around belly',      b:'Difficulty losing weight'},
+        {icon:'clock',   a:'Cravings & low energy',         b:'Bloating & fatigue'}
+      ];
+      var grid = document.createElement('div'); grid.className='personagrid';
+      function personaCard(tone, phase, pname, key){
+        var card = document.createElement('div'); card.className='personacard persona-'+tone;
+        card.innerHTML = mascot(phase,'sm') + '<div class="personatag">Meet '+pname+'</div>';
+        categories.forEach(function(c){
+          var row=document.createElement('div'); row.className='personarow';
+          row.innerHTML='<span class="picon">'+ICONS[c.icon]+'</span><span></span>';
+          row.querySelector('span:last-child').textContent = c[key];
+          card.appendChild(row);
+        });
+        return card;
+      }
+      grid.appendChild(personaCard('a','crescent','Anu','a'));
+      grid.appendChild(personaCard('b','quarter','Kavya','b'));
+      el.appendChild(grid);
+
+      var tfRow = document.createElement('div'); tfRow.className='tfrow';
+      tfRow.innerHTML = '<button class="tfbtn" data-v="yes">Yes</button><button class="tfbtn" data-v="no">No</button>';
+      el.appendChild(tfRow);
+      var spA=document.createElement('div'); spA.className='spacer'; el.appendChild(spA);
+      stage.appendChild(el);
+
+      var pickTokenA = 0;
+      tfRow.querySelectorAll('.tfbtn').forEach(function(b){
+        b.onclick=function(){
+          var v = b.dataset.v;
+          tfRow.querySelectorAll('.tfbtn').forEach(function(x){ x.classList.remove('picked'); });
+          b.classList.add('picked');
+          burst(b);
+          var opener = v==='no' ? 'Exactly right.' : 'Actually, no.';
+          var myToken = ++pickTokenA;
+          setTimeout(function(){
+            if(myToken!==pickTokenA) return;
+            el.querySelector('h1.q').textContent = opener;
+            revealInline(el, 'Same PCOS. Different bodies. Different needs. Personal care works best.');
+          }, 220);
+        };
+      });
+      return;
+    }
+
+    if(name==='quizB'){
+      el = screenWrap('question');
+      el.innerHTML =
+        '<h1 class="q">Quick guess.</h1>'+
+        '<p class="sub">How many women do you think live with PCOS?</p>'+
+        '<div class="guessval" id="guessVal">'+state.guess+' million</div>'+
+        '<div class="guesssub">worldwide</div>'+
+        '<input type="range" min="1" max="60" value="'+state.guess+'" id="guessSlider">'+
+        '<div class="rangeends"><span>Rare</span><span>Very common</span></div>'+
+        '<div class="spacer"></div>'+
+        '<button class="btn" id="seeAnswer">See the answer</button>';
+      stage.appendChild(el);
+      var slider=el.querySelector('#guessSlider'); var valEl=el.querySelector('#guessVal');
+      slider.oninput=function(){ state.guess=+slider.value; valEl.textContent=slider.value+' million'; };
+      el.querySelector('#seeAnswer').onclick=function(){
+        var answerBtn = el.querySelector('#seeAnswer');
+        burst(valEl);
+        answerBtn.remove();
+        var sp = el.querySelector('.spacer'); if(sp) sp.remove();
+        slider.disabled = true;
+        el.querySelector('h1.q').textContent = 'Actually, it\u2019s about 20 million.';
+        var dots = document.createElement('div'); dots.className='dotsgrid';
+        var tones=['coral','moss','berry','sky','gold','ink'];
+        for(var k=0;k<12;k++){ var d=document.createElement('div'); d.className='dot c-'+tones[k%tones.length]; dots.appendChild(d); }
+        el.insertBefore(dots, el.querySelector('.guesssub').nextSibling);
+        revealInline(el, '20 million people. All different. There\u2019s no one fix. Just yours.');
+      };
+      return;
+    }
+
+    if(name==='quizC'){
+      el = screenWrap('question');
+      el.innerHTML = '<h1 class="q">How important is diet &amp; exercise in managing PCOS?</h1>';
+      var opts=[
+        {id:'little', label:'A little', c:'ink', icon:'shield'},
+        {id:'guided', label:'Important, with guidance', c:'moss', icon:'compass'},
+        {id:'very', label:'Very important', c:'coral', icon:'sun'},
+        {id:'only', label:'The only thing', c:'gold', icon:'spark'}
+      ];
+      var g=document.createElement('div'); g.className='cardgrid';
+      var dietEls = opts.map(function(o){ var c=iconCard(o); g.appendChild(c); return c; });
+      el.appendChild(g);
+      var sp6=document.createElement('div'); sp6.className='spacer'; el.appendChild(sp6);
+      stage.appendChild(el);
+
+      var openers = {little:'It matters more than that.', guided:'That\u2019s about right.', very:'You\u2019re on the right track.', only:'It matters — but not the whole story.'};
+      wireSingleSelect(dietEls, opts, function(o){
+        state.dietPick=o.id;
+        el.querySelector('h1.q').textContent = openers[o.id];
+        revealInline(el, 'Diet and exercise help. But it must fit you. One plan won\u2019t fit all.');
+      });
+      return;
+    }
+
+    if(name==='quizD'){
+      el = screenWrap('question');
+      el.innerHTML = '<h1 class="q">Can PCOS be managed well enough to reach your goals?</h1>'+
+        '<div class="tfrow" id="row">'+
+          '<button class="tfbtn" data-v="yes">Yes</button>'+
+          '<button class="tfbtn" data-v="no">No</button>'+
+        '</div>';
+      var sp7=document.createElement('div'); sp7.className='spacer'; el.appendChild(sp7);
+      stage.appendChild(el);
+      var pickTokenD = 0;
+      el.querySelectorAll('.tfbtn').forEach(function(b){
+        b.onclick=function(){
+          state.tfD=b.dataset.v;
+          el.querySelectorAll('.tfbtn').forEach(function(x){x.classList.remove('picked');});
+          b.classList.add('picked');
+          burst(b);
+          var opener = state.tfD==='yes' ? 'Yes — exactly right.' : 'Actually, yes.';
+          var myToken = ++pickTokenD;
+          setTimeout(function(){
+            if(myToken!==pickTokenD) return;
+            el.querySelector('h1.q').textContent = opener;
+            revealInline(el, 'Everyone\u2019s path looks different. Let\u2019s find yours.');
+          }, 220);
+        };
+      });
+      return;
+    }
+
+    if(name==='quizE'){
+      el = screenWrap('question');
+      el.innerHTML = '<h1 class="q">What should a PCOS workshop get right?</h1><p class="sub">Pick 3.</p>';
+      var g6=document.createElement('div'); g6.className='cardgrid'; g6.id='credGrid';
+      CRED.forEach(function(o){
+        var c=iconCard(o); c.dataset.id=o.id;
+        c.onclick=function(){
+          var id=this.dataset.id;
+          if(state.cred.has(id)){ state.cred.delete(id); this.classList.remove('selected'); }
+          else { if(state.cred.size>=3) return; state.cred.add(id); this.classList.add('selected'); burst(this.querySelector('.badge')); }
+          refreshCred();
+        };
+        g6.appendChild(c);
+      });
+      el.appendChild(g6);
+      var sp8=document.createElement('div'); sp8.className='spacer'; el.appendChild(sp8);
+      var btn=document.createElement('button'); btn.className='btn disabled'; btn.id='credBtn'; btn.textContent='Continue';
+      btn.onclick=function(){
+        if(state.cred.size!==3) return;
+        g6.querySelectorAll('.card').forEach(function(c){ c.classList.add('locked'); });
+        btn.remove(); sp8.remove();
+        revealInline(el,
+          'Doctors check it. Real patients help write it. We keep it fresh. That\u2019s care, not content.');
+      };
+      el.appendChild(btn);
+      stage.appendChild(el);
+      function refreshCred(){
+        g6.querySelectorAll('.card').forEach(function(c){ c.classList.toggle('locked', state.cred.size>=3 && !state.cred.has(c.dataset.id)); });
+        btn.className='btn'+(state.cred.size===3?'':' disabled');
+      }
+      return;
+    }
+
+    if(name==='finale'){
+      el = screenWrap('question');
+      el.appendChild(mascotHero('full'));
+      var receiptWrap = document.createElement('div');
+      receiptWrap.innerHTML =
+        '<div class="receipt">'+
+          '<div class="cross">Generic advice</div>'+
+          '<div class="cross">One-size-fits-all plans</div>'+
+          '<div class="cross">Guesswork</div>'+
+          '<div class="final">Only your path ahead.</div>'+
+        '</div>';
+      el.appendChild(receiptWrap.firstChild);
+      var cf=document.createElement('button'); cf.className='btn'; cf.textContent='See my path'; cf.onclick=next;
+      el.appendChild(cf);
+      stage.appendChild(el);
+      return;
+    }
+
+    if(name==='payoff'){
+      var track = TRACKS[state.answers.goal] || TRACKS.cycle;
+      var fs = firstSymptom();
+      var kLabel = (KNOWLEDGE.filter(function(k){return k.id===state.answers.knowledge;})[0]||{}).label || 'wherever you are';
+      var rows = [
+        {label:'Your focus is', value:track.title, phase:track.phase},
+        fs ? {label:'Because you mentioned', value:fs.label, icon:fs.icon} : null,
+        {label:'We\u2019re pacing this for', value:kLabel, icon:'book'},
+        {label:'One thing to know', value:track.fact, icon:'spark'}
+      ].filter(Boolean);
+      el = screenWrap('reveal');
+      el.appendChild(mascotHero(track.phase));
+      var h2=document.createElement('h1'); h2.className='q'; h2.textContent='So, here\u2019s your path'; el.appendChild(h2);
+      var rl=document.createElement('div'); rl.className='recaplist'; el.appendChild(rl);
+      var save=document.createElement('button'); save.className='btn'; save.textContent='Save my spot'; save.onclick=next;
+      stage.appendChild(el);
+      el.appendChild(save);
+      var tones=['ric-coral','ric-moss','ric-berry','ric-sky'];
+      rows.forEach(function(r,idx){
+        var row=document.createElement('div'); row.className='recaprow';
+        var tone=tones[idx%tones.length];
+        var iconHtml = r.icon ? ICONS[r.icon] : '<div class="mhead '+r.phase+'" style="position:relative;width:100%;height:100%;"><i class="msh"></i></div>';
+        row.innerHTML='<span class="ricon '+tone+'">'+iconHtml+'</span><span><div class="rlabel"></div><div class="rvalue"></div></span>';
+        row.querySelector('.rlabel').textContent=r.label;
+        row.querySelector('.rvalue').textContent=r.value;
+        rl.appendChild(row);
+      });
+      return;
+    }
+
+    if(name==='email'){
+      var track2 = TRACKS[state.answers.goal] || TRACKS.cycle;
+      el = screenWrap('question');
+      el.innerHTML =
+        '<h1 class="q">Where should we send it?</h1>'+
+        '<p class="sub">Your '+track2.title+' guide + invite.</p>'+
+        '<div class="field"><label>Email</label><input type="email" id="emailInput" placeholder="you@email.com" autocomplete="email"></div>'+
+        '<div class="spacer"></div>'+
+        '<button class="btn" id="reserveBtn">Reserve my spot</button>'+
+        '<button class="textlink" id="skipEmail">Skip for now, I\u2019ll browse first</button>';
+      stage.appendChild(el);
+      el.querySelector('#reserveBtn').onclick=function(){
+        var v=el.querySelector('#emailInput').value.trim();
+        state.answers.email=v||null; next();
+      };
+      el.querySelector('#skipEmail').onclick=function(){ state.answers.email=null; next(); };
+      return;
+    }
+
+    if(name==='testimonials'){
+      el = screenWrap('question');
+      el.innerHTML = '<h1 class="q">From women we\'ve helped</h1>';
+      var quotes = [
+        {q:'She actually explained why my cycles were off, instead of just handing me a diet. First time it made sense.', who:'Bhopal \u00b7 past client'},
+        {q:'No pressure to buy anything. I left with something I could actually follow at home.', who:'Past client'},
+        {q:'They told me honestly it might be my thyroid, not PCOS. I trusted them more for it.', who:'Past client'}
+      ];
+      quotes.forEach(function(t){
+        var c=document.createElement('div'); c.className='testicard';
+        c.innerHTML='<div class="stars">\u2605\u2605\u2605\u2605\u2605</div><div class="qt"></div><div class="who"></div>';
+        c.querySelector('.qt').textContent='\u201c'+t.q+'\u201d';
+        c.querySelector('.who').textContent='[ Name ] \u00b7 '+t.who;
+        el.appendChild(c);
+      });
+      var sp9=document.createElement('div'); sp9.className='spacer'; el.appendChild(sp9);
+      var cont=document.createElement('button'); cont.className='btn'; cont.textContent='Continue'; cont.onclick=next;
+      el.appendChild(cont);
+      stage.appendChild(el);
+      return;
+    }
+
+    if(name==='offer'){
+      el = screenWrap('question');
+      el.innerHTML = '<h1 class="q">Build a plan that\'s actually yours.</h1><p class="sub">Two hours. Real experts. A plan you keep.</p>';
+      var pc=document.createElement('div'); pc.className='pricecard';
+      pc.innerHTML='<div><span class="was">\u20b9499</span><span class="now">\u20b9149</span></div><div class="note">[ Sun 22 June \u00b7 11 AM ] \u00b7 Live on Zoom</div>';
+      el.appendChild(pc);
+      var ol=document.createElement('div'); ol.className='offer-list';
+      var items = [
+        'Your likely PCOS type \u2014 the root driving your symptoms',
+        'A one-page action plan, built live in the session',
+        'A daily WhatsApp tracker + a free community'
+      ];
+      items.forEach(function(t){
+        var r=document.createElement('div'); r.className='offer-row';
+        r.innerHTML='<svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span></span>';
+        r.querySelector('span').textContent=t;
+        ol.appendChild(r);
+      });
+      el.appendChild(ol);
+      var sp10=document.createElement('div'); sp10.className='spacer'; el.appendChild(sp10);
+      var goPay=document.createElement('button'); goPay.className='btn'; goPay.textContent='Continue to payment'; goPay.onclick=next;
+      el.appendChild(goPay);
+      stage.appendChild(el);
+      return;
+    }
+
+    if(name==='payment'){
+      el = screenWrap('question');
+      el.innerHTML =
+        '<h1 class="q">Reserve your seat</h1><p class="sub">\u20b9149 \u00b7 live 2-hour workshop</p>'+
+        '<div class="field"><label>Your name</label><input type="text" id="payName" placeholder="Priya Sharma" autocomplete="name"></div>'+
+        '<div class="field"><label>WhatsApp number</label><input type="tel" id="payPhone" placeholder="98765 43210" inputmode="numeric" autocomplete="tel"></div>'+
+        '<div class="field"><label>Email</label><input type="email" id="payEmail" placeholder="you@email.com" autocomplete="email"></div>'+
+        '<div class="payerr" id="payErr"></div>'+
+        '<div class="spacer"></div>'+
+        '<button class="btn" id="payBtn">Pay \u20b9149</button>';
+      stage.appendChild(el);
+
+      var nameEl=el.querySelector('#payName'), phoneEl=el.querySelector('#payPhone'),
+          emailEl=el.querySelector('#payEmail'), errEl=el.querySelector('#payErr'),
+          payBtn=el.querySelector('#payBtn');
+      if(state.answers.email) emailEl.value = state.answers.email;
+
+      function setErr(msg){ errEl.textContent = msg || ''; }
+      function setBusy(on, label){
+        payBtn.classList.toggle('busy', on);
+        if(on) payBtn.textContent = label;
+      }
+      function resetBtn(){ payBtn.classList.remove('busy'); payBtn.textContent = 'Pay \u20b9149'; }
+      function fallbackOrExplain(){
+        if(RAZORPAY_LINK){ window.location.href = RAZORPAY_LINK; return; }
+        setErr('Payment isn\u2019t switched on yet. Message us on WhatsApp to book.');
+        resetBtn();
+      }
+
+      payBtn.onclick=function(){
+        if(payBtn.classList.contains('busy')) return;
+        var nm=nameEl.value.trim(), ph=phoneEl.value.trim(), em=emailEl.value.trim();
+        if(!nm) return setErr('Please enter your name.');
+        if(ph.replace(/\D/g,'').length<10) return setErr('Please enter a valid phone number.');
+        if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return setErr('Please enter a valid email address.');
+        setErr(''); setBusy(true,'Starting\u2026');
+        state.answers.name=nm; state.answers.phone=ph; state.answers.email=em;
+
+        fetch('/api/create-order',{
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({name:nm,email:em,phone:ph,track:state.answers.goal||'',language:'en'})
+        }).then(function(r){ return r.json().then(function(d){ return {ok:r.ok,status:r.status,data:d}; }); })
+        .then(function(res){
+          if(res.status===503||res.status===404||res.status===405){ fallbackOrExplain(); return; }
+          if(!res.ok){ setErr(res.data.error||'Something went wrong. Please try again.'); resetBtn(); return; }
+          return loadRazorpay().then(function(loaded){
+            if(!loaded){ fallbackOrExplain(); return; }
+            resetBtn();
+            var rzp=new window.Razorpay({
+              key:res.data.keyId, order_id:res.data.orderId, amount:res.data.amount, currency:res.data.currency,
+              name:'Garbha Saathi', description:'Live 2-hour PCOS workshop',
+              prefill:{name:nm,email:em,contact:ph}, theme:{color:'#C1704A'},
+              handler:function(resp){
+                setBusy(true,'Confirming\u2026');
+                fetch('/api/verify-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(resp)})
+                  .then(function(r){ return r.json(); })
+                  .then(function(v){
+                    if(v&&v.verified){ next(); }
+                    else{ setErr('We couldn\u2019t confirm that payment. If money was deducted, message us on WhatsApp.'); resetBtn(); }
+                  })
+                  .catch(function(){ setErr('We couldn\u2019t confirm that payment. If money was deducted, message us on WhatsApp.'); resetBtn(); });
+              },
+              modal:{ondismiss:function(){ resetBtn(); }}
+            });
+            rzp.on('payment.failed',function(){ setErr('That payment didn\u2019t go through. Please try again.'); resetBtn(); });
+            rzp.open();
+          });
+        }).catch(function(){ fallbackOrExplain(); });
+      };
+      return;
+    }
+
+    if(name==='success'){
+      var track3 = TRACKS[state.answers.goal] || TRACKS.cycle;
+      el = screenWrap('successwrap');
+      var pm=document.createElement('div'); pm.className='paidmark';
+      pm.innerHTML='<svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>';
+      el.appendChild(pm);
+      var msg = 'Check <strong>'+state.answers.email+'</strong> \u2014 we\u2019ll send the Zoom link and your '+track3.title+' notes before the session.';
+      var h=document.createElement('h1'); h.textContent = 'Your seat is booked.';
+      var p=document.createElement('p'); p.innerHTML=msg;
+      el.appendChild(h); el.appendChild(p);
+      var again=document.createElement('div'); again.className='startover'; again.textContent='Start over';
+      again.onclick=function(){
+        state.answers={age:null,knowledge:null,symptoms:[],goal:null,fertilityTime:null,doctor:null,email:null,name:null,phone:null};
+        state.guess=20; state.tfA=null; state.tfD=null; state.dietPick=null; state.cred=new Set();
+        goTo(0);
+      };
+      el.appendChild(again);
+      stage.appendChild(el);
+      return;
+    }
+  }
+
+  goTo(0);
+})();
+
+</script>
+</body>
+</html>
