@@ -183,7 +183,7 @@
 
   /* ---- hero: video + headline, grafted onto Phases' welcome screen ---- */
   .herovideo{ position:relative; width:100%; max-width:280px; margin:4px auto 14px; border-radius:18px; overflow:hidden; aspect-ratio:5/4; box-shadow:0 10px 24px rgba(59,52,44,.18); background:linear-gradient(150deg,var(--coral-pastel),var(--gold-pastel)); }
-  .herovideo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .herovideo img, .herovideo video{ width:100%; height:100%; object-fit:cover; display:block; background:#000; }
   .herovideo .play{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
   .herovideo .play span{ width:52px; height:52px; border-radius:50%; background:rgba(251,247,238,.94); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 14px rgba(0,0,0,.22); }
   .herovideo .play span::after{ content:''; border-left:15px solid var(--terracotta); border-top:9px solid transparent; border-bottom:9px solid transparent; margin-left:3px; }
@@ -638,8 +638,10 @@
         '<div class="wordmark"><div class="dot"></div><span>Garbha Saathi</span></div>'+
         '<div class="trustpill">Live 2-hour PCOS workshop</div>'+
         '<div class="herovideo">'+
-          '<img loading="lazy" alt="Isha — 30 second intro" src="https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?w=560&h=448&fit=crop&crop=faces&q=72&auto=format">'+
-          '<div class="play"><span></span></div>'+
+          '<video id="heroVideoEl" poster="https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?w=560&h=448&fit=crop&crop=faces&q=72&auto=format" preload="metadata" playsinline webkit-playsinline>'+
+            '<source src="assets/isha-intro.mp4" type="video/mp4">'+
+          '</video>'+
+          '<div class="play" id="heroPlay"><span></span></div>'+
           '<div class="vcap">▶ Isha · 30 sec</div>'+
         '</div>';
       var h=document.createElement('h1'); h.innerHTML='Your PCOS. <span class="accent">Your plan.</span>';
@@ -653,6 +655,15 @@
       startBtn.onclick=next;
       el.appendChild(startBtn);
       stage.appendChild(el);
+
+      // Tap to play the intro clip in place, over its poster frame — same
+      // "play button on a still" pattern as the reveal, just backed by a
+      // real <video> now instead of a static image standing in for one.
+      var heroVideoEl = el.querySelector('#heroVideoEl'), heroPlay = el.querySelector('#heroPlay');
+      heroPlay.onclick = function(){ heroVideoEl.play(); };
+      heroVideoEl.addEventListener('playing', function(){ heroPlay.style.display='none'; });
+      heroVideoEl.addEventListener('pause', function(){ heroPlay.style.display='flex'; });
+      heroVideoEl.addEventListener('ended', function(){ heroVideoEl.currentTime=0; heroPlay.style.display='flex'; });
       return;
     }
 
