@@ -164,28 +164,62 @@
   .tcard .who .n{font-size:12.5px;font-weight:700}
   .tcard .who .s{font-size:11px;color:var(--ink-soft)}
 
-  /* ---- checkout sheet: collects name/WhatsApp/email in one place before
-     Razorpay opens, same contract as index.html's sheet ---- */
-  .sheet-ov{position:fixed;inset:0;z-index:120;display:flex;align-items:flex-end;justify-content:center;background:rgba(46,33,56,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-  .sheet-ov[hidden]{display:none}
-  .sheet-card{width:100%;max-width:var(--col);background:var(--cream);border-radius:22px 22px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));box-shadow:var(--shadow-lg);animation:sheetUp .3s cubic-bezier(.2,.8,.2,1)}
-  @keyframes sheetUp{from{transform:translateY(14px);opacity:0}to{transform:translateY(0);opacity:1}}
-  .sheet-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-  .sheet-head h3{font-family:var(--serif);font-size:20px;font-weight:600;color:var(--ink)}
-  .sheet-head .sh-sub{font-size:12.5px;color:var(--ink-soft);margin-top:3px}
-  .sheet-x{flex:none;width:30px;height:30px;border-radius:50%;border:none;background:rgba(46,33,56,.07);color:var(--ink);font-size:17px;line-height:1;cursor:pointer;font-family:var(--sans)}
+  /* ---- reservation form: inline on its own card now, not a popup —
+     collects name/WhatsApp/email right there before Razorpay opens ---- */
   .sheet-fields{display:grid;gap:10px;margin-top:16px}
   .sheet-fields label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:5px}
   .sheet-fields input{width:100%;font-family:var(--sans);font-size:16px;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px 13px}
   .sheet-fields input:focus{outline:none;border-color:var(--rose)}
-  .sheet-focus{display:flex;align-items:center;gap:8px;background:var(--rose-tint);border-radius:11px;padding:9px 12px;margin-top:14px;font-size:12.5px;font-weight:600;color:var(--rose-deep)}
-  .sheet-focus[hidden]{display:none}
+  .sheet-focus{display:flex;align-items:center;gap:8px;background:var(--rose-tint);border-radius:11px;padding:9px 12px;margin:14px 0;font-size:12.5px;font-weight:600;color:var(--rose-deep)}
   .sheet-err{font-size:12.5px;font-weight:600;color:var(--rose-deep);margin-top:10px;min-height:16px}
-  .sheet-card .btn{margin-top:12px}
-  .sheet-card .btn.busy{opacity:.65;pointer-events:none}
+  .btn.busy{opacity:.65;pointer-events:none}
   .sheet-trust{text-align:center;font-size:11.5px;color:var(--ink-soft);margin-top:9px}
   .paid-mark{width:52px;height:52px;border-radius:50%;margin:0 auto 12px;background:var(--sage-tint);display:grid;place-items:center}
   .paid-mark svg{width:26px;height:26px;stroke:var(--sage);fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+
+  /* ---- plan snapshot: a real look at the deliverable, not just a
+     text description of it ---- */
+  .plandoc-shot{position:relative;margin-top:14px;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow-lg);max-height:280px}
+  .plandoc-shot img{width:100%;display:block}
+  .plandoc-shot .shot-fade{position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(to bottom,rgba(253,246,241,0),var(--cream));pointer-events:none}
+  .plandoc-shot .shot-cap{position:absolute;left:12px;bottom:12px;z-index:2;background:rgba(46,33,56,.82);color:#fff;font-size:11px;font-weight:600;padding:5px 11px;border-radius:8px}
+
+  /* ---- post-workshop options ---- */
+  .opts{display:grid;gap:11px;margin-top:18px}
+  .opt{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:16px}
+  .opt.feat{background:#fff;color:var(--ink);border-color:transparent;box-shadow:var(--shadow-lg);position:relative}
+  .opt .oh{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .opt .on{font-family:var(--serif);font-size:18px;font-weight:600}
+  .opt .pp{font-size:11.5px;font-weight:700;padding:5px 9px;border-radius:999px;white-space:nowrap}
+  .opt .pp.free{background:rgba(94,126,104,.25);color:#CFE6D5}
+  .opt.feat .pp{background:var(--rose-tint);color:var(--rose-deep)}
+  .opt .pp.clinic{background:rgba(232,154,60,.22);color:#F4CD96}
+  .opt .od{font-size:13px;margin-top:4px;color:rgba(255,255,255,.7)}
+  .opt.feat .od{color:var(--ink-soft)}
+  .opt ul{list-style:none;margin-top:11px;display:grid;gap:7px}
+  .opt li{font-size:13px;display:flex;gap:8px;align-items:flex-start;color:rgba(255,255,255,.9)}
+  .opt.feat li{color:var(--ink)}
+  .opt li svg{width:14px;height:14px;flex:none;margin-top:3px;stroke:#F2A6BE;fill:none;stroke-width:2.2}
+  .opt.feat li svg{stroke:var(--rose)}
+  .opt .ribbon{position:absolute;top:-10px;left:16px;background:var(--marigold);color:#fff;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:5px 10px;border-radius:7px}
+  .opt .pprice{margin-top:12px;display:flex;align-items:baseline;gap:8px}
+  .opt .pprice .now{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--ink)}
+  .opt .pprice .off{font-size:10.5px;font-weight:700;color:var(--sage);background:var(--sage-tint);padding:3px 7px;border-radius:5px}
+  .opt .offernote{font-size:11.5px;color:var(--ink-soft);margin-top:6px}
+  .after-foot{margin-top:16px;font-size:13px;color:rgba(255,255,255,.6);text-align:center;font-style:italic}
+
+  /* ---- FAQ ---- */
+  .faq-list{margin-top:14px;border-top:1px solid var(--line)}
+  .faq-list details{border-bottom:1px solid var(--line)}
+  .faq-list summary{list-style:none;cursor:pointer;padding:15px 0;font-weight:600;font-size:14.5px;color:var(--ink);display:flex;justify-content:space-between;gap:12px;align-items:center}
+  .faq-list summary::-webkit-details-marker{display:none}
+  .faq-list summary .pm{width:21px;height:21px;flex:none;border-radius:50%;border:1.5px solid var(--rose);position:relative}
+  .faq-list summary .pm::before,.faq-list summary .pm::after{content:"";position:absolute;background:var(--rose);border-radius:2px;top:50%;left:50%;transform:translate(-50%,-50%)}
+  .faq-list summary .pm::before{width:9px;height:1.8px}
+  .faq-list summary .pm::after{width:1.8px;height:9px;transition:transform .2s}
+  .faq-list details[open] summary .pm::after{transform:translate(-50%,-50%) scaleY(0)}
+  .faq-list .ans{padding:0 0 16px;font-size:13.5px;color:var(--ink-soft)}
+  .faq-list .ans b{color:var(--ink);font-weight:600}
 
   /* ---- price ---- */
   .pricebox{text-align:center;margin-top:20px}
@@ -391,6 +425,12 @@
       <div class="fnote">This is a starting point, not a diagnosis. In the workshop you'll build the full plan around it — and we'll tell you honestly if it looks like something other than PCOS.</div>
     </div>
 
+    <div class="plandoc-shot">
+      <img alt="Sample My PCOS Root Plan" src="assets/plan-sample.webp" loading="lazy" width="780" height="910">
+      <div class="shot-fade"></div>
+      <span class="shot-cap">A real participant's filled plan</span>
+    </div>
+
     <div class="spacer"></div>
     <div class="cue">
       <span>What women who did this say</span>
@@ -470,12 +510,77 @@
 
     <div class="spacer"></div>
     <div class="cue">
-      <span>Book your seat</span>
+      <span>After the workshop</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
     </div>
   </section>
 
-  <!-- 8 · PAY -->
+  <!-- 8 · AFTER THE WORKSHOP -->
+  <section class="card dark" data-card>
+    <span class="eyebrow" style="color:#F2A6BE">After the workshop</span>
+    <h2>Three honest options — <em>all good.</em></h2>
+    <p class="lead">Everyone leaves with the same free baseline. The rest is your choice.</p>
+
+    <div class="opts">
+      <div class="opt">
+        <div class="oh"><span class="on">1 · Do it yourself</span><span class="pp free">Free</span></div>
+        <div class="od">A complete option if you're self-driven.</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Rebuild your plate anytime</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>WhatsApp tracker + free community</li>
+        </ul>
+      </div>
+      <div class="opt feat">
+        <span class="ribbon">Attendee offer · 48 hrs</span>
+        <div class="oh"><span class="on">2 · 90-Day Program</span></div>
+        <div class="od">An expert alongside you, on three pillars:</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><b>Personalisation</b> — your plan keeps adjusting</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><b>Accountability</b> — check-ins that keep you going</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><b>Course-correction</b> — someone reading your patterns</li>
+        </ul>
+        <div class="pprice"><span class="now">[ ₹X,XXX ]</span><span class="off">attendee price</span></div>
+        <div class="offernote">Sent on WhatsApp after the session · 48 hours.</div>
+      </div>
+      <div class="opt">
+        <div class="oh"><span class="on">3 · Clinic visit</span><span class="pp clinic">Separate</span></div>
+        <div class="od">For clarity first — not a tier up or down.</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>If you're unsure, or planning a pregnancy</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Reports reviewed · online or in Bhopal</li>
+        </ul>
+      </div>
+    </div>
+    <p class="after-foot">Even with option 1, you're ahead of where you were 2 hours ago.</p>
+
+    <div class="spacer"></div>
+    <div class="cue">
+      <span>Before you join</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- 9 · FAQ -->
+  <section class="card" data-card>
+    <span class="eyebrow">Quick answers</span>
+    <h2>Before you <em>join.</em></h2>
+
+    <div class="faq-list">
+      <details><summary>Do I need to be techy?<span class="pm"></span></summary><div class="ans">No. If you can send a WhatsApp message, you can do this.</div></details>
+      <details><summary>What if I'm not sure I have PCOS?<span class="pm"></span></summary><div class="ans">That's exactly what the honest self-screen is for. <b>We'll tell you if it might be something else.</b></div></details>
+      <details><summary>Will I see results fast?<span class="pm"></span></summary><div class="ans">We won't pretend. Energy, sleep and cravings <b>may</b> shift in 1–2 weeks. Skin, hair and cycles take 2–3 months. "Nothing yet" in week one is normal.</div></details>
+      <details><summary>Do I have to buy anything after?<span class="pm"></span></summary><div class="ans"><b>No.</b> Doing it yourself is complete. The program is optional, for ongoing support.</div></details>
+      <details><summary>What if I can't join live?<span class="pm"></span></summary><div class="ans">[ Replay policy to confirm before launch. ] You'll get the most from attending live.</div></details>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="cue">
+      <span>Ready?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- 10 · THE ₹149 CTA -->
   <section class="card dark" data-card id="book">
     <span class="eyebrow">Reserve your seat</span>
     <h2>Build a plan that's <em>actually yours.</em></h2>
@@ -492,34 +597,30 @@
     </div>
 
     <div class="spacer"></div>
-    <a class="btn" href="#" data-checkout>Reserve my seat <span class="tag">₹149</span></a>
-    <p class="lead" style="text-align:center;font-size:12px;margin-top:10px">Secure payment via Razorpay · UPI, cards &amp; netbanking</p>
+    <a class="btn" href="#reservation">I'm ready — reserve my spot</a>
   </section>
 
-</div>
+  <!-- 11 · RESERVATION -->
+  <section class="card" data-card id="reservation">
+    <span class="eyebrow">Just a few details</span>
+    <h2>Where should we <em>send it?</em></h2>
+    <p class="lead">Your seat, the Zoom link, and your focus area — all in one place.</p>
 
-<div class="sheet-ov" id="checkoutSheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
-  <div class="sheet-card" id="sheetCard">
-    <div class="sheet-head">
-      <div>
-        <h3 id="sheetTitle">Reserve your seat</h3>
-        <div class="sh-sub">Live 2-hour PCOS workshop · ₹149</div>
+    <div id="reservationBody">
+      <div class="sheet-focus" id="sheetFocus">
+        <span>Your focus: <b id="sheetFocusName">Cycle &amp; Hormone Balance</b></span>
       </div>
-      <button class="sheet-x" id="sheetClose" aria-label="Close">&times;</button>
+      <div class="sheet-fields">
+        <div><label for="ckName">Your name</label><input id="ckName" type="text" autocomplete="name" placeholder="Priya Sharma"></div>
+        <div><label for="ckPhone">WhatsApp number</label><input id="ckPhone" type="tel" autocomplete="tel" inputmode="numeric" placeholder="98765 43210"></div>
+        <div><label for="ckEmail">Email</label><input id="ckEmail" type="email" autocomplete="email" placeholder="you@email.com"></div>
+      </div>
+      <div class="sheet-err" id="sheetErr"></div>
+      <a class="btn" href="#" id="sheetPay">Confirm my spot <span class="tag">₹149</span></a>
+      <p class="lead" style="text-align:center;font-size:12px;margin-top:10px">Secure payment via Razorpay · UPI, cards &amp; netbanking</p>
     </div>
-    <div class="sheet-focus" id="sheetFocus" hidden>
-      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-      <span>Your focus: <b id="sheetFocusName"></b></span>
-    </div>
-    <div class="sheet-fields">
-      <div><label for="ckName">Your name</label><input id="ckName" type="text" autocomplete="name" placeholder="Priya Sharma"></div>
-      <div><label for="ckPhone">WhatsApp number</label><input id="ckPhone" type="tel" autocomplete="tel" inputmode="numeric" placeholder="98765 43210"></div>
-      <div><label for="ckEmail">Email</label><input id="ckEmail" type="email" autocomplete="email" placeholder="you@email.com"></div>
-    </div>
-    <div class="sheet-err" id="sheetErr"></div>
-    <a class="btn" href="#" id="sheetPay">Pay <span class="tag">₹149</span></a>
-    <div class="sheet-trust">Secure payment via Razorpay · UPI, cards &amp; netbanking</div>
-  </div>
+  </section>
+
 </div>
 
 <div class="paybar">
@@ -527,7 +628,7 @@
     <div class="l1">Your PCOS, your plan — ₹149</div>
     <div class="l2">Live on Zoom · [ Sun 22 June ]</div>
   </div>
-  <a class="btn" href="#" data-checkout>Reserve</a>
+  <a class="btn" href="#reservation">Reserve</a>
 </div>
 
 <script>
@@ -610,6 +711,8 @@
     var t = TRACKS[topTrack()];
     focusName.textContent = t[0];
     focusFact.textContent = t[1];
+    var sfn = document.getElementById('sheetFocusName');
+    if (sfn) sfn.textContent = t[0];
   }
 
   Array.prototype.forEach.call(document.querySelectorAll('#tiles .tile'), function(tile){
@@ -641,20 +744,17 @@
     });
   });
 
-  /* ---- payment: one sheet collects name/WhatsApp/email, then Razorpay
-     opens over the page — same contract as index.html's checkout. ---- */
+  /* ---- payment: the reservation card collects name/WhatsApp/email inline,
+     then Razorpay opens over the page — same contract as index.html's
+     checkout, just without a popup sheet in between. ---- */
   var RAZORPAY_LINK = "";
 
-  var sheet=document.getElementById('checkoutSheet'),
-      sheetCard=document.getElementById('sheetCard'),
+  var reservationBody=document.getElementById('reservationBody'),
       sheetErr=document.getElementById('sheetErr'),
       sheetPay=document.getElementById('sheetPay'),
-      sheetFocus=document.getElementById('sheetFocus'),
-      sheetFocusName=document.getElementById('sheetFocusName'),
       ckName=document.getElementById('ckName'),
       ckPhone=document.getElementById('ckPhone'),
-      ckEmail=document.getElementById('ckEmail'),
-      lastFocused=null;
+      ckEmail=document.getElementById('ckEmail');
 
   function setErr(msg){ sheetErr.textContent = msg || ''; }
   function setBusy(on,label){
@@ -663,35 +763,8 @@
   }
   function resetPayBtn(){
     sheetPay.classList.remove('busy');
-    sheetPay.innerHTML = 'Pay <span class="tag">₹149</span>';
+    sheetPay.innerHTML = 'Confirm my spot <span class="tag">₹149</span>';
   }
-
-  function openCheckout(e){
-    if (e) e.preventDefault();
-    lastFocused = document.activeElement;
-    setErr(''); resetPayBtn();
-    if (picked.length) {
-      sheetFocusName.textContent = TRACKS[topTrack()][0];
-      sheetFocus.hidden = false;
-    } else {
-      sheetFocus.hidden = true;
-    }
-    sheet.hidden = false;
-    setTimeout(function(){ ckName.focus(); }, 60);
-  }
-  function closeCheckout(){
-    sheet.hidden = true;
-    if (lastFocused && lastFocused.focus) lastFocused.focus();
-  }
-
-  document.getElementById('sheetClose').addEventListener('click', closeCheckout);
-  sheet.addEventListener('click', function(e){ if (e.target === sheet) closeCheckout(); });
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && !sheet.hidden) closeCheckout();
-  });
-  Array.prototype.forEach.call(document.querySelectorAll('[data-checkout]'), function(el){
-    el.addEventListener('click', openCheckout);
-  });
 
   /* Razorpay's script is only fetched once someone actually opens checkout. */
   var rzpLoading = null;
@@ -715,14 +788,10 @@
   }
 
   function showPaid(){
-    sheetCard.innerHTML =
+    reservationBody.innerHTML =
       '<div class="paid-mark"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>'+
       '<h3 style="font-family:var(--serif);font-size:20px;text-align:center;color:var(--ink)">Your seat is booked</h3>'+
-      '<p style="text-align:center;font-size:14px;margin-top:8px">We’ll send the Zoom link and joining details on WhatsApp and email.</p>'+
-      '<a class="btn" href="#" id="paidDone" style="margin-top:16px">Done</a>';
-    document.getElementById('paidDone').addEventListener('click', function(e){
-      e.preventDefault(); closeCheckout();
-    });
+      '<p style="text-align:center;font-size:14px;margin-top:8px">We’ll send the Zoom link and joining details on WhatsApp and email.</p>';
   }
 
   sheetPay.addEventListener('click', function(e){
