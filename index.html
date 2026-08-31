@@ -64,7 +64,7 @@
 
   /* video */
   .video{position:relative;margin:20px 0 0;border-radius:18px;overflow:hidden;box-shadow:var(--shadow-lg);background:linear-gradient(140deg,var(--rose-tint),var(--marigold-tint));aspect-ratio:5/4}
-  .video img{width:100%;height:100%;object-fit:cover;display:block}
+  .video img,.video video{width:100%;height:100%;object-fit:cover;display:block;background:#000}
   .video .play{position:absolute;inset:0;display:grid;place-items:center}
   .video .play span{width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;box-shadow:0 10px 24px -8px rgba(0,0,0,.5)}
   .video .play span::after{content:"";border-left:18px solid var(--rose);border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:4px}
@@ -396,11 +396,12 @@
       <h1>Tired of fighting PCOS symptoms? Learn &amp; Build your <em>personalized action plan in 2 hours.</em></h1>
       <p class="hero-sub">Acne, weight, hair fall, irregular periods — different symptoms, one root cause.</p>
 
-      <div class="video">
-        <img loading="lazy" alt="Isha intro video"
-          src="https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?w=800&h=640&fit=crop&crop=faces&q=72&auto=format">
-        <div class="play"><span></span></div>
-        <div class="vcap">▶ Isha · 30-sec intro</div>
+      <div class="video" id="heroVideo">
+        <video id="heroVideoEl" poster="https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?w=800&h=640&fit=crop&crop=faces&q=72&auto=format" preload="metadata" playsinline webkit-playsinline>
+          <source src="assets/isha-intro.mp4" type="video/mp4">
+        </video>
+        <div class="play" id="heroPlay"><span></span></div>
+        <div class="vcap">▶ Isha · 1.5 min</div>
       </div>
 
       <div class="meta">
@@ -696,6 +697,16 @@
 </div></div>
 
 <script>
+  /* Tap to play the intro clip in place, over its poster frame. */
+  (function(){
+    var heroVideoEl = document.getElementById('heroVideoEl'), heroPlay = document.getElementById('heroPlay');
+    if(!heroVideoEl || !heroPlay) return;
+    heroPlay.addEventListener('click', function(){ heroVideoEl.play(); });
+    heroVideoEl.addEventListener('playing', function(){ heroPlay.style.display='none'; });
+    heroVideoEl.addEventListener('pause', function(){ heroPlay.style.display='grid'; });
+    heroVideoEl.addEventListener('ended', function(){ heroVideoEl.currentTime=0; heroPlay.style.display='grid'; });
+  })();
+
   /* ================================================================
      PAYMENT
      Two ways to take money, tried in this order:
@@ -880,7 +891,7 @@
     "Your PCOS,":"आपका PCOS,",
     "your plan.":"आपका प्लान।",
     "Build a plan that's actually yours. Real experts tune it live. In 2 hours.":"ऐसा प्लान बनाइए जो सच में आपका हो। एक्सपर्ट उसे लाइव ठीक करेंगे। बस 2 घंटे में।",
-    "▶ Isha · 30-sec intro":"▶ ईशा · 30-सेकंड परिचय",
+    "▶ Isha · 1.5 min":"▶ ईशा · 1.5 मिनट",
     "[ Sun 22 June · 11 AM ]":"[ रवि 22 जून · 11 AM ]",
     "Live on Zoom":"Zoom पर लाइव",
     "Live session starts in":"लाइव सेशन शुरू होने में",
