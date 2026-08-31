@@ -347,22 +347,37 @@
     <div class="tiles" id="tiles">
       <button class="tile" data-track="cycle" aria-pressed="false">
         <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/><circle cx="12" cy="15" r="2"/></svg>
-        <span class="tx">Irregular periods</span>
-        <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
-      </button>
-      <button class="tile" data-track="skin" aria-pressed="false">
-        <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".8"/><circle cx="15" cy="13" r=".8"/><circle cx="13.5" cy="9" r=".8"/></svg>
-        <span class="tx">Acne &amp; hair fall</span>
+        <span class="tx">Irregular cycles</span>
         <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
       </button>
       <button class="tile" data-track="metabolic" aria-pressed="false">
         <svg class="ic" viewBox="0 0 24 24"><path d="M4 8h16l-2 12H6z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>
-        <span class="tx">Weight that won't shift</span>
+        <span class="tx">Weight &amp; insulin</span>
+        <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+      </button>
+      <button class="tile" data-track="skin" aria-pressed="false">
+        <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".8"/><circle cx="15" cy="13" r=".8"/><circle cx="13.5" cy="9" r=".8"/></svg>
+        <span class="tx">Acne, skin &amp; hair</span>
+        <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+      </button>
+      <button class="tile" data-track="fertility" aria-pressed="false">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M12 22a1 1 0 01-1-1v-6.1C6.6 14.4 3 10.8 3 6a1 1 0 011-1c4.8 0 8.4 3.6 8.9 8H13c.5-4.4 4.1-8 8.9-8a1 1 0 011 1c0 4.8-3.6 8.4-8 8.9V21a1 1 0 01-1 1z"/></svg>
+        <span class="tx">Fertility challenges</span>
         <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
       </button>
       <button class="tile" data-track="mood" aria-pressed="false">
         <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 15.5c.8-1 2-1.5 3.5-1.5s2.7.5 3.5 1.5"/><circle cx="9" cy="10" r=".8"/><circle cx="15" cy="10" r=".8"/></svg>
-        <span class="tx">Mood swings, low energy</span>
+        <span class="tx">Mood swings</span>
+        <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+      </button>
+      <button class="tile" data-track="mood" aria-pressed="false">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 10.4l4 2.3-.9 1.6-4.6-2.7V6h1.5v6.4z"/></svg>
+        <span class="tx">Low energy</span>
+        <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+      </button>
+      <button class="tile" data-track="mood" aria-pressed="false">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M3 4.5A1.5 1.5 0 014.5 3H11v18H4.5A1.5 1.5 0 013 19.5v-15zM21 4.5A1.5 1.5 0 0019.5 3H13v18h6.5a1.5 1.5 0 001.5-1.5v-15z"/></svg>
+        <span class="tx">Trouble sleeping</span>
         <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
       </button>
     </div>
@@ -424,7 +439,7 @@
     </div>
   </section>
 
-  <!-- 4 · HER RESULT -->
+  <!-- 4 · HER RESULT (+ what she keeps) -->
   <section class="card" data-card>
     <span class="eyebrow">Your starting point</span>
     <h2>Where <em>your</em> plan begins.</h2>
@@ -440,6 +455,13 @@
       <img alt="Sample My PCOS Root Plan" src="assets/plan-sample.webp" loading="lazy" width="780" height="910">
       <div class="shot-fade"></div>
       <span class="shot-cap">A real participant's filled plan</span>
+    </div>
+
+    <div class="gets">
+      <div class="get"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>A one-page action plan, in your words</span></div>
+      <div class="get"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>The exact tests to confirm it with a doctor</span></div>
+      <div class="get"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>An honest timeline — weeks for some things, months for others</span></div>
+      <div class="get"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>A daily WhatsApp tracker + a free community</span></div>
     </div>
 
     <div class="spacer"></div>
@@ -502,32 +524,12 @@
 
     <div class="spacer"></div>
     <div class="cue">
-      <span>What you keep</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
-    </div>
-  </section>
-
-  <!-- 7 · WHAT SHE KEEPS -->
-  <section class="card" data-card>
-    <span class="eyebrow">What you walk out with</span>
-    <h2>Your own PCOS Root Plan — <em>not a handout.</em></h2>
-
-    <div class="gets">
-      <div class="get"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>Your likely PCOS type — the root driving your symptoms</span></div>
-      <div class="get"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>A one-page action plan — diet &amp; lifestyle, in your words</span></div>
-      <div class="get"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>The exact tests to get, so a doctor can confirm it</span></div>
-      <div class="get"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>An honest timeline — what shifts in weeks, what takes months</span></div>
-      <div class="get"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span>A daily WhatsApp tracker + a free community</span></div>
-    </div>
-
-    <div class="spacer"></div>
-    <div class="cue">
       <span>After the workshop</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
     </div>
   </section>
 
-  <!-- 8 · AFTER THE WORKSHOP -->
+  <!-- 7 · AFTER THE WORKSHOP -->
   <section class="card dark" data-card>
     <span class="eyebrow" style="color:#F2A6BE">After the workshop</span>
     <h2>Three honest options — <em>all good.</em></h2>
@@ -572,7 +574,7 @@
     </div>
   </section>
 
-  <!-- 9 · FAQ -->
+  <!-- 8 · FAQ -->
   <section class="card" data-card>
     <span class="eyebrow">Quick answers</span>
     <h2>Before you <em>join.</em></h2>
@@ -592,7 +594,7 @@
     </div>
   </section>
 
-  <!-- 10 · THE ₹149 CTA -->
+  <!-- 9 · THE ₹149 CTA -->
   <section class="card dark" data-card id="book">
     <span class="eyebrow">Reserve your seat</span>
     <h2>Build a plan that's <em>actually yours.</em></h2>
@@ -654,6 +656,7 @@
     cycle:     ['Cycle & Hormone Balance', 'A long, irregular cycle can still become a healthy one.'],
     skin:      ['Skin & Hair Wellness',    'PCOS acne shows on the jaw and chin. It’s hormonal, not hygiene.'],
     metabolic: ['Metabolic & Insulin Health','You can have insulin issues at any weight.'],
+    fertility: ['Fertility Support',       'Home tests can get PCOS wrong. Specialists know better.'],
     mood:      ['Mood & Energy Restoration','Mood swings come from hormones, not a character flaw.']
   };
 
