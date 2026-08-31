@@ -5,88 +5,101 @@ without re-reading the whole chat history.
 
 ## What this is
 
-The landing page for a ₹149 live PCOS workshop. One static `index.html`,
-plus two small serverless functions (`api/`) that take payment through
-Razorpay. See `README.md` for setup/deploy steps — this file is about
-**what's been built, what's tested, and what's still open.**
+The landing page for a ₹149 live PCOS workshop, plus two small serverless
+functions (`api/`) that take payment through Razorpay. See `README.md` for
+setup/deploy steps — this file is about **what's been built, what's
+tested, and what's still open.**
 
-Branch: `claude/saathi-landing-page-redesign-nc5rpb`. Everything below is
+Branch: `claude/saathi-landing-page-redesign-nc5rpb`, merged into `main`
+after each change (that's what Vercel deploys from). Everything below is
 committed and pushed — nothing is sitting locally, unpushed, or only in
 chat.
 
-## What's built, in order
+## Three versions exist — `preview.html` is the one going to production
 
-1. **Payment CTA wired up.** The "Reserve my seat" button was a dead
-   `href="#"`. Now it opens a real checkout sheet.
-2. **The 208KB inline image → 36KB external file.** The sample plan
-   screenshot was base64-encoded directly into the HTML, bloating the page
-   and blocking first paint. Now it's `assets/plan-sample.webp`, lazy-loaded.
-3. **The Problem section redesigned**, matching the reference panel you
-   shared: scattered conflicting opinions (mum / friend / doctor /
-   Instagram) converging into one real point, instead of a paragraph.
-4. **The symptom grid is now an interactive 3-second quiz.** Tap the
-   symptoms that apply, and a personalized "focus" card appears below —
-   her likely PCOS type (cycle / skin / metabolic / mood) plus one real
-   fact — with a button into the plan section. Works in both languages.
-5. **Copy trimmed** in Isha's bio, "Why this works," the 2-hours steps, and
-   testimonials — cut repeated points, not just shortened sentences.
-6. **Razorpay Checkout**, phase 2. A bottom sheet collects name/WhatsApp/
-   email, then opens Razorpay over the page with those fields prefilled and
-   her quiz result attached to the order. Falls back to a plain hosted
-   Payment Link (or a clear "not set up yet" message) if the backend isn't
-   configured — so the page never looks broken, it just does less.
-7. **Confirmation email.** Once a payment verifies, she gets a bilingual
-   email with the Zoom link (once you've set one) and her quiz result.
-8. **A Razorpay webhook as a reliability backstop.** If she pays and closes
-   the tab immediately, the browser-based confirmation never gets a chance
-   to run. The webhook fires from Razorpay's own servers regardless, so the
-   email still goes out. This is the only thing that sends the email — the
-   browser path just shows her the "booked" screen — specifically so a
-   normal payment doesn't get emailed twice.
+- **`index.html`** — the original scrolling sales page. Full sections
+  (founder story, packages, FAQ), Hindi/English toggle.
+- **`quiz.html`** — Phases' actual 16-screen quiz mechanic, ported and
+  extended with a hero, testimonials, and checkout.
+- **`preview.html`** — a card-based, scroll-snap funnel (tap-through
+  quiz → personalized result → testimonials → post-workshop options →
+  FAQ → price pitch → payment popup). **This is the current production
+  candidate** — `index.html` and `quiz.html` are intentionally frozen
+  for now, not being iterated on.
 
-Everything above was tested directly (not just described): forged
-signatures rejected, tampered payloads rejected, a failed email never
-flips a real payment to "unconfirmed," the full quiz → checkout → payment →
-confirmation flow passes in a real headless browser, in both languages.
+All three share the same payment backend (`api/create-order.js`,
+`api/verify-payment.js`, `api/razorpay-webhook.js`) and the same brand
+(MySaathi, renamed from Garbha Saathi).
+
+## What's built on `preview.html`, in order
+
+1. Hero with a real intro video (tap-to-play, native progress/pause
+   controls, real poster frame extracted from the video) and a headline
+   covering all the symptoms including fertility.
+2. A 2-question tappable quiz (symptoms, then a "same diagnosis, same
+   plan?" realization) feeding a personalized result card — including an
+   actual plan-sample screenshot, not just a text description.
+3. Real testimonials (verbatim quotes from earlier services — see "Open
+   items" below, names still pending) and post-workshop options (DIY /
+   90-Day Program at ₹1,499 / clinic visit), ported from `index.html`.
+4. An FAQ addressing the "will 2 hours actually help" skepticism.
+5. A price-pitch card, followed by a Razorpay checkout popup (name/
+   WhatsApp/email → Razorpay → verified confirmation) — same popup
+   pattern as `index.html`, reachable from any card via the sticky bar.
+6. Legal pages: `privacy.html`, `terms.html`, `refund.html`,
+   `contact.html` — linked from the price-pitch card. **These are solid
+   drafts, not reviewed by a lawyer** — see "Open items."
+
+Tested directly throughout (not just described): forged Razorpay
+signatures rejected, tampered amounts rejected, the checkout popup opens
+correctly from every entry point, a failed email never flips a real
+payment to "unconfirmed," and the personalized-focus pill correctly
+shows a generic message (not a fake-specific one) when she reserves
+before answering the quiz.
 
 ## How to actually test what's built
 
-**Without any setup** (just pull the branch and open `index.html`):
-- Language toggle, the symptom quiz and its personalized result, the
-  redesigned Problem section, all copy — all client-side, all testable
-  immediately, in a plain browser, no server needed.
-- Tapping "Reserve my seat" opens the checkout sheet and validates the
-  form (empty name, bad email, short phone all get caught) — also works
-  with no backend.
+**Without any setup** (pull the branch, open `preview.html`): the whole
+quiz, personalization, testimonials, options, and FAQ are client-side —
+testable immediately, no server needed. Tapping "Reserve" opens the
+checkout popup and validates the form even with no backend.
 
-**Payment itself won't complete yet** — and that's expected, not a bug.
-Opening `index.html` as a plain file (or hosting it on GitHub Pages) has no
-`/api` behind it, so submitting the checkout form will show *"Payment
-isn't switched on yet"*. That's the fallback working correctly. Real
-checkout needs:
-1. The repo imported into Vercel (so `/api/*` actually runs), and
-2. `RAZORPAY_KEY_ID` / `RAZORPAY_KEY_SECRET` set (test-mode keys are fine
-   to start — see README for the full env var list).
+**Payment itself won't complete without a backend** — expected, not a
+bug. With no `/api` behind it, submitting the form shows *"Payment isn't
+switched on yet"* — the fallback working correctly. Real checkout needs
+the repo imported into Vercel plus `RAZORPAY_KEY_ID`/`RAZORPAY_KEY_SECRET`
+set (see README). You've already confirmed a full test-mode Razorpay
+checkout works end to end.
 
-Once those two things exist, the whole flow — quiz → checkout → Razorpay
-→ confirmation email — is live end to end.
+## Open items — needs you, not more code
 
-## What's not done — needs you, not more code
+**Blockers before real money can flow:**
+- Razorpay live-mode KYC (business PAN, bank account) — not started.
+  Test keys work today; this is what unlocks real payments.
+- Confirm `RAZORPAY_WEBHOOK_SECRET` and `RESEND_API_KEY` are actually set
+  in Vercel — without them, no confirmation email ever sends.
+- Legal pages exist now but are drafts with placeholders (`[ ... ]`
+  markers) for things only you know: registered business name, address,
+  support email/phone, whether sessions are recorded, your actual
+  cancellation-window policy, and whether a named Grievance Officer is
+  required for your business (confirm with a professional — this isn't
+  legal advice, just a reasonable starting draft).
 
-- **Razorpay account + Vercel import.** Nothing above can go live without
-  these two.
-- **Content placeholders**: workshop date, 90-day program price, replay
-  policy, 3 real testimonial names, 2–4 real medical/partner logos.
-- **Real photos.** Isha and the Bhopal clinic are still stock Unsplash
-  photos; testimonial faces are randomuser.me placeholders. There's a dark
-  "DEMO" banner at the top of the page flagging this — it needs to come out
-  before real visitors see it.
-- **Razorpay live-mode approval.** Test keys work today; real payments need
-  Razorpay to approve live mode (business KYC), which takes a few days, not
-  minutes.
-- **Legal pages.** Razorpay's live-mode approval typically expects a
-  Privacy Policy, Terms & Conditions, a Refund/Cancellation policy, and a
-  Contact page on the site. None exist yet.
+**Content still placeholder:**
+- Workshop date is still `[ Sun 22 June · 11 AM ]` everywhere.
+- Testimonials have real quotes now (from earlier services) but real
+  names are still `[ Name ]`, and the photos are still randomuser.me
+  stand-ins, not the actual people's photos.
+- FAQ's "What if I can't join live?" still says `[ Replay policy to
+  confirm before launch ]`.
+- The plan-sample screenshot (`assets/plan-sample.webp`) still visually
+  shows the old "Garbha Saathi" name baked into the image itself — it's
+  a real screenshot, not editable text, so it needs a fresh one.
+
+**Decided, worth noting:**
+- 90-Day Program price: ₹1,499 (set).
+- Platform: Google Meet, not Zoom (set on `preview.html` only —
+  `index.html`/`quiz.html` still say Zoom, but they're frozen for now).
 
 ## The bigger vision (cross-app, not yet built)
 
@@ -112,6 +125,6 @@ decision, not an engineering question:
 ## Where things live
 
 - Code + all commits: `claude/saathi-landing-page-redesign-nc5rpb` on
-  `Mysaathi-landingpage`, all pushed.
+  `Mysaathi-landingpage`, merged into `main` after each change, all pushed.
 - Setup/deploy steps: `README.md` in this repo.
 - This file: what's done, what's tested, what's still open.
