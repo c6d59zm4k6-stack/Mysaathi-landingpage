@@ -67,12 +67,17 @@
   /* ---- hero ---- */
   .brand{display:flex;align-items:center;gap:8px;font-family:var(--serif);font-weight:600;font-size:17px}
   .brand .mark{width:26px;height:26px;border-radius:50%;background:conic-gradient(from 200deg,var(--rose),var(--marigold),var(--plum),var(--rose));display:grid;place-items:center;color:#fff;font-size:12px}
-  .video{position:relative;margin-top:18px;border-radius:18px;overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:5/4;background:var(--rose-tint)}
-  .video img{width:100%;height:100%;object-fit:cover;display:block}
+  /* aspect-ratio matches the actual clip (1024x576, 16:9) so object-fit:cover
+     doesn't crop the sides. */
+  .video{position:relative;margin-top:18px;border-radius:18px;overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:16/9;background:var(--rose-tint)}
+  .video img,.video video{width:100%;height:100%;object-fit:cover;display:block;background:#000}
   .video .play{position:absolute;inset:0;display:grid;place-items:center}
   .video .play span{width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.93);display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,.25)}
   .video .play span::after{content:"";border-left:17px solid var(--rose);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
-  .video .vcap{position:absolute;left:11px;bottom:11px;background:rgba(46,33,56,.78);color:#fff;font-size:11px;font-weight:600;padding:4px 9px;border-radius:7px}
+  .video .vcap{position:absolute;left:11px;top:11px;background:rgba(46,33,56,.78);color:#fff;font-size:11px;font-weight:600;padding:4px 9px;border-radius:7px}
+  /* hide the browser's big centered play button — our own .play covers that,
+     the native bottom bar (progress/pause/volume) stays */
+  .video video::-webkit-media-controls-overlay-play-button{display:none}
   .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
   .chip{display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 11px;font-size:12px;font-weight:600}
   .chip.hot{background:var(--rose-tint);border-color:transparent;color:var(--rose-deep)}
@@ -268,10 +273,11 @@
     <p class="lead">Acne, weight, hair fall, irregular cycles — different symptoms, one root cause.</p>
 
     <div class="video">
-      <img loading="lazy" alt="Isha — 30 second intro"
-        src="https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?w=800&h=640&fit=crop&crop=faces&q=72&auto=format">
-      <div class="play"><span></span></div>
-      <div class="vcap">▶ Isha · 30 sec</div>
+      <video id="heroVideoEl" poster="assets/isha-poster.jpg" preload="metadata" controls playsinline webkit-playsinline>
+        <source src="assets/isha-intro.mp4" type="video/mp4">
+      </video>
+      <div class="play" id="heroPlay"><span></span></div>
+      <div class="vcap">▶ Isha · 1.5 min</div>
     </div>
 
     <div class="chips">
@@ -537,6 +543,17 @@
 
   var deck  = document.getElementById('deck');
   var cards = Array.prototype.slice.call(document.querySelectorAll('[data-card]'));
+
+  /* ---- hero video: tap the cover to start; native controls (play/pause,
+     progress, volume) take over from there. ---- */
+  (function(){
+    var heroVideoEl = document.getElementById('heroVideoEl'), heroPlay = document.getElementById('heroPlay');
+    if(!heroVideoEl || !heroPlay) return;
+    heroPlay.addEventListener('click', function(){ heroVideoEl.play().catch(function(){}); });
+    heroVideoEl.addEventListener('playing', function(){ heroPlay.style.display='none'; });
+    heroVideoEl.addEventListener('pause', function(){ heroPlay.style.display='grid'; });
+    heroVideoEl.addEventListener('ended', function(){ heroVideoEl.currentTime=0; heroPlay.style.display='grid'; });
+  })();
 
   /* ---- progress bar: segment per card, filled up to (and including)
      wherever she currently is — same "how much is left" signal as
