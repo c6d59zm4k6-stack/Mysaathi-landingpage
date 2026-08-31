@@ -190,7 +190,10 @@
   .herovideo .play{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
   .herovideo .play span{ width:52px; height:52px; border-radius:50%; background:rgba(251,247,238,.94); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 14px rgba(0,0,0,.22); }
   .herovideo .play span::after{ content:''; border-left:15px solid var(--terracotta); border-top:9px solid transparent; border-bottom:9px solid transparent; margin-left:3px; }
-  .herovideo .vcap{ position:absolute; left:10px; bottom:10px; background:rgba(59,52,44,.78); color:var(--paper); font-size:10.5px; font-weight:700; padding:4px 9px; border-radius:7px; }
+  .herovideo .vcap{ position:absolute; left:10px; top:10px; background:rgba(59,52,44,.78); color:var(--paper); font-size:10.5px; font-weight:700; padding:4px 9px; border-radius:7px; }
+  /* hide the browser's big centered play button — our own .play covers that,
+     the native bottom bar (progress/pause/volume) stays */
+  .herovideo video::-webkit-media-controls-overlay-play-button{ display:none; }
 
   /* ---- testimonials ---- */
   .testihead{ font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--charcoal-dim); text-align:center; margin:24px 0 10px; }
@@ -641,7 +644,7 @@
         '<div class="wordmark"><div class="dot"></div><span>MySaathi</span></div>'+
         '<div class="trustpill">Live 2-hour PCOS workshop</div>'+
         '<div class="herovideo">'+
-          '<video id="heroVideoEl" poster="assets/isha-poster.jpg" preload="metadata" playsinline webkit-playsinline>'+
+          '<video id="heroVideoEl" poster="assets/isha-poster.jpg" preload="metadata" controls playsinline webkit-playsinline>'+
             '<source src="assets/isha-intro.mp4" type="video/mp4">'+
           '</video>'+
           '<div class="play" id="heroPlay"><span></span></div>'+
@@ -659,13 +662,12 @@
       el.appendChild(startBtn);
       stage.appendChild(el);
 
-      // Tap to play the intro clip in place, over its poster frame; tapping
-      // again — on the button once visible, or directly on the video while
-      // it's hidden underneath — pauses it, same as tapping any video.
+      // Tap the cover to start the intro clip; native controls (play/pause,
+      // progress, volume) take over from there — no custom toggle needed,
+      // and none wired on the video itself so it can't double-fire against
+      // a tap on the native controls bar.
       var heroVideoEl = el.querySelector('#heroVideoEl'), heroPlay = el.querySelector('#heroPlay');
-      function toggleHeroVideo(){ if(heroVideoEl.paused) heroVideoEl.play().catch(function(){}); else heroVideoEl.pause(); }
-      heroPlay.onclick = toggleHeroVideo;
-      heroVideoEl.onclick = toggleHeroVideo;
+      heroPlay.onclick = function(){ heroVideoEl.play().catch(function(){}); };
       heroVideoEl.addEventListener('playing', function(){ heroPlay.style.display='none'; });
       heroVideoEl.addEventListener('pause', function(){ heroPlay.style.display='flex'; });
       heroVideoEl.addEventListener('ended', function(){ heroVideoEl.currentTime=0; heroPlay.style.display='flex'; });

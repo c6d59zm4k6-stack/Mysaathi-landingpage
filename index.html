@@ -71,7 +71,10 @@
   .video .play{position:absolute;inset:0;display:grid;place-items:center}
   .video .play span{width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;box-shadow:0 10px 24px -8px rgba(0,0,0,.5)}
   .video .play span::after{content:"";border-left:18px solid var(--rose);border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:4px}
-  .video .vcap{position:absolute;left:12px;bottom:12px;background:rgba(46,33,56,.78);color:#fff;font-size:11.5px;font-weight:600;padding:6px 11px;border-radius:8px;backdrop-filter:blur(4px)}
+  .video .vcap{position:absolute;left:12px;top:12px;background:rgba(46,33,56,.78);color:#fff;font-size:11.5px;font-weight:600;padding:6px 11px;border-radius:8px;backdrop-filter:blur(4px)}
+  /* hide the browser's big centered play button — our own .play covers that,
+     the native bottom bar (progress/pause/volume) stays */
+  .video video::-webkit-media-controls-overlay-play-button{display:none}
 
   .meta{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 0}
   .chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:12.5px;font-weight:600;box-shadow:var(--shadow)}
@@ -400,7 +403,7 @@
       <p class="hero-sub">Acne, weight, hair fall, irregular periods — different symptoms, one root cause.</p>
 
       <div class="video" id="heroVideo">
-        <video id="heroVideoEl" poster="assets/isha-poster.jpg" preload="metadata" playsinline webkit-playsinline>
+        <video id="heroVideoEl" poster="assets/isha-poster.jpg" preload="metadata" controls playsinline webkit-playsinline>
           <source src="assets/isha-intro.mp4" type="video/mp4">
         </video>
         <div class="play" id="heroPlay"><span></span></div>
@@ -700,13 +703,14 @@
 </div></div>
 
 <script>
-  /* Tap to play the intro clip in place, over its poster frame. */
+  /* Tap the cover to start the intro clip; native controls (play/pause,
+     progress, volume) take over from there — no custom toggle needed, and
+     none wired on the video itself so it can't double-fire against a tap
+     on the native controls bar. */
   (function(){
     var heroVideoEl = document.getElementById('heroVideoEl'), heroPlay = document.getElementById('heroPlay');
     if(!heroVideoEl || !heroPlay) return;
-    function toggleHeroVideo(){ if(heroVideoEl.paused) heroVideoEl.play().catch(function(){}); else heroVideoEl.pause(); }
-    heroPlay.addEventListener('click', toggleHeroVideo);
-    heroVideoEl.addEventListener('click', toggleHeroVideo);
+    heroPlay.addEventListener('click', function(){ heroVideoEl.play().catch(function(){}); });
     heroVideoEl.addEventListener('playing', function(){ heroPlay.style.display='none'; });
     heroVideoEl.addEventListener('pause', function(){ heroPlay.style.display='grid'; });
     heroVideoEl.addEventListener('ended', function(){ heroVideoEl.currentTime=0; heroPlay.style.display='grid'; });
