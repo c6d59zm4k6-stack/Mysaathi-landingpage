@@ -49,9 +49,14 @@ export function buildConfirmationEmail(notes) {
 
   const subject = hi ? "आपकी सीट पक्की है — MySaathi" : "You're in! Your MySaathi seat is confirmed";
 
+  const thanksLine = hi
+    ? "इतनी सारी वर्कशॉप में से हम पर भरोसा करने के लिए शुक्रिया — हमें सच में खुशी है कि आप जुड़ रही हैं।"
+    : "Thank you for choosing us out of everywhere you could have — we're genuinely glad you're joining.";
+
   const html = hi
     ? `<div style="font-family:Georgia,serif;max-width:480px;margin:0 auto;color:#2E2138">
         <h2 style="color:#5B3E6B">नमस्ते ${name}, आपकी सीट बुक हो गई है 🎉</h2>
+        <p>${thanksLine}</p>
         <p>लाइव 2-घंटे का PCOS वर्कशॉप — <b>${dateLabel}</b></p>
         ${zoomLine}
         ${fact ? `<p style="background:#FBEEDB;padding:10px 14px;border-radius:10px"><b>आपके लिए एक बात:</b> ${fact}</p>` : ""}
@@ -60,6 +65,7 @@ export function buildConfirmationEmail(notes) {
       </div>`
     : `<div style="font-family:Georgia,serif;max-width:480px;margin:0 auto;color:#2E2138">
         <h2 style="color:#5B3E6B">Hi ${name}, your seat is booked 🎉</h2>
+        <p>${thanksLine}</p>
         <p>Live 2-hour PCOS workshop — <b>${dateLabel}</b></p>
         ${zoomLine}
         ${fact ? `<p style="background:#FBEEDB;padding:10px 14px;border-radius:10px"><b>One thing for you:</b> ${fact}</p>` : ""}
@@ -68,8 +74,8 @@ export function buildConfirmationEmail(notes) {
       </div>`;
 
   const text = hi
-    ? `नमस्ते ${name}, आपकी सीट बुक हो गई है।\nलाइव 2-घंटे का PCOS वर्कशॉप — ${dateLabel}\n${zoomLink || "Zoom लिंक सेशन से पहले WhatsApp पर भेजा जाएगा।"}\n${fact}`
-    : `Hi ${name}, your seat is booked.\nLive 2-hour PCOS workshop — ${dateLabel}\n${zoomLink || "The Zoom link will be sent on WhatsApp before the session."}\n${fact}`;
+    ? `नमस्ते ${name}, आपकी सीट बुक हो गई है।\n${thanksLine}\nलाइव 2-घंटे का PCOS वर्कशॉप — ${dateLabel}\n${zoomLink || "Zoom लिंक सेशन से पहले WhatsApp पर भेजा जाएगा।"}\n${fact}`
+    : `Hi ${name}, your seat is booked.\n${thanksLine}\nLive 2-hour PCOS workshop — ${dateLabel}\n${zoomLink || "The Zoom link will be sent on WhatsApp before the session."}\n${fact}`;
 
   return { subject, html, text };
 }
