@@ -1,4 +1,4 @@
-# Garbha Saathi landing page — build progress
+# MySaathi landing page — build progress
 
 Written so this can be picked back up (by you, or a fresh Claude session)
 without re-reading the whole chat history.

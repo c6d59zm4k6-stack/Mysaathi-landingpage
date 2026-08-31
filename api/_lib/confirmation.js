@@ -47,7 +47,7 @@ export function buildConfirmationEmail(notes) {
       ? `<p>Zoom लिंक सेशन से पहले WhatsApp पर भेजा जाएगा।</p>`
       : `<p>The Zoom link will be sent on WhatsApp before the session.</p>`;
 
-  const subject = hi ? "आपकी सीट पक्की है — गर्भ साथी" : "You're in! Your Garbha Saathi seat is confirmed";
+  const subject = hi ? "आपकी सीट पक्की है — MySaathi" : "You're in! Your MySaathi seat is confirmed";
 
   const html = hi
     ? `<div style="font-family:Georgia,serif;max-width:480px;margin:0 auto;color:#2E2138">
@@ -88,7 +88,7 @@ export async function sendConfirmationEmail(notes) {
     console.warn("No email on order notes — skipping confirmation email.");
     return;
   }
-  const from = process.env.EMAIL_FROM || "Garbha Saathi <onboarding@resend.dev>";
+  const from = process.env.EMAIL_FROM || "MySaathi <onboarding@resend.dev>";
   const { subject, html, text } = buildConfirmationEmail(notes);
 
   try {
