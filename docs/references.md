@@ -34,7 +34,7 @@ condition/type → plan → afford­able entry point → bigger upsell after).
 **Key difference from our case:** Traya's long intake belongs on the
 quiz page because the *product* (which kit) depends on the answers.
 Our equivalent long intake (10+ questions) belongs inside the actual
-*workshop* (where the Garbha Saathi assistant builds her plan live) —
+*workshop* (where the MySaathi assistant builds her plan live) —
 not on the pre-purchase landing page. The landing page's own quiz stays
 short, like Phases'.
 
@@ -64,7 +64,7 @@ short, like Phases'.
   Typeform's quiz builder) — evidence this is an established approach
   with off-the-shelf support, not a novel bet.
 
-## Where Garbha Saathi sits on this spectrum
+## Where MySaathi sits on this spectrum
 
 - The **workshop session** is standardized (same for everyone) — like
   Noom's core app.

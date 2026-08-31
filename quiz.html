@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
-<title>Your PCOS, Your Plan — Garbha Saathi</title>
+<title>Your PCOS, Your Plan — MySaathi - PCOS workshop</title>
 <meta name="theme-color" content="#F4EEE1">
 <meta name="description" content="A live 2-hour PCOS workshop. Answer a few quick questions and see your personalized starting point.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -521,7 +521,7 @@
         resetSheetBtn();
         var rzp=new window.Razorpay({
           key:res.data.keyId, order_id:res.data.orderId, amount:res.data.amount, currency:res.data.currency,
-          name:'Garbha Saathi', description:'Live 2-hour PCOS workshop',
+          name:'MySaathi', description:'Live 2-hour PCOS workshop',
           prefill:{name:nm,email:em,contact:ph}, theme:{color:'#C1704A'},
           handler:function(resp){
             setSheetBusy(true,'Confirming…');
@@ -638,7 +638,7 @@
     if(name==='welcome'){
       el = screenWrap('welcome');
       el.innerHTML =
-        '<div class="wordmark"><div class="dot"></div><span>Garbha Saathi</span></div>'+
+        '<div class="wordmark"><div class="dot"></div><span>MySaathi</span></div>'+
         '<div class="trustpill">Live 2-hour PCOS workshop</div>'+
         '<div class="herovideo">'+
           '<video id="heroVideoEl" poster="assets/isha-poster.jpg" preload="metadata" playsinline webkit-playsinline>'+

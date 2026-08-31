@@ -1,4 +1,4 @@
-# Garbha Saathi — landing page
+# MySaathi — landing page
 
 One static page (`index.html`) plus two small serverless functions that take
 payment for the ₹149 live workshop.
@@ -28,7 +28,7 @@ Needs hosting that runs the `api/` functions. Vercel is set up for it:
    | `WORKSHOP_AMOUNT_PAISE` | optional, defaults to `14900` (₹149) |
    | `RAZORPAY_WEBHOOK_SECRET` | from Razorpay → Settings → Webhooks, see below — different from `RAZORPAY_KEY_SECRET` |
    | `RESEND_API_KEY` | optional — enables the confirmation email, see below |
-   | `EMAIL_FROM` | optional, e.g. `Garbha Saathi <hello@yourdomain.com>` |
+   | `EMAIL_FROM` | optional, e.g. `MySaathi <hello@yourdomain.com>` |
    | `WORKSHOP_ZOOM_LINK` | optional — included in the confirmation email once you have one |
    | `WORKSHOP_DATE_LABEL` | optional, e.g. `Sunday, 22 June · 11 AM` |
 
