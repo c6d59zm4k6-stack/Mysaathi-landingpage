@@ -164,20 +164,23 @@
   .tcard .who .n{font-size:12.5px;font-weight:700}
   .tcard .who .s{font-size:11px;color:var(--ink-soft)}
 
-  /* ---- back link: the reservation card can be jumped to directly from
-     the sticky bar on any earlier card, skipping everything in between —
-     this is the way back, since it's otherwise the last card in the deck. ---- */
-  .backlink{align-self:flex-start;font-size:12.5px;font-weight:700;color:var(--ink-soft);text-decoration:none;margin-bottom:10px;display:inline-flex;align-items:center;gap:4px}
-  .backlink:active{opacity:.6}
-
-  /* ---- reservation form: inline on its own card now, not a popup —
-     collects name/WhatsApp/email right there before Razorpay opens ---- */
+  /* ---- checkout sheet: a popup over whichever card she's on, so getting
+     there and closing it never requires scrolling anywhere ---- */
+  .sheet-ov{position:fixed;inset:0;z-index:120;display:flex;align-items:flex-end;justify-content:center;background:rgba(46,33,56,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+  .sheet-ov[hidden]{display:none}
+  .sheet-card{width:100%;max-width:var(--col);max-height:88vh;overflow-y:auto;background:var(--cream);border-radius:22px 22px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));box-shadow:var(--shadow-lg);animation:sheetUp .3s cubic-bezier(.2,.8,.2,1)}
+  @keyframes sheetUp{from{transform:translateY(14px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .sheet-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .sheet-head h3{font-family:var(--serif);font-size:20px;font-weight:600;color:var(--ink)}
+  .sheet-head .sh-sub{font-size:12.5px;color:var(--ink-soft);margin-top:3px}
+  .sheet-x{flex:none;width:30px;height:30px;border-radius:50%;border:none;background:rgba(46,33,56,.07);color:var(--ink);font-size:17px;line-height:1;cursor:pointer;font-family:var(--sans)}
   .sheet-fields{display:grid;gap:10px;margin-top:16px}
   .sheet-fields label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:5px}
   .sheet-fields input{width:100%;font-family:var(--sans);font-size:16px;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px 13px}
   .sheet-fields input:focus{outline:none;border-color:var(--rose)}
-  .sheet-focus{display:flex;align-items:center;gap:8px;background:var(--rose-tint);border-radius:11px;padding:9px 12px;margin:14px 0;font-size:12.5px;font-weight:600;color:var(--rose-deep)}
+  .sheet-focus{display:flex;align-items:center;gap:8px;background:var(--rose-tint);border-radius:11px;padding:9px 12px;margin-top:14px;font-size:12.5px;font-weight:600;color:var(--rose-deep)}
   .sheet-err{font-size:12.5px;font-weight:600;color:var(--rose-deep);margin-top:10px;min-height:16px}
+  .sheet-card .btn{margin-top:12px}
   .btn.busy{opacity:.65;pointer-events:none}
   .sheet-trust{text-align:center;font-size:11.5px;color:var(--ink-soft);margin-top:9px}
   .paid-mark{width:52px;height:52px;border-radius:50%;margin:0 auto 12px;background:var(--sage-tint);display:grid;place-items:center}
@@ -603,31 +606,32 @@
     </div>
 
     <div class="spacer"></div>
-    <a class="btn" href="#reservation">I'm ready — reserve my spot</a>
+    <a class="btn" href="#" data-checkout>I'm ready — reserve my spot</a>
   </section>
 
-  <!-- 11 · RESERVATION -->
-  <section class="card" data-card id="reservation">
-    <a class="backlink" href="#" id="backToTop">‹ Back to the landing page</a>
-    <span class="eyebrow">Just a few details</span>
-    <h2>Where should we <em>send it?</em></h2>
-    <p class="lead">Your seat, the Google Meet link, and your focus area — all in one place.</p>
+</div>
 
-    <div id="reservationBody">
-      <div class="sheet-focus" id="sheetFocus">
-        <span>Your focus: <b id="sheetFocusName">Understand PCOS, build my plan</b></span>
+<div class="sheet-ov" id="checkoutSheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="sheet-card" id="sheetCard">
+    <div class="sheet-head">
+      <div>
+        <h3 id="sheetTitle">Reserve your seat</h3>
+        <div class="sh-sub">Live 2-hour PCOS workshop · ₹149</div>
       </div>
-      <div class="sheet-fields">
-        <div><label for="ckName">Your name</label><input id="ckName" type="text" autocomplete="name" placeholder="Priya Sharma"></div>
-        <div><label for="ckPhone">WhatsApp number</label><input id="ckPhone" type="tel" autocomplete="tel" inputmode="numeric" placeholder="98765 43210"></div>
-        <div><label for="ckEmail">Email</label><input id="ckEmail" type="email" autocomplete="email" placeholder="you@email.com"></div>
-      </div>
-      <div class="sheet-err" id="sheetErr"></div>
-      <a class="btn" href="#" id="sheetPay">Confirm my spot <span class="tag">₹149</span></a>
-      <p class="lead" style="text-align:center;font-size:12px;margin-top:10px">Secure payment via Razorpay · UPI, cards &amp; netbanking</p>
+      <button class="sheet-x" id="sheetClose" aria-label="Close">&times;</button>
     </div>
-  </section>
-
+    <div class="sheet-focus" id="sheetFocus">
+      <span>Your focus: <b id="sheetFocusName">Understand PCOS, build my plan</b></span>
+    </div>
+    <div class="sheet-fields">
+      <div><label for="ckName">Your name</label><input id="ckName" type="text" autocomplete="name" placeholder="Priya Sharma"></div>
+      <div><label for="ckPhone">WhatsApp number</label><input id="ckPhone" type="tel" autocomplete="tel" inputmode="numeric" placeholder="98765 43210"></div>
+      <div><label for="ckEmail">Email</label><input id="ckEmail" type="email" autocomplete="email" placeholder="you@email.com"></div>
+    </div>
+    <div class="sheet-err" id="sheetErr"></div>
+    <a class="btn" href="#" id="sheetPay">Confirm my spot <span class="tag">₹149</span></a>
+    <div class="sheet-trust">Secure payment via Razorpay · UPI, cards &amp; netbanking</div>
+  </div>
 </div>
 
 <div class="paybar">
@@ -635,7 +639,7 @@
     <div class="l1">Your PCOS, your plan — ₹149</div>
     <div class="l2">Live on Google Meet · [ Sun 22 June ]</div>
   </div>
-  <a class="btn" href="#reservation">Reserve</a>
+  <a class="btn" href="#" data-checkout>Reserve</a>
 </div>
 
 <script>
@@ -697,16 +701,6 @@
     });
   });
 
-  /* ---- back to top: Reservation is the last card and can be jumped to
-     directly from the sticky bar on any earlier card, so it needs its own
-     way back instead of relying on the scroll-down cue every other card has. ---- */
-  var backToTop = document.getElementById('backToTop');
-  if (backToTop) {
-    backToTop.addEventListener('click', function(e){
-      e.preventDefault();
-      cards[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  }
 
   /* ---- Q1: symptom tiles ---- */
   var picked = [];
@@ -766,16 +760,19 @@
   });
 
   /* ---- payment: the reservation card collects name/WhatsApp/email inline,
-     then Razorpay opens over the page — same contract as index.html's
-     checkout, just without a popup sheet in between. ---- */
+     then Razorpay opens over whatever card she's on — same contract as
+     index.html's checkout. ---- */
   var RAZORPAY_LINK = "";
 
-  var reservationBody=document.getElementById('reservationBody'),
+  var sheet=document.getElementById('checkoutSheet'),
+      sheetCard=document.getElementById('sheetCard'),
       sheetErr=document.getElementById('sheetErr'),
       sheetPay=document.getElementById('sheetPay'),
+      sheetFocusName=document.getElementById('sheetFocusName'),
       ckName=document.getElementById('ckName'),
       ckPhone=document.getElementById('ckPhone'),
-      ckEmail=document.getElementById('ckEmail');
+      ckEmail=document.getElementById('ckEmail'),
+      lastFocused=null;
 
   function setErr(msg){ sheetErr.textContent = msg || ''; }
   function setBusy(on,label){
@@ -786,6 +783,31 @@
     sheetPay.classList.remove('busy');
     sheetPay.innerHTML = 'Confirm my spot <span class="tag">₹149</span>';
   }
+
+  function openCheckout(e){
+    if (e) e.preventDefault();
+    lastFocused = document.activeElement;
+    setErr(''); resetPayBtn();
+    // Only claim a specific focus once she's actually picked something —
+    // "Reserve" is reachable from every card via the sticky bar, including
+    // before she's answered anything.
+    sheetFocusName.textContent = picked.length ? TRACKS[topTrack()][0] : 'Understand PCOS, build my plan';
+    sheet.hidden = false;
+    setTimeout(function(){ ckName.focus(); }, 60);
+  }
+  function closeCheckout(){
+    sheet.hidden = true;
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+
+  document.getElementById('sheetClose').addEventListener('click', closeCheckout);
+  sheet.addEventListener('click', function(e){ if (e.target === sheet) closeCheckout(); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && !sheet.hidden) closeCheckout();
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-checkout]'), function(el){
+    el.addEventListener('click', openCheckout);
+  });
 
   /* Razorpay's script is only fetched once someone actually opens checkout. */
   var rzpLoading = null;
@@ -809,10 +831,14 @@
   }
 
   function showPaid(){
-    reservationBody.innerHTML =
+    sheetCard.innerHTML =
       '<div class="paid-mark"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>'+
       '<h3 style="font-family:var(--serif);font-size:20px;text-align:center;color:var(--ink)">Your seat is booked</h3>'+
-      '<p style="text-align:center;font-size:14px;margin-top:8px">We’ll send the Google Meet link and joining details on WhatsApp and email.</p>';
+      '<p style="text-align:center;font-size:14px;margin-top:8px">We’ll send the Google Meet link and joining details on WhatsApp and email.</p>'+
+      '<a class="btn" href="#" id="paidDone" style="margin-top:16px">Done</a>';
+    document.getElementById('paidDone').addEventListener('click', function(e){
+      e.preventDefault(); closeCheckout();
+    });
   }
 
   sheetPay.addEventListener('click', function(e){
