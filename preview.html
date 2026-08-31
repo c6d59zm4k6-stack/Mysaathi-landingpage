@@ -164,6 +164,12 @@
   .tcard .who .n{font-size:12.5px;font-weight:700}
   .tcard .who .s{font-size:11px;color:var(--ink-soft)}
 
+  /* ---- back link: the reservation card can be jumped to directly from
+     the sticky bar on any earlier card, skipping everything in between —
+     this is the way back, since it's otherwise the last card in the deck. ---- */
+  .backlink{align-self:flex-start;font-size:12.5px;font-weight:700;color:var(--ink-soft);text-decoration:none;margin-bottom:10px;display:inline-flex;align-items:center;gap:4px}
+  .backlink:active{opacity:.6}
+
   /* ---- reservation form: inline on its own card now, not a popup —
      collects name/WhatsApp/email right there before Razorpay opens ---- */
   .sheet-fields{display:grid;gap:10px;margin-top:16px}
@@ -304,7 +310,7 @@
     <div class="brand"><span class="mark">M</span> MySaathi</div>
     <span class="eyebrow" style="margin-top:20px">Live 2-hour PCOS workshop</span>
     <h1>Your PCOS.<br><em>Your plan.</em></h1>
-    <p class="lead">Acne, weight, hair fall, irregular cycles — different symptoms, one root cause.</p>
+    <p class="lead">Acne, weight, hair fall, irregular cycles, fertility struggles — different symptoms, one root cause.</p>
 
     <div class="video">
       <video id="heroVideoEl" poster="assets/isha-poster.jpg" preload="metadata" controls playsinline webkit-playsinline>
@@ -316,7 +322,7 @@
 
     <div class="chips">
       <span class="chip hot">[ Sun 22 June · 11 AM ]</span>
-      <span class="chip">Live on Zoom</span>
+      <span class="chip">Live on Google Meet</span>
       <span class="chip">₹149</span>
     </div>
 
@@ -602,13 +608,14 @@
 
   <!-- 11 · RESERVATION -->
   <section class="card" data-card id="reservation">
+    <a class="backlink" href="#" id="backToTop">‹ Back to the landing page</a>
     <span class="eyebrow">Just a few details</span>
     <h2>Where should we <em>send it?</em></h2>
-    <p class="lead">Your seat, the Zoom link, and your focus area — all in one place.</p>
+    <p class="lead">Your seat, the Google Meet link, and your focus area — all in one place.</p>
 
     <div id="reservationBody">
       <div class="sheet-focus" id="sheetFocus">
-        <span>Your focus: <b id="sheetFocusName">Cycle &amp; Hormone Balance</b></span>
+        <span>Your focus: <b id="sheetFocusName">Understand PCOS, build my plan</b></span>
       </div>
       <div class="sheet-fields">
         <div><label for="ckName">Your name</label><input id="ckName" type="text" autocomplete="name" placeholder="Priya Sharma"></div>
@@ -626,7 +633,7 @@
 <div class="paybar">
   <div class="info">
     <div class="l1">Your PCOS, your plan — ₹149</div>
-    <div class="l2">Live on Zoom · [ Sun 22 June ]</div>
+    <div class="l2">Live on Google Meet · [ Sun 22 June ]</div>
   </div>
   <a class="btn" href="#reservation">Reserve</a>
 </div>
@@ -690,6 +697,17 @@
     });
   });
 
+  /* ---- back to top: Reservation is the last card and can be jumped to
+     directly from the sticky bar on any earlier card, so it needs its own
+     way back instead of relying on the scroll-down cue every other card has. ---- */
+  var backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    backToTop.addEventListener('click', function(e){
+      e.preventDefault();
+      cards[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
   /* ---- Q1: symptom tiles ---- */
   var picked = [];
   var rev1 = document.getElementById('rev1');
@@ -711,8 +729,11 @@
     var t = TRACKS[topTrack()];
     focusName.textContent = t[0];
     focusFact.textContent = t[1];
+    // Only claim a specific focus once she's actually picked something —
+    // jumping straight to Reservation from the sticky bar shouldn't show a
+    // guessed track as if it were a real answer.
     var sfn = document.getElementById('sheetFocusName');
-    if (sfn) sfn.textContent = t[0];
+    if (sfn) sfn.textContent = picked.length ? t[0] : 'Understand PCOS, build my plan';
   }
 
   Array.prototype.forEach.call(document.querySelectorAll('#tiles .tile'), function(tile){
@@ -791,7 +812,7 @@
     reservationBody.innerHTML =
       '<div class="paid-mark"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>'+
       '<h3 style="font-family:var(--serif);font-size:20px;text-align:center;color:var(--ink)">Your seat is booked</h3>'+
-      '<p style="text-align:center;font-size:14px;margin-top:8px">We’ll send the Zoom link and joining details on WhatsApp and email.</p>';
+      '<p style="text-align:center;font-size:14px;margin-top:8px">We’ll send the Google Meet link and joining details on WhatsApp and email.</p>';
   }
 
   sheetPay.addEventListener('click', function(e){
