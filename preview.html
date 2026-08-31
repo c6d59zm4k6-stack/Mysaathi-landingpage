@@ -107,15 +107,13 @@
      white-card-with-shadow shape reads as tappable too, and it isn't. */
   .person{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:15px;padding:13px 12px}
   .person .who{display:flex;align-items:center;gap:7px;font-family:var(--serif);font-weight:600;font-size:15px;padding-bottom:9px;border-bottom:1px solid rgba(255,255,255,.14);margin-bottom:9px}
-  .person .av{width:26px;height:26px;border-radius:50%;flex:none}
-  .person.a .av{background:linear-gradient(140deg,var(--rose),var(--marigold))}
-  .person.b .av{background:linear-gradient(140deg,var(--plum),var(--sage))}
+  .person .av{width:26px;height:26px;border-radius:50%;flex:none;object-fit:cover;background:rgba(255,255,255,.1)}
   .person .row{display:flex;align-items:flex-start;gap:7px;font-size:12.5px;color:rgba(255,255,255,.68);padding:4px 0;line-height:1.35}
   .person .row svg{width:13px;height:13px;flex:none;margin-top:2px;stroke:rgba(255,255,255,.68);fill:none;stroke-width:2;opacity:.9}
 
   /* ---- yes/no ---- */
-  .yn{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
-  .yn button{position:relative;font-family:var(--sans);font-size:16px;font-weight:700;padding:15px;border-radius:14px;border:1.5px solid var(--rose);background:#fff;color:var(--rose-deep);cursor:pointer;transition:transform .1s}
+  .yn{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+  .yn button{position:relative;font-family:var(--sans);font-size:16px;font-weight:700;padding:15px;min-height:64px;border-radius:14px;border:1.5px solid var(--rose);background:#fff;color:var(--rose-deep);cursor:pointer;transition:transform .1s}
   .yn button:active{transform:scale(.97)}
   .yn button:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
   .yn button.picked{background:var(--rose);color:#fff;border-color:transparent}
@@ -315,8 +313,8 @@
   <section class="card" data-card>
     <div class="brand"><span class="mark">M</span> MySaathi</div>
     <span class="eyebrow" style="margin-top:20px">Live 2-hour PCOS workshop</span>
-    <h1>Your PCOS Workshop.<br><em>Your plan.</em></h1>
-    <p class="lead">Acne, weight, hair fall, irregular cycles, fertility struggles — different symptoms, one root cause.</p>
+    <h1>Your PCOS.<br><em>Your plan.</em></h1>
+    <p class="lead">Acne, weight, hair fall, irregular cycles, fertility struggles — different symptoms, different bodies, different plans.</p>
 
     <div class="video">
       <video id="heroVideoEl" poster="assets/isha-poster.jpg" preload="metadata" controls playsinline webkit-playsinline>
@@ -405,14 +403,14 @@
 
     <div class="people">
       <div class="person a">
-        <div class="who"><span class="av"></span> Anu</div>
+        <div class="who"><img class="av" loading="lazy" alt="" src="https://randomuser.me/api/portraits/women/44.jpg"> Anu</div>
         <div class="row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg> Irregular cycles</div>
         <div class="row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg> Acne, oily skin</div>
         <div class="row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg> Belly weight gain</div>
         <div class="row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg> Cravings, crashes</div>
       </div>
       <div class="person b">
-        <div class="who"><span class="av"></span> Kavya</div>
+        <div class="who"><img class="av" loading="lazy" alt="" src="https://randomuser.me/api/portraits/women/32.jpg"> Kavya</div>
         <div class="row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg> Regular cycles</div>
         <div class="row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg> Clear skin</div>
         <div class="row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg> Can't lose weight</div>
@@ -718,15 +716,17 @@
   }
 
   function syncResult(){
-    var t = TRACKS[topTrack()];
-    focusName.textContent = t[0];
-    focusFact.textContent = t[1];
     // Only claim a specific focus once she's actually picked something —
-    // jumping straight to Reservation from the sticky bar shouldn't show a
-    // guessed track as if it were a real answer.
+    // scrolling past Q1 without tapping anything (or jumping straight to
+    // Reservation from the sticky bar) shouldn't show a guessed track as
+    // if it were a real answer.
+    var t = TRACKS[topTrack()];
+    focusName.textContent = picked.length ? t[0] : 'Whatever you’re dealing with';
+    focusFact.textContent = picked.length ? t[1] : 'Tap a few symptoms above and we’ll get specific.';
     var sfn = document.getElementById('sheetFocusName');
     if (sfn) sfn.textContent = picked.length ? t[0] : 'Understand PCOS, build my plan';
   }
+  syncResult();
 
   Array.prototype.forEach.call(document.querySelectorAll('#tiles .tile'), function(tile){
     tile.addEventListener('click', function(){
