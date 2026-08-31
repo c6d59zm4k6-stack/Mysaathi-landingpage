@@ -56,9 +56,9 @@
 
   .eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);display:flex;align-items:center;gap:7px}
   .dark .eyebrow{color:#F2A6BE}
-  h1,h2{font-family:var(--serif);font-weight:600;line-height:1.14;letter-spacing:-.01em}
-  h1{font-size:31px;margin-top:14px}
-  h2{font-size:26px;margin-top:10px}
+  h1,h2{font-family:var(--serif);font-weight:600;line-height:1.1;letter-spacing:-.01em}
+  h1{font-size:32px;margin-top:14px}
+  h2{font-size:29px;margin-top:10px}
   em{font-style:italic;color:var(--rose)}
   .dark em{color:#F2A6BE}
   p.lead{font-size:15.5px;color:var(--ink-soft);margin-top:11px}
@@ -139,6 +139,7 @@
   .focus .fname{font-family:var(--serif);font-size:23px;font-weight:600;margin-top:7px;line-height:1.2}
   .focus .ffact{font-size:14px;color:var(--ink-soft);margin-top:9px}
   .focus .fnote{font-size:12px;color:var(--ink-soft);margin-top:13px;padding-top:11px;border-top:1px solid var(--line-soft)}
+  .planlabel{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rose);margin:20px 0 8px}
 
   /* ---- steps ---- */
   .steps{display:flex;flex-direction:column;gap:10px;margin-top:18px}
@@ -314,7 +315,7 @@
   <section class="card" data-card>
     <div class="brand"><span class="mark">M</span> MySaathi</div>
     <span class="eyebrow" style="margin-top:20px">Live 2-hour PCOS workshop</span>
-    <h1>Your PCOS.<br><em>Your plan.</em></h1>
+    <h1>Your PCOS Workshop.<br><em>Your plan.</em></h1>
     <p class="lead">Acne, weight, hair fall, irregular cycles, fertility struggles — different symptoms, one root cause.</p>
 
     <div class="video">
@@ -441,16 +442,17 @@
 
   <!-- 4 · HER RESULT (+ what she keeps) -->
   <section class="card" data-card>
-    <span class="eyebrow">Your starting point</span>
-    <h2>Where <em>your</em> plan begins.</h2>
+    <span class="eyebrow">What the workshop covers</span>
+    <h2>Built around <em>your</em> answers.</h2>
 
     <div class="focus">
-      <div class="fk">Likely focus area</div>
+      <div class="fk">The workshop will focus on</div>
       <div class="fname" id="focusName">Cycle &amp; Hormone Balance</div>
       <div class="ffact" id="focusFact">A long, irregular cycle can still become a healthy one.</div>
-      <div class="fnote">This is a starting point, not a diagnosis. In the workshop you'll build the full plan around it — and we'll tell you honestly if it looks like something other than PCOS.</div>
+      <div class="fnote">This is a starting point, not a diagnosis. We'll build the full plan live — and tell you honestly if it looks like something other than PCOS.</div>
     </div>
 
+    <div class="planlabel">In the end, your plan:</div>
     <div class="plandoc-shot">
       <img alt="Sample My PCOS Root Plan" src="assets/plan-sample.webp" loading="lazy" width="780" height="910">
       <div class="shot-fade"></div>
@@ -475,7 +477,6 @@
   <section class="card" data-card>
     <span class="eyebrow">From women we've helped</span>
     <h2>Real words, <em>real people.</em></h2>
-    <p class="lead" style="font-style:italic;font-size:12.5px">From our earlier services — workshop reviews coming soon. [ Add their names before launch. ]</p>
 
     <div class="tests">
       <div class="tcard">
@@ -533,20 +534,15 @@
   <section class="card dark" data-card>
     <span class="eyebrow" style="color:#F2A6BE">After the workshop</span>
     <h2>Three honest options — <em>all good.</em></h2>
-    <p class="lead">Everyone leaves with the same free baseline. The rest is your choice.</p>
 
     <div class="opts">
       <div class="opt">
-        <div class="oh"><span class="on">1 · Do it yourself</span><span class="pp free">Free</span></div>
-        <div class="od">A complete option if you're self-driven.</div>
-        <ul>
-          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Rebuild your plate anytime</li>
-          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>WhatsApp tracker + free community</li>
-        </ul>
+        <div class="oh"><span class="on">Do it yourself</span><span class="pp free">Free</span></div>
+        <div class="od">Everything from today — the plan, the tracker, the community.</div>
       </div>
       <div class="opt feat">
         <span class="ribbon">Attendee offer · 48 hrs</span>
-        <div class="oh"><span class="on">2 · 90-Day Program</span></div>
+        <div class="oh"><span class="on">90-Day Program</span></div>
         <div class="od">An expert alongside you, on three pillars:</div>
         <ul>
           <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><b>Personalisation</b> — your plan keeps adjusting</li>
@@ -557,15 +553,10 @@
         <div class="offernote">Sent on WhatsApp after the session · 48 hours.</div>
       </div>
       <div class="opt">
-        <div class="oh"><span class="on">3 · Clinic visit</span><span class="pp clinic">Separate</span></div>
-        <div class="od">For clarity first — not a tier up or down.</div>
-        <ul>
-          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>If you're unsure, or planning a pregnancy</li>
-          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Reports reviewed · online or in Bhopal</li>
-        </ul>
+        <div class="oh"><span class="on">Clinic visit</span><span class="pp clinic">Separate</span></div>
+        <div class="od">See a doctor to confirm it — online or in Bhopal.</div>
       </div>
     </div>
-    <p class="after-foot">Even with option 1, you're ahead of where you were 2 hours ago.</p>
 
     <div class="spacer"></div>
     <div class="cue">
